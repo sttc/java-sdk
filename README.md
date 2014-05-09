@@ -26,3 +26,13 @@ public class Main {
   }
 }
 ```
+
+The only dependency you need is this:
+
+```xml
+<dependency>
+  <groupId>co.stateful</groupId>
+  <artifactId>java-sdk</artifactId>
+  <version>0.1</version>
+</dependency>
+```

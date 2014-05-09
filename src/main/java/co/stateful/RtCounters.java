@@ -100,7 +100,7 @@ public final class RtCounters implements Counters {
             .rel(
                 String.format(
                     // @checkstyle LineLength (1 line)
-                    "/page/counters/counter[name='%s']/links/link[@rel='delete']@href",
+                    "/page/counters/counter[name='%s']/links/link[@rel='delete']/@href",
                     name
                 )
             )

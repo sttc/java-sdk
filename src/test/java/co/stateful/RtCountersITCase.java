@@ -67,17 +67,25 @@ public final class RtCountersITCase {
             "test-%s", RtCountersITCase.RANDOM.nextInt(Integer.MAX_VALUE)
         );
         final Counter counter = counters.create(name);
-        final long start = RtCountersITCase.RANDOM.nextLong();
-        counter.set(start);
-        MatcherAssert.assertThat(
-            counter.incrementAndGet(0L),
-            Matchers.equalTo(start)
-        );
-        final long delta = (long) Tv.FIVE;
-        MatcherAssert.assertThat(
-            counter.incrementAndGet(delta),
-            Matchers.equalTo(start + delta)
-        );
+        try {
+            MatcherAssert.assertThat(
+                counters.names(),
+                Matchers.hasItem(name)
+            );
+            final long start = RtCountersITCase.RANDOM.nextLong();
+            counter.set(start);
+            MatcherAssert.assertThat(
+                counter.incrementAndGet(0L),
+                Matchers.equalTo(start)
+            );
+            final long delta = (long) Tv.FIVE;
+            MatcherAssert.assertThat(
+                counter.incrementAndGet(delta),
+                Matchers.equalTo(start + delta)
+            );
+        } finally {
+            counters.delete(name);
+        }
     }
 
 }

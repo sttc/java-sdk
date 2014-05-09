@@ -35,6 +35,8 @@ import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -86,6 +88,7 @@ public final class RtCounter implements Counter {
         return Long.parseLong(
             this.irequest.method(Request.GET)
                 .uri().queryParam("value", delta).back()
+                .header(HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN)
                 .fetch()
                 .as(RestResponse.class)
                 .assertStatus(HttpURLConnection.HTTP_OK)
