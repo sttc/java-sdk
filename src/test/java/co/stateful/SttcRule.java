@@ -27,39 +27,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful.core;
+package co.stateful;
 
 import com.jcabi.urn.URN;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.Assume;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 
 /**
- * Integration case for {@link DyCounters}.
+ * Sttc test rule.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  */
-public final class DyCountersITCase {
+public final class SttcRule implements TestRule {
 
     /**
-     * DyCounters can manage counters.
-     * @throws Exception If some problem inside
+     * URN of stateful.co.
      */
-    @Test
-    public void managesCounters() throws Exception {
-        final Counters counters = new DefaultUser(
-            new URN("urn:test:8900967")
-        ).counters();
-        final String name = "test-one";
-        counters.create(name);
-        MatcherAssert.assertThat(
-            counters.names(),
-            Matchers.hasItem(name)
-        );
-        counters.delete(name);
-        MatcherAssert.assertThat(
-            counters.names(),
-            Matchers.emptyIterable()
+    private static final String USER = System.getProperty("sttc.urn");
+
+    /**
+     * Token of stateful.co.
+     */
+    private static final String TOKEN = System.getProperty("sttc.token");
+
+    @Override
+    public Statement apply(final Statement base,
+        final Description description) {
+        return base;
+    }
+
+    /**
+     * Get Sttc.
+     * @return Sttc
+     */
+    public Sttc get() {
+        Assume.assumeNotNull(SttcRule.USER);
+        return new RtSttc(
+            URN.create(SttcRule.USER),
+            SttcRule.TOKEN
         );
     }
 

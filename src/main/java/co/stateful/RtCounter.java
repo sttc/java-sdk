@@ -27,45 +27,69 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful.core;
+package co.stateful;
 
-import com.jcabi.urn.URN;
-import java.math.BigDecimal;
-import java.security.SecureRandom;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Loggable;
+import com.jcabi.http.Request;
+import com.jcabi.http.response.RestResponse;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Integration case for {@link DyCounter}.
+ * Counter.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
-public final class DyCounterITCase {
+@Immutable
+@Loggable(Loggable.DEBUG)
+@ToString
+@EqualsAndHashCode(of = { "srequest", "irequest" })
+public final class RtCounter implements Counter {
 
     /**
-     * DyCounter can increment and set.
-     * @throws Exception If some problem inside
+     * Set request.
      */
-    @Test
-    public void incrementAndSet() throws Exception {
-        final Counters counters = new DefaultUser(
-            new URN("urn:test:7889978")
-        ).counters();
-        final String name = "test-78";
-        counters.create(name);
-        final Counter counter = counters.get(name);
-        final BigDecimal start = new BigDecimal(new SecureRandom().nextLong());
-        counter.set(start);
-        MatcherAssert.assertThat(
-            counter.increment(new BigDecimal(0L)),
-            Matchers.equalTo(start)
-        );
-        final BigDecimal delta = new BigDecimal(new SecureRandom().nextLong());
-        MatcherAssert.assertThat(
-            counter.increment(delta),
-            Matchers.equalTo(start.add(delta))
-        );
+    private final transient Request srequest;
+
+    /**
+     * Increment request.
+     */
+    private final transient Request irequest;
+
+    /**
+     * Ctor.
+     * @param sreq SET request
+     * @param ireq INC request
+     */
+    public RtCounter(final Request sreq, final Request ireq) {
+        this.srequest = sreq;
+        this.irequest = ireq;
     }
 
+    @Override
+    public void set(final long value) throws IOException {
+        this.srequest.method(Request.PUT)
+            .uri().queryParam("value", value).back()
+            .fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK);
+    }
+
+    @Override
+    public long incrementAndGet(final long delta) throws IOException {
+        return Long.parseLong(
+            this.irequest.method(Request.GET)
+                .uri().queryParam("value", delta).back()
+                .fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .body()
+        );
+    }
 }

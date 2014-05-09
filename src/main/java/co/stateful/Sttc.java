@@ -33,28 +33,20 @@ import com.jcabi.aspects.Immutable;
 import java.io.IOException;
 
 /**
- * Counter.
+ * Stateful Entry Point.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public interface Counter {
+public interface Sttc {
 
     /**
-     * Set specific value.
-     * @param value Value to set
+     * Counters.
+     * @return Counters
      * @throws IOException If some I/O problem
      */
-    void set(long value) throws IOException;
-
-    /**
-     * Add value to it.
-     * @param delta Delta to add (can be zero or negative)
-     * @return New value
-     * @throws IOException If some I/O problem
-     */
-    long incrementAndGet(long delta) throws IOException;
+    Counters counters() throws IOException;
 
 }

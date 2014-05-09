@@ -30,31 +30,59 @@
 package co.stateful;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Loggable;
+import com.jcabi.http.Request;
+import com.jcabi.http.request.JdkRequest;
+import com.jcabi.http.response.RestResponse;
+import com.jcabi.http.response.XmlResponse;
+import com.jcabi.urn.URN;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Counter.
+ * Stateful Entry Point.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
  */
 @Immutable
-public interface Counter {
+@Loggable(Loggable.DEBUG)
+@ToString
+@EqualsAndHashCode(of = "request")
+public final class RtSttc implements Sttc {
 
     /**
-     * Set specific value.
-     * @param value Value to set
-     * @throws IOException If some I/O problem
+     * Entry request.
      */
-    void set(long value) throws IOException;
+    private final transient Request request;
 
     /**
-     * Add value to it.
-     * @param delta Delta to add (can be zero or negative)
-     * @return New value
-     * @throws IOException If some I/O problem
+     * Ctor.
+     * @param urn Owner URN
+     * @param token Security token
      */
-    long incrementAndGet(long delta) throws IOException;
+    public RtSttc(final URN urn, final String token) {
+        this.request = new JdkRequest("http://www.stateful.co")
+            .header("X-Sttc-URN", urn.toString())
+            .header("X-Sttc-Token", token)
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
+            .header(HttpHeaders.USER_AGENT, "java-sdk.stateful.co");
+    }
 
+    @Override
+    public Counters counters() throws IOException {
+        return new RtCounters(
+            this.request
+                .fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(XmlResponse.class)
+                .rel("/page/links/link[@rel='menu:counters']/@href")
+        );
+    }
 }

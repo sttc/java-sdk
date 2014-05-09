@@ -27,25 +27,57 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful.core;
+package co.stateful;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.urn.URN;
+import com.jcabi.aspects.Tv;
+import java.security.SecureRandom;
+import java.util.Random;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Base.
- *
+ * Integration case for {@link RtCounters}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @since 0.1
  */
-@Immutable
-public interface Base {
+public final class RtCountersITCase {
 
     /**
-     * Get one user.
-     * @param urn URN of the user
-     * @return User
+     * Random.
      */
-    User user(URN urn);
+    private static final Random RANDOM = new SecureRandom();
+
+    /**
+     * Region rule.
+     * @checkstyle VisibilityModifierCheck (3 lines)
+     */
+    public final transient SttcRule srule = new SttcRule();
+
+    /**
+     * RtCounters can manage counters.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void incrementsAndSets() throws Exception {
+        final Sttc sttc = this.srule.get();
+        final Counters counters = sttc.counters();
+        final String name = String.format(
+            "test-%s", RtCountersITCase.RANDOM.nextInt(Integer.MAX_VALUE)
+        );
+        final Counter counter = counters.create(name);
+        final long start = RtCountersITCase.RANDOM.nextLong();
+        counter.set(start);
+        MatcherAssert.assertThat(
+            counter.incrementAndGet(0L),
+            Matchers.equalTo(start)
+        );
+        final long delta = (long) Tv.FIVE;
+        MatcherAssert.assertThat(
+            counter.incrementAndGet(delta),
+            Matchers.equalTo(start + delta)
+        );
+    }
 
 }
