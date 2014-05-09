@@ -40,6 +40,53 @@
     <version>0.1</version>
     <packaging>jar</packaging>
     <name>java-sdk</name>
+    <description>Stateful Web Primitives</description>
+    <url>http://www.stateful.co</url>
+    <inceptionYear>2014</inceptionYear>
+    <organization>
+        <name>stateful.co</name>
+        <url>http://www.stateful.co</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>Stateful Web Primitives</name>
+            <url>http://www.stateful.co/LICENSE.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Yegor Bugayenko</name>
+            <email>yegor@tpc2.com</email>
+            <organization>teamed.io</organization>
+            <organizationUrl>http://www.teamed.io</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>-7</timezone>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/sttc/java-sdk/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>rultor</system>
+        <url>http://www.rultor.com/s/stateful</url>
+    </ciManagement>
+    <scm>
+        <connection>scm:git:github.com:sttc/java-sdk.git</connection>
+        <developerConnection>scm:git:github.com:sttc/java-sdk.git</developerConnection>
+        <url>https://github.com/sttc/java-sdk</url>
+    </scm>
+    <distributionManagement>
+        <site>
+            <id>gh-pages</id>
+            <url>http://java-sdk.stateful.co/</url>
+        </site>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
