@@ -34,7 +34,7 @@
     </skin>
     <bannerLeft>
         <name>stateful</name>
-        <src>http://img.stateful.co/logo-128x128.png</src>
+        <src>http://img.stateful.co/pomegranate.svg</src>
         <href>http://java-sdk.stateful.co</href>
         <width>64</width>
         <height>64</height>
@@ -42,7 +42,7 @@
     <googleAnalyticsAccountId>UA-1963507-35</googleAnalyticsAccountId>
     <body>
         <head>
-            <link href="http://img.stateful.co/logo-128x128.png" rel="shortcut icon"/>
+            <link href="http://img.stateful.co/favicon.ico" rel="shortcut icon"/>
         </head>
         <breadcrumbs>
             <item name="java-sdk" href="http://java-sdk.stateful.co"/>
