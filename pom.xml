@@ -37,7 +37,7 @@
     </parent>
     <groupId>co.stateful</groupId>
     <artifactId>java-sdk</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
     <packaging>jar</packaging>
     <name>java-sdk</name>
     <description>Stateful Web Primitives</description>
