@@ -76,19 +76,19 @@
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      @Test
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> locksAndUnlocks() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">final</strong> Sttc sttc = <strong class="jxr_keyword">this</strong>.srule.get();
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">final</strong> Locks locks = sttc.locks();
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">final</strong> String name = String.format(
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>              <span class="jxr_string">"test-%s"</span>, RtLocksITCase.RANDOM.nextInt(Integer.MAX_VALUE)
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          );
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          <strong class="jxr_keyword">final</strong> AtomicInteger sum = <strong class="jxr_keyword">new</strong> AtomicInteger();
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">final</strong> Collection&lt;Integer&gt; deltas = <strong class="jxr_keyword">new</strong> CopyOnWriteArrayList&lt;Integer&gt;();
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <em class="jxr_comment">// @checkstyle AnonInnerLengthCheck (50 lines)</em>
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <strong class="jxr_keyword">new</strong> Callable&lt;Void&gt;() {
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>              @Override
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>              @Parallel(threads = Tv.FIVE)
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">public</strong> Void call() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>                  locks.call(
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>                      name,
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">final</strong> Lock lock = sttc.locks().get(
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>              String.format(
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>                  <span class="jxr_string">"test-%s"</span>, RtLocksITCase.RANDOM.nextInt(Integer.MAX_VALUE)
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>              )
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          );
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">final</strong> AtomicInteger sum = <strong class="jxr_keyword">new</strong> AtomicInteger();
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">final</strong> Collection&lt;Integer&gt; deltas = <strong class="jxr_keyword">new</strong> CopyOnWriteArrayList&lt;Integer&gt;();
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <em class="jxr_comment">// @checkstyle AnonInnerLengthCheck (50 lines)</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          <strong class="jxr_keyword">new</strong> Callable&lt;Void&gt;() {
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>              @Override
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>              @Parallel(threads = Tv.FIVE)
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>              <strong class="jxr_keyword">public</strong> Void call() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>                  lock.call(
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>                      <strong class="jxr_keyword">new</strong> Callable&lt;Void&gt;() {
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>                          @Override
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>                          <strong class="jxr_keyword">public</strong> Void call() <strong class="jxr_keyword">throws</strong> Exception {
