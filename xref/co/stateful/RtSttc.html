@@ -110,7 +110,19 @@
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>                 .rel(<span class="jxr_string">"/page/links/link[@rel='menu:counters']/@href"</span>)
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>         );
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>     }
-<a class="jxr_linenumber" name="L105" href="#L105">105</a> }
+<a class="jxr_linenumber" name="L105" href="#L105">105</a> 
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>     @Override
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">public</strong> <a href="../../co/stateful/Locks.html">Locks</a> locks() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../co/stateful/RtLocks.html">RtLocks</a>(
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>             <strong class="jxr_keyword">this</strong>.request
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 .fetch()
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>                 .as(RestResponse.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>                 .assertStatus(HttpURLConnection.HTTP_OK)
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 .as(XmlResponse.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>                 .rel(<span class="jxr_string">"/page/links/link[@rel='menu:locks']/@href"</span>)
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         );
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>     }
+<a class="jxr_linenumber" name="L117" href="#L117">117</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2014 <a href="http://www.stateful.co">stateful.co</a>. All rights reserved.</div>
