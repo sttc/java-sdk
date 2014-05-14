@@ -27,37 +27,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful.mock;
+package co.stateful;
 
-import co.stateful.Counters;
-import co.stateful.Locks;
-import co.stateful.Sttc;
 import com.jcabi.aspects.Immutable;
-import com.jcabi.aspects.Loggable;
-import java.io.IOException;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.util.concurrent.Callable;
 
 /**
- * Mock.
+ * Locks.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
 @Immutable
-@Loggable(Loggable.DEBUG)
-@ToString
-@EqualsAndHashCode
-public final class MkSttc implements Sttc {
+public interface Locks {
 
-    @Override
-    public Counters counters() throws IOException {
-        return new MkCounters();
-    }
+    /**
+     * Call in a synchronized manner.
+     * @param name Name of lock
+     * @param callable Callable to execute
+     * @return Value
+     * @param <T> Type of result
+     * @throws Exception If any problem inside
+     */
+    <T> T call(String name, Callable<T> callable) throws Exception;
 
-    @Override
-    public Locks locks() throws IOException {
-        return new MkLocks();
-    }
 }

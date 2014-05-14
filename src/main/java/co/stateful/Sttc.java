@@ -49,4 +49,11 @@ public interface Sttc {
      */
     Counters counters() throws IOException;
 
+    /**
+     * Locks.
+     * @return Locks
+     * @throws IOException If some I/O problem
+     */
+    Locks locks() throws IOException;
+
 }

@@ -29,35 +29,29 @@
  */
 package co.stateful.mock;
 
-import co.stateful.Counters;
 import co.stateful.Locks;
-import co.stateful.Sttc;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import java.io.IOException;
+import java.util.concurrent.Callable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock.
+ * Mock locks.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode
-public final class MkSttc implements Sttc {
+final class MkLocks implements Locks {
 
     @Override
-    public Counters counters() throws IOException {
-        return new MkCounters();
-    }
-
-    @Override
-    public Locks locks() throws IOException {
-        return new MkLocks();
+    public <T> T call(final String name, final Callable<T> callable)
+        throws Exception {
+        return callable.call();
     }
 }

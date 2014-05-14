@@ -52,7 +52,7 @@ import lombok.ToString;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = { "srequest", "irequest" })
-public final class RtCounter implements Counter {
+final class RtCounter implements Counter {
 
     /**
      * Set request.

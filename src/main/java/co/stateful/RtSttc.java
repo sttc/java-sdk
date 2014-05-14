@@ -102,4 +102,16 @@ public final class RtSttc implements Sttc {
                 .rel("/page/links/link[@rel='menu:counters']/@href")
         );
     }
+
+    @Override
+    public Locks locks() throws IOException {
+        return new RtLocks(
+            this.request
+                .fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(XmlResponse.class)
+                .rel("/page/links/link[@rel='menu:locks']/@href")
+        );
+    }
 }

@@ -27,37 +27,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful.mock;
+package co.stateful;
 
-import co.stateful.Counters;
-import co.stateful.Locks;
-import co.stateful.Sttc;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import java.io.IOException;
+import com.jcabi.http.Request;
+import java.util.concurrent.Callable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Mock.
+ * Locks.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.2
+ * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString
-@EqualsAndHashCode
-public final class MkSttc implements Sttc {
+@EqualsAndHashCode(of = "request")
+public final class RtLocks implements Locks {
 
-    @Override
-    public Counters counters() throws IOException {
-        return new MkCounters();
+    /**
+     * Entry request.
+     */
+    private final transient Request request;
+
+    /**
+     * Ctor.
+     * @param req Request
+     */
+    public RtLocks(final Request req) {
+        this.request = req;
     }
 
     @Override
-    public Locks locks() throws IOException {
-        return new MkLocks();
+    public <T> T call(final String name, final Callable<T> callable)
+        throws Exception {
+        return callable.call();
     }
 }
