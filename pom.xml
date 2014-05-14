@@ -116,11 +116,19 @@
         </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-manifests</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jcabi</groupId>
             <artifactId>jcabi-xml</artifactId>
         </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
             <artifactId>jcabi-urn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
@@ -143,9 +151,25 @@
             <artifactId>hamcrest-core</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration combine.children="append">
+                    <archive>
+                        <manifestEntries>
+                            <Sttc-Version>${project.version}</Sttc-Version>
+                            <Sttc-Build>${buildNumber}</Sttc-Build>
+                            <Sttc-Date>${maven.build.timestamp}</Sttc-Date>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>

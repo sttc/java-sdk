@@ -35,6 +35,7 @@ import com.jcabi.aspects.Tv;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
+import com.jcabi.manifests.Manifests;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.Date;
@@ -92,7 +93,9 @@ public final class RtLocks implements Locks {
      */
     private boolean lock(final String name) throws IOException {
         final String label = String.format(
-            "co.stateful/java-sdk %s %s %s %s",
+            "co.stateful/java-sdk %s/%s; %s; Java %s; %s %s",
+            Manifests.read("Sttc-Version"),
+            Manifests.read("Sttc-Revision"),
             DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()),
             System.getProperty("java.version"),
             System.getProperty("os.name"),
