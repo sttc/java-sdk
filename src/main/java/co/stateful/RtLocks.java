@@ -31,10 +31,18 @@ package co.stateful;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import com.jcabi.aspects.Tv;
 import com.jcabi.http.Request;
+import com.jcabi.http.response.RestResponse;
+import com.jcabi.http.response.XmlResponse;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.Date;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * Locks.
@@ -66,6 +74,57 @@ public final class RtLocks implements Locks {
     @Override
     public <T> T call(final String name, final Callable<T> callable)
         throws Exception {
-        return callable.call();
+        while (!this.lock(name)) {
+            TimeUnit.MILLISECONDS.sleep((long) Tv.HUNDRED);
+        }
+        try {
+            return callable.call();
+        } finally {
+            this.unlock(name);
+        }
     }
+
+    /**
+     * Lock.
+     * @param name Name of the lock
+     * @return TRUE if locked
+     * @throws IOException If fails
+     */
+    private boolean lock(final String name) throws IOException {
+        final String label = String.format(
+            "co.stateful/java-sdk %s %s %s %s",
+            DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()),
+            System.getProperty("java.version"),
+            System.getProperty("os.name"),
+            System.getProperty("os.version")
+        );
+        return this.request.fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(XmlResponse.class)
+            .rel("/page/links/link[@rel='lock']/@href")
+            .method(Request.POST)
+            .body().formParam("name", name).formParam("label", label).back()
+            .fetch()
+            .status() == HttpURLConnection.HTTP_SEE_OTHER;
+    }
+
+    /**
+     * UnLock.
+     * @param name Name of the lock
+     * @throws IOException If fails
+     */
+    private void unlock(final String name) throws IOException {
+        this.request.fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(XmlResponse.class)
+            .rel("/page/links/link[@rel='unlock']/@href")
+            .method(Request.GET)
+            .uri().queryParam("name", name).back()
+            .fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+    }
+
 }
