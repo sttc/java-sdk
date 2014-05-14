@@ -40,6 +40,7 @@ import java.util.concurrent.Callable;
  * @since 0.3
  */
 @Immutable
+@SuppressWarnings("PMD.DoNotUseThreads")
 public interface Lock {
 
     /**
@@ -50,5 +51,69 @@ public interface Lock {
      * @throws Exception If any problem inside
      */
     <T> T call(Callable<T> callable) throws Exception;
+
+    /**
+     * Quiet.
+     * @since 0.3
+     */
+    @Immutable
+    final class Quiet {
+        /**
+         * Original lock.
+         */
+        private final transient Lock lock;
+        /**
+         * Ctor.
+         * @param lck Lock
+         */
+        public Quiet(final Lock lck) {
+            this.lock = lck;
+        }
+        /**
+         * Call this callable code.
+         * @param callable Code to call
+         * @param <T> Type of result
+         * @return Result
+         */
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        public <T> T call(final Callable<T> callable) {
+            final T result;
+            try {
+                result = this.lock.call(callable);
+                // @checkstyle IllegalCatchCheck (1 line)
+            } catch (final Exception ex) {
+                throw new IllegalStateException(ex);
+            }
+            return result;
+        }
+        /**
+         * Run this code.
+         * @param runnable Runnable code
+         */
+        public void run(final Runnable runnable) {
+            this.call(new Lock.Quiet.Wrap(runnable));
+        }
+        /**
+         * Wrapper of runnable.
+         */
+        private static final class Wrap implements Callable<Void> {
+            /**
+             * Original runnable.
+             */
+            private final transient Runnable runnable;
+            /**
+             * Ctor.
+             * @param rnbl Original
+             */
+            private Wrap(final Runnable rnbl) {
+                this.runnable = rnbl;
+            }
+            @Override
+            public Void call() throws Exception {
+                this.runnable.run();
+                return null;
+            }
+        }
+    }
 
 }
