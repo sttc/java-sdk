@@ -38,7 +38,9 @@ import com.jcabi.http.response.XmlResponse;
 import com.jcabi.manifests.Manifests;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.security.SecureRandom;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
@@ -60,6 +62,11 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 public final class RtLocks implements Locks {
 
     /**
+     * Random.
+     */
+    private static final Random RANDOM = new SecureRandom();
+
+    /**
      * Entry request.
      */
     private final transient Request request;
@@ -76,7 +83,10 @@ public final class RtLocks implements Locks {
     public <T> T call(final String name, final Callable<T> callable)
         throws Exception {
         while (!this.lock(name)) {
-            TimeUnit.MILLISECONDS.sleep((long) Tv.HUNDRED);
+            TimeUnit.MILLISECONDS.sleep(
+                (long) Tv.HUNDRED
+                + (long) RtLocks.RANDOM.nextInt(Tv.HUNDRED)
+            );
         }
         try {
             return callable.call();

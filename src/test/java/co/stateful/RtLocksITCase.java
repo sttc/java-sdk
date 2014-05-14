@@ -77,7 +77,7 @@ public final class RtLocksITCase {
         // @checkstyle AnonInnerLengthCheck (50 lines)
         new Callable<Void>() {
             @Override
-            @Parallel(threads = Tv.TWENTY)
+            @Parallel(threads = Tv.FIVE)
             public Void call() throws Exception {
                 locks.call(
                     name,
