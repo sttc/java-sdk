@@ -1,3 +1,5 @@
+<img src="http://img.stateful.co/pomegranate.svg" width="64px" height="64px"/>
+
 [![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
 
 Java SDK of Stateful.co
@@ -27,12 +29,27 @@ public class Main {
 }
 ```
 
+Here is how you can use a lock:
+
+```java
+Locks locks = sttc.locks();
+Lock lock = locks.get("test-lock");
+new Lock.Quiet(lock).run(
+  new Runnable() {
+    @Override
+    public void run() {
+      // perfectly synchronized code
+    }
+  }
+);
+```
+
 The only dependency you need is this:
 
 ```xml
 <dependency>
   <groupId>co.stateful</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>0.1</version>
+  <version>0.4</version>
 </dependency>
 ```
