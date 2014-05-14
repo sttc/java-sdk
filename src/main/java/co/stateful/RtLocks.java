@@ -59,7 +59,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = "request")
-public final class RtLocks implements Locks {
+final class RtLocks implements Locks {
 
     /**
      * Random.
