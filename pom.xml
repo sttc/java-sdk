@@ -173,7 +173,6 @@
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
-                    <parallel>none</parallel>
                     <systemPropertyVariables>
                         <sttc.urn>${sttc.urn}</sttc.urn>
                         <sttc.token>${sttc.token}</sttc.token>

@@ -27,27 +27,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful;
+package co.stateful.mock;
 
+import co.stateful.Lock;
 import com.jcabi.aspects.Immutable;
-import java.io.IOException;
+import com.jcabi.aspects.Loggable;
+import java.util.concurrent.Callable;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Locks.
+ * Mock lock.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
  */
 @Immutable
-public interface Locks {
+@Loggable(Loggable.DEBUG)
+@ToString
+@EqualsAndHashCode
+final class MkLock implements Lock {
 
-    /**
-     * Get one lock by name.
-     * @param name Name of lock
-     * @return Lock
-     * @throws IOException If fails
-     */
-    Lock get(String name) throws IOException;
-
+    @Override
+    public <T> T call(final Callable<T> callable) throws Exception {
+        return callable.call();
+    }
 }

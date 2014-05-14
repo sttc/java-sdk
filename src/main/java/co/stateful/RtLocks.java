@@ -31,21 +31,10 @@ package co.stateful;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.http.Request;
-import com.jcabi.http.response.RestResponse;
-import com.jcabi.http.response.XmlResponse;
-import com.jcabi.manifests.Manifests;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.security.SecureRandom;
-import java.util.Date;
-import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * Locks.
@@ -62,11 +51,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 final class RtLocks implements Locks {
 
     /**
-     * Random.
-     */
-    private static final Random RANDOM = new SecureRandom();
-
-    /**
      * Entry request.
      */
     private final transient Request request;
@@ -75,69 +59,13 @@ final class RtLocks implements Locks {
      * Ctor.
      * @param req Request
      */
-    public RtLocks(final Request req) {
+    RtLocks(final Request req) {
         this.request = req;
     }
 
     @Override
-    public <T> T call(final String name, final Callable<T> callable)
-        throws Exception {
-        while (!this.lock(name)) {
-            TimeUnit.MILLISECONDS.sleep(
-                (long) Tv.HUNDRED
-                + (long) RtLocks.RANDOM.nextInt(Tv.HUNDRED)
-            );
-        }
-        try {
-            return callable.call();
-        } finally {
-            this.unlock(name);
-        }
-    }
-
-    /**
-     * Lock.
-     * @param name Name of the lock
-     * @return TRUE if locked
-     * @throws IOException If fails
-     */
-    private boolean lock(final String name) throws IOException {
-        final String label = String.format(
-            "co.stateful/java-sdk %s/%s; %s; Java %s; %s %s",
-            Manifests.read("Sttc-Version"),
-            Manifests.read("Sttc-Revision"),
-            DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()),
-            System.getProperty("java.version"),
-            System.getProperty("os.name"),
-            System.getProperty("os.version")
-        );
-        return this.request.fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(XmlResponse.class)
-            .rel("/page/links/link[@rel='lock']/@href")
-            .method(Request.POST)
-            .body().formParam("name", name).formParam("label", label).back()
-            .fetch()
-            .status() == HttpURLConnection.HTTP_SEE_OTHER;
-    }
-
-    /**
-     * UnLock.
-     * @param name Name of the lock
-     * @throws IOException If fails
-     */
-    private void unlock(final String name) throws IOException {
-        this.request.fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(XmlResponse.class)
-            .rel("/page/links/link[@rel='unlock']/@href")
-            .method(Request.GET)
-            .uri().queryParam("name", name).back()
-            .fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+    public Lock get(final String name) throws IOException {
+        return new RtLock(this.request, name);
     }
 
 }

@@ -68,9 +68,10 @@ public final class RtLocksITCase {
     @Test
     public void locksAndUnlocks() throws Exception {
         final Sttc sttc = this.srule.get();
-        final Locks locks = sttc.locks();
-        final String name = String.format(
-            "test-%s", RtLocksITCase.RANDOM.nextInt(Integer.MAX_VALUE)
+        final Lock lock = sttc.locks().get(
+            String.format(
+                "test-%s", RtLocksITCase.RANDOM.nextInt(Integer.MAX_VALUE)
+            )
         );
         final AtomicInteger sum = new AtomicInteger();
         final Collection<Integer> deltas = new CopyOnWriteArrayList<Integer>();
@@ -79,8 +80,7 @@ public final class RtLocksITCase {
             @Override
             @Parallel(threads = Tv.FIVE)
             public Void call() throws Exception {
-                locks.call(
-                    name,
+                lock.call(
                     new Callable<Void>() {
                         @Override
                         public Void call() throws Exception {

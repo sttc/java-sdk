@@ -29,10 +29,10 @@
  */
 package co.stateful.mock;
 
+import co.stateful.Lock;
 import co.stateful.Locks;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import java.util.concurrent.Callable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -50,8 +50,8 @@ import lombok.ToString;
 final class MkLocks implements Locks {
 
     @Override
-    public <T> T call(final String name, final Callable<T> callable)
-        throws Exception {
-        return callable.call();
+    public Lock get(final String name) {
+        return new MkLock();
     }
+
 }

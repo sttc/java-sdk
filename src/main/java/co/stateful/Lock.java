@@ -30,24 +30,25 @@
 package co.stateful;
 
 import com.jcabi.aspects.Immutable;
-import java.io.IOException;
+import java.util.concurrent.Callable;
 
 /**
- * Locks.
+ * Lock.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.2
+ * @since 0.3
  */
 @Immutable
-public interface Locks {
+public interface Lock {
 
     /**
-     * Get one lock by name.
-     * @param name Name of lock
-     * @return Lock
-     * @throws IOException If fails
+     * Call in a synchronized manner.
+     * @param callable Callable to execute
+     * @return Value
+     * @param <T> Type of result
+     * @throws Exception If any problem inside
      */
-    Lock get(String name) throws IOException;
+    <T> T call(Callable<T> callable) throws Exception;
 
 }
