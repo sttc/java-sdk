@@ -164,7 +164,7 @@
                     <archive>
                         <manifestEntries>
                             <Sttc-Version>${project.version}</Sttc-Version>
-                            <Sttc-Build>${buildNumber}</Sttc-Build>
+                            <Sttc-Revision>${buildNumber}</Sttc-Revision>
                             <Sttc-Date>${maven.build.timestamp}</Sttc-Date>
                         </manifestEntries>
                     </archive>
