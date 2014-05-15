@@ -27,51 +27,51 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful;
+package co.stateful.retry;
 
-import co.stateful.retry.ReSttc;
-import com.jcabi.urn.URN;
-import org.junit.Assume;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
+import co.stateful.Counter;
+import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Loggable;
+import com.jcabi.aspects.RetryOnFailure;
+import java.io.IOException;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Sttc test rule.
+ * Retriable counter.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.5
  */
-public final class SttcRule implements TestRule {
+@Immutable
+@Loggable(Loggable.DEBUG)
+@ToString
+@EqualsAndHashCode(of = "origin")
+public final class ReCounter implements Counter {
 
     /**
-     * URN of stateful.co.
+     * Original object.
      */
-    private static final String USER = System.getProperty("sttc.urn");
+    private final transient Counter origin;
 
     /**
-     * Token of stateful.co.
+     * Ctor.
+     * @param orgn Original object
      */
-    private static final String TOKEN = System.getProperty("sttc.token");
+    public ReCounter(final Counter orgn) {
+        this.origin = orgn;
+    }
 
     @Override
-    public Statement apply(final Statement base,
-        final Description description) {
-        return base;
+    @RetryOnFailure(verbose = false)
+    public void set(final long value) throws IOException {
+        this.origin.set(value);
     }
 
-    /**
-     * Get Sttc.
-     * @return Sttc
-     */
-    public Sttc get() {
-        Assume.assumeNotNull(SttcRule.USER);
-        return new ReSttc(
-            new RtSttc(
-                URN.create(SttcRule.USER),
-                SttcRule.TOKEN
-            )
-        );
+    @Override
+    @RetryOnFailure(verbose = false)
+    public long incrementAndGet(final long delta) throws IOException {
+        return this.origin.incrementAndGet(delta);
     }
-
 }
