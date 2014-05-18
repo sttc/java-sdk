@@ -75,26 +75,27 @@ public final class RtLocksITCase {
         );
         final AtomicInteger sum = new AtomicInteger();
         final Collection<Integer> deltas = new CopyOnWriteArrayList<Integer>();
-        // @checkstyle AnonInnerLengthCheck (50 lines)
+        final Callable<Void> atomic = new Atomic<Void>(
+            new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    final int start = sum.get();
+                    final int delta = RtLocksITCase.RANDOM.nextInt();
+                    TimeUnit.MILLISECONDS.sleep(
+                        (long) RtLocksITCase.RANDOM.nextInt(Tv.THOUSAND)
+                    );
+                    sum.set(start + delta);
+                    deltas.add(delta);
+                    return null;
+                }
+            },
+            lock
+        );
         new Callable<Void>() {
             @Override
             @Parallel(threads = Tv.FIVE)
             public Void call() throws Exception {
-                lock.call(
-                    new Callable<Void>() {
-                        @Override
-                        public Void call() throws Exception {
-                            final int start = sum.get();
-                            final int delta = RtLocksITCase.RANDOM.nextInt();
-                            TimeUnit.MILLISECONDS.sleep(
-                                (long) RtLocksITCase.RANDOM.nextInt(Tv.THOUSAND)
-                            );
-                            sum.set(start + delta);
-                            deltas.add(delta);
-                            return null;
-                        }
-                    }
-                );
+                atomic.call();
                 return null;
             }
         } .call();

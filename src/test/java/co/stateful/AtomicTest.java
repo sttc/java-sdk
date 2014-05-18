@@ -29,32 +29,38 @@
  */
 package co.stateful;
 
-import com.jcabi.aspects.Immutable;
-import java.io.IOException;
+import co.stateful.mock.MkSttc;
+import java.util.concurrent.Callable;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Lock.
- *
+ * Test case for {@link Atomic}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.3
+ * @since 0.6
  */
-@Immutable
-public interface Lock {
+public final class AtomicTest {
 
     /**
-     * Lock.
-     * @return TRUE if success, FALSE otherwise
-     * @throws IOException If any problem inside
-     * @since 0.6
+     * Atomic can run callable.
+     * @throws Exception If some problem inside
      */
-    boolean lock() throws IOException;
-
-    /**
-     * Unlock.
-     * @throws IOException If any problem inside
-     * @since 0.6
-     */
-    void unlock() throws IOException;
+    @Test
+    public void runsCallable() throws Exception {
+        MatcherAssert.assertThat(
+            new Atomic<String>(
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        return "hello, world";
+                    }
+                },
+                new MkSttc().locks().get("test")
+            ).call(),
+            Matchers.containsString("hello")
+        );
+    }
 
 }

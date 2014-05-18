@@ -47,6 +47,10 @@ import lombok.ToString;
 /**
  * Stateful Entry Point.
  *
+ * <p>It is highly recommended to use
+ * {@link co.stateful.retry.ReSttc} decorator, in production
+ * environment.</p>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1

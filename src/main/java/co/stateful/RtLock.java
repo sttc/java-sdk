@@ -31,18 +31,13 @@ package co.stateful;
 
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
 import com.jcabi.manifests.Manifests;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.security.SecureRandom;
 import java.util.Date;
-import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -60,11 +55,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 @ToString
 @EqualsAndHashCode(of = { "lrequest", "urequest" })
 final class RtLock implements Lock {
-
-    /**
-     * Random.
-     */
-    private static final Random RANDOM = new SecureRandom();
 
     /**
      * Lock request.
@@ -96,26 +86,7 @@ final class RtLock implements Lock {
     }
 
     @Override
-    public <T> T call(final Callable<T> callable) throws Exception {
-        while (!this.lock()) {
-            TimeUnit.MILLISECONDS.sleep(
-                (long) Tv.HUNDRED
-                    + (long) RtLock.RANDOM.nextInt(Tv.HUNDRED)
-            );
-        }
-        try {
-            return callable.call();
-        } finally {
-            this.unlock();
-        }
-    }
-
-    /**
-     * Lock.
-     * @return TRUE if locked
-     * @throws IOException If fails
-     */
-    private boolean lock() throws IOException {
+    public boolean lock() throws IOException {
         final String label = String.format(
             "co.stateful/java-sdk %s/%s; %s; Java %s; %s %s",
             Manifests.read("Sttc-Version"),
@@ -131,11 +102,8 @@ final class RtLock implements Lock {
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
     }
 
-    /**
-     * UnLock.
-     * @throws IOException If fails
-     */
-    private void unlock() throws IOException {
+    @Override
+    public void unlock() throws IOException {
         this.urequest
             .fetch()
             .as(RestResponse.class)

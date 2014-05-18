@@ -32,7 +32,8 @@ package co.stateful.retry;
 import co.stateful.Lock;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import java.util.concurrent.Callable;
+import com.jcabi.aspects.RetryOnFailure;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -63,7 +64,14 @@ public final class ReLock implements Lock {
     }
 
     @Override
-    public <T> T call(final Callable<T> callable) throws Exception {
-        return this.origin.call(callable);
+    @RetryOnFailure(verbose = false)
+    public boolean lock() throws IOException {
+        return this.origin.lock();
+    }
+
+    @Override
+    @RetryOnFailure(verbose = false)
+    public void unlock() throws IOException {
+        this.origin.unlock();
     }
 }

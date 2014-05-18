@@ -32,7 +32,6 @@ package co.stateful.mock;
 import co.stateful.Lock;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import java.util.concurrent.Callable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -50,7 +49,12 @@ import lombok.ToString;
 final class MkLock implements Lock {
 
     @Override
-    public <T> T call(final Callable<T> callable) throws Exception {
-        return callable.call();
+    public boolean lock() {
+        return true;
+    }
+
+    @Override
+    public void unlock() {
+        // nothing to do here
     }
 }
