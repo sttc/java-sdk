@@ -51,6 +51,10 @@ import lombok.ToString;
  * {@link co.stateful.retry.ReSttc} decorator, in production
  * environment.</p>
  *
+ * <p>It is also highly recommended to use
+ * {@link co.stateful.cached.CdSttc} decorator, in production
+ * environment.</p>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1

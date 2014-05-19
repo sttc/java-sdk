@@ -27,54 +27,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful;
+package co.stateful.cached;
 
-import co.stateful.cached.CdSttc;
-import co.stateful.retry.ReSttc;
-import com.jcabi.urn.URN;
-import org.junit.Assume;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
+import co.stateful.Lock;
+import co.stateful.Locks;
+import com.jcabi.aspects.Cacheable;
+import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Loggable;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Sttc test rule.
+ * Cached locks.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.7
  */
-public final class SttcRule implements TestRule {
+@Immutable
+@Loggable(Loggable.DEBUG)
+@ToString
+@EqualsAndHashCode(of = "origin")
+public final class CdLocks implements Locks {
 
     /**
-     * URN of stateful.co.
+     * Original object.
      */
-    private static final String USER = System.getProperty("sttc.urn");
+    private final transient Locks origin;
 
     /**
-     * Token of stateful.co.
+     * Ctor.
+     * @param orgn Original object
      */
-    private static final String TOKEN = System.getProperty("sttc.token");
+    public CdLocks(final Locks orgn) {
+        this.origin = orgn;
+    }
 
     @Override
-    public Statement apply(final Statement base,
-        final Description description) {
-        return base;
+    @Cacheable(lifetime = 1, unit = TimeUnit.HOURS)
+    public Lock get(final String name) throws IOException {
+        return this.origin.get(name);
     }
-
-    /**
-     * Get Sttc.
-     * @return Sttc
-     */
-    public Sttc get() {
-        Assume.assumeNotNull(SttcRule.USER);
-        return new ReSttc(
-            new CdSttc(
-                new RtSttc(
-                    URN.create(SttcRule.USER),
-                    SttcRule.TOKEN
-                )
-            )
-        );
-    }
-
 }

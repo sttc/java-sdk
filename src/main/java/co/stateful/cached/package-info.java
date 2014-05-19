@@ -27,54 +27,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package co.stateful;
-
-import co.stateful.cached.CdSttc;
-import co.stateful.retry.ReSttc;
-import com.jcabi.urn.URN;
-import org.junit.Assume;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
- * Sttc test rule.
+ * Cached SDK interfaces (highly recommended to use in production).
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
- * @since 0.1
+ * @since 0.7
  */
-public final class SttcRule implements TestRule {
-
-    /**
-     * URN of stateful.co.
-     */
-    private static final String USER = System.getProperty("sttc.urn");
-
-    /**
-     * Token of stateful.co.
-     */
-    private static final String TOKEN = System.getProperty("sttc.token");
-
-    @Override
-    public Statement apply(final Statement base,
-        final Description description) {
-        return base;
-    }
-
-    /**
-     * Get Sttc.
-     * @return Sttc
-     */
-    public Sttc get() {
-        Assume.assumeNotNull(SttcRule.USER);
-        return new ReSttc(
-            new CdSttc(
-                new RtSttc(
-                    URN.create(SttcRule.USER),
-                    SttcRule.TOKEN
-                )
-            )
-        );
-    }
-
-}
+package co.stateful.cached;
