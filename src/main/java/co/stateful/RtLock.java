@@ -33,7 +33,6 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
-import com.jcabi.http.response.XmlResponse;
 import com.jcabi.manifests.Manifests;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -68,21 +67,12 @@ final class RtLock implements Lock {
 
     /**
      * Ctor.
-     * @param req Request
-     * @param name Name of the lock
-     * @throws IOException If fails
+     * @param lreq Lock request
+     * @param ureq Unlock request
      */
-    RtLock(final Request req, final String name) throws IOException {
-        final XmlResponse rsp = req.fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(XmlResponse.class);
-        this.lrequest = rsp.rel("/page/links/link[@rel='lock']/@href")
-            .method(Request.POST)
-            .body().formParam("name", name).back();
-        this.urequest = rsp.rel("/page/links/link[@rel='unlock']/@href")
-            .method(Request.GET)
-            .uri().queryParam("name", name).back();
+    RtLock(final Request lreq, final Request ureq) {
+        this.lrequest = lreq;
+        this.urequest = ureq;
     }
 
     @Override

@@ -32,7 +32,10 @@ package co.stateful;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
+import com.jcabi.http.response.RestResponse;
+import com.jcabi.http.response.XmlResponse;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -47,25 +50,36 @@ import lombok.ToString;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString
-@EqualsAndHashCode(of = "request")
+@EqualsAndHashCode(of = "response")
 final class RtLocks implements Locks {
 
     /**
-     * Entry request.
+     * Entry response.
      */
-    private final transient Request request;
+    private final transient XmlResponse response;
 
     /**
      * Ctor.
      * @param req Request
+     * @throws IOException If fails
      */
-    RtLocks(final Request req) {
-        this.request = req;
+    RtLocks(final Request req) throws IOException {
+        this.response = req.fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(XmlResponse.class);
     }
 
     @Override
-    public Lock get(final String name) throws IOException {
-        return new RtLock(this.request, name);
+    public Lock get(final String name) {
+        return new RtLock(
+            this.response.rel("/page/links/link[@rel='lock']/@href")
+                .method(Request.POST)
+                .body().formParam("name", name).back(),
+            this.response.rel("/page/links/link[@rel='unlock']/@href")
+                .method(Request.GET)
+                .uri().queryParam("name", name).back()
+        );
     }
 
 }
