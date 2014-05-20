@@ -34,11 +34,12 @@ Here is how you can use a lock:
 ```java
 Locks locks = sttc.locks();
 Lock lock = locks.get("test-lock");
-new Lock.Quiet(lock).run(
-  new Runnable() {
+new Atomic(lock).call(
+  new Callable<Void>() {
     @Override
-    public void run() {
+    public void call() {
       // perfectly synchronized code
+      return null;
     }
   }
 );
@@ -50,6 +51,6 @@ The only dependency you need is this:
 <dependency>
   <groupId>co.stateful</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>0.4</version>
+  <version>0.7.1</version>
 </dependency>
 ```
