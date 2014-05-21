@@ -1,6 +1,7 @@
 <img src="http://img.stateful.co/pomegranate.svg" width="64px" height="64px"/>
 
 [![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
 
 Java SDK of Stateful.co
 
