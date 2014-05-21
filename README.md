@@ -46,12 +46,3 @@ new Atomic(lock).call(
 );
 ```
 
-The only dependency you need is this:
-
-```xml
-<dependency>
-  <groupId>co.stateful</groupId>
-  <artifactId>java-sdk</artifactId>
-  <version>0.7.1</version>
-</dependency>
-```
