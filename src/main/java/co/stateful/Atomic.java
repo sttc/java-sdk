@@ -31,6 +31,7 @@ package co.stateful;
 
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.Tv;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -96,7 +97,19 @@ public final class Atomic<T> implements Callable<T> {
     }
 
     @Override
+    @SuppressWarnings("PMD.DoNotUseThreads")
     public T call() throws Exception {
+        final Thread hook = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Atomic.this.lock.unlock();
+                } catch (final IOException ex) {
+                    throw new IllegalStateException(ex);
+                }
+            }
+        };
+        Runtime.getRuntime().addShutdownHook(hook);
         while (!this.lock.lock()) {
             TimeUnit.MILLISECONDS.sleep(
                 (long) Tv.HUNDRED + (long) Atomic.RANDOM.nextInt(Tv.HUNDRED)
@@ -106,6 +119,7 @@ public final class Atomic<T> implements Callable<T> {
             return this.callable.call();
         } finally {
             this.lock.unlock();
+            Runtime.getRuntime().removeShutdownHook(hook);
         }
     }
 
