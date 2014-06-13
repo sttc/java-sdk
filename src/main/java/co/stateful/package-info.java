@@ -31,6 +31,26 @@
 /**
  * Stateful.co SDK.
  *
+ * First, read the documentation at
+ * <a href="http://java-sdk.stateful.co"></a>java-sdk.stateful.co</a>. Then,
+ * register an account at <a href="http://www.stateful.co">stateful.co</a>.
+ * Then, you can try to use, for example, counters:
+ *
+ * <pre>public class Main {
+ *   public static void main(String... args) {
+ *     Sttc sttc = new RtSttc(
+ *       new URN("urn:github:526301"),
+ *       "9FF3-41E0-73FB-F900"
+ *     );
+ *     String name = "test-123";
+ *     Counters counters = sttc.counters();
+ *     Counter counter = counters.create(name);
+ *     long value = counter.incrementAndGet(1L);
+ *     System.out.println("new value: " + value);
+ *     counters.delete(name);
+ *   }
+ * }</pre>
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
