@@ -69,7 +69,7 @@ final class RtCounter implements Counter {
      * @param sreq SET request
      * @param ireq INC request
      */
-    public RtCounter(final Request sreq, final Request ireq) {
+    RtCounter(final Request sreq, final Request ireq) {
         this.srequest = sreq;
         this.irequest = ireq;
     }

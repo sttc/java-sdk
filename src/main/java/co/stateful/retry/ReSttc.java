@@ -48,7 +48,7 @@ import lombok.ToString;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@ToString
+@ToString(includeFieldNames = false)
 @EqualsAndHashCode(of = "origin")
 public final class ReSttc implements Sttc {
 

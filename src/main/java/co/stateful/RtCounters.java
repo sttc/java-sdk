@@ -62,7 +62,7 @@ final class RtCounters implements Counters {
      * Ctor.
      * @param req Request
      */
-    public RtCounters(final Request req) {
+    RtCounters(final Request req) {
         this.request = req;
     }
 

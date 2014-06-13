@@ -61,7 +61,7 @@ import lombok.ToString;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@ToString
+@ToString(of = { })
 @EqualsAndHashCode(of = "request")
 public final class RtSttc implements Sttc {
 
