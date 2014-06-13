@@ -51,9 +51,14 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@ToString
+@ToString(of = "label", includeFieldNames = false)
 @EqualsAndHashCode(of = { "lrequest", "urequest" })
 final class RtLock implements Lock {
+
+    /**
+     * Its name.
+     */
+    private final transient String label;
 
     /**
      * Lock request.
@@ -67,17 +72,24 @@ final class RtLock implements Lock {
 
     /**
      * Ctor.
+     * @param name Name of it
      * @param lreq Lock request
      * @param ureq Unlock request
      */
-    RtLock(final Request lreq, final Request ureq) {
+    RtLock(final String name, final Request lreq, final Request ureq) {
+        this.label = name;
         this.lrequest = lreq;
         this.urequest = ureq;
     }
 
     @Override
+    public String name() {
+        return this.label;
+    }
+
+    @Override
     public boolean lock() throws IOException {
-        final String label = String.format(
+        final String marker = String.format(
             "co.stateful/java-sdk %s/%s; %s; Java %s; %s %s",
             Manifests.read("Sttc-Version"),
             Manifests.read("Sttc-Revision"),
@@ -87,7 +99,7 @@ final class RtLock implements Lock {
             System.getProperty("os.version")
         );
         return this.lrequest
-            .body().formParam("label", label).back()
+            .body().formParam("label", marker).back()
             .fetch()
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
     }

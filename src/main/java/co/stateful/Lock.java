@@ -43,6 +43,13 @@ import java.io.IOException;
 public interface Lock {
 
     /**
+     * Its name.
+     * @return Name of this lock
+     * @since 0.8
+     */
+    String name();
+
+    /**
      * Lock.
      * @return TRUE if success, FALSE otherwise
      * @throws IOException If any problem inside

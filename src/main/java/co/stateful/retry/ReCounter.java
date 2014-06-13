@@ -65,6 +65,12 @@ public final class ReCounter implements Counter {
 
     @Override
     @RetryOnFailure(verbose = false)
+    public String name() {
+        return this.origin.name();
+    }
+
+    @Override
+    @RetryOnFailure(verbose = false)
     public void set(final long value) throws IOException {
         this.origin.set(value);
     }

@@ -50,9 +50,14 @@ import lombok.ToString;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@ToString
+@ToString(of = "label", includeFieldNames = false)
 @EqualsAndHashCode(of = { "srequest", "irequest" })
 final class RtCounter implements Counter {
+
+    /**
+     * Its name.
+     */
+    private final transient String label;
 
     /**
      * Set request.
@@ -66,12 +71,19 @@ final class RtCounter implements Counter {
 
     /**
      * Ctor.
+     * @param name Name of it
      * @param sreq SET request
      * @param ireq INC request
      */
-    RtCounter(final Request sreq, final Request ireq) {
+    RtCounter(final String name, final Request sreq, final Request ireq) {
+        this.label = name;
         this.srequest = sreq;
         this.irequest = ireq;
+    }
+
+    @Override
+    public String name() {
+        return this.label;
     }
 
     @Override

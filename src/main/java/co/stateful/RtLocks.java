@@ -49,7 +49,7 @@ import lombok.ToString;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@ToString
+@ToString(of = { })
 @EqualsAndHashCode(of = "response")
 final class RtLocks implements Locks {
 
@@ -73,6 +73,7 @@ final class RtLocks implements Locks {
     @Override
     public Lock get(final String name) {
         return new RtLock(
+            name,
             this.response.rel("/page/links/link[@rel='lock']/@href")
                 .method(Request.POST)
                 .body().formParam("name", name).back(),

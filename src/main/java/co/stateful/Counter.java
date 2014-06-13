@@ -43,6 +43,13 @@ import java.io.IOException;
 public interface Counter {
 
     /**
+     * Its name.
+     * @return Name of this lock
+     * @since 0.8
+     */
+    String name();
+
+    /**
      * Set specific value.
      * @param value Value to set
      * @throws IOException If some I/O problem

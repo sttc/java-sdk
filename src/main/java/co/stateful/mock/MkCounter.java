@@ -49,6 +49,11 @@ import lombok.ToString;
 final class MkCounter implements Counter {
 
     @Override
+    public String name() {
+        return this.getClass().getName();
+    }
+
+    @Override
     public void set(final long value) {
         // done
     }

@@ -65,6 +65,12 @@ public final class ReLock implements Lock {
 
     @Override
     @RetryOnFailure(verbose = false)
+    public String name() {
+        return this.origin.name();
+    }
+
+    @Override
+    @RetryOnFailure(verbose = false)
     public boolean lock() throws IOException {
         return this.origin.lock();
     }

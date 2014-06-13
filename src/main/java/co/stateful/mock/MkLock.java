@@ -49,6 +49,11 @@ import lombok.ToString;
 final class MkLock implements Lock {
 
     @Override
+    public String name() {
+        return this.getClass().getName();
+    }
+
+    @Override
     public boolean lock() {
         return true;
     }

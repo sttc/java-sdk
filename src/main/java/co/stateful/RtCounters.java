@@ -49,7 +49,7 @@ import lombok.ToString;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@ToString
+@ToString(of = { })
 @EqualsAndHashCode(of = "request")
 final class RtCounters implements Counters {
 
@@ -117,6 +117,7 @@ final class RtCounters implements Counters {
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class);
         return new RtCounter(
+            name,
             rsp.rel(
                 String.format(
                     // @checkstyle LineLength (1 line)
