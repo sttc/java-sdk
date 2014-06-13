@@ -32,7 +32,7 @@
  * Stateful.co SDK.
  *
  * First, read the documentation at
- * <a href="http://java-sdk.stateful.co"></a>java-sdk.stateful.co</a>. Then,
+ * <a href="http://java-sdk.stateful.co">java-sdk.stateful.co</a>. Then,
  * register an account at <a href="http://www.stateful.co">stateful.co</a>.
  * Then, you can try to use, for example, counters:
  *
