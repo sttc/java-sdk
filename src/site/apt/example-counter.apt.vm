@@ -1,5 +1,5 @@
  ------
- Atomic Cloud Counters
+ Atomic Counters
  ------
  Yegor Bugayenko
  ------
@@ -26,7 +26,7 @@
 ~~ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
 ~~ OF SUCH DAMAGE.
 
-Atomic Cloud Counters at Stateful.co
+Atomic Counters at Stateful.co
 
   For example, you need an atomic counter available online and shared among multiple
   processes running on different nodes in the network. Here is how you
@@ -53,5 +53,4 @@ public class Main {
   }
 }
 +--
-
 

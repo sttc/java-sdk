@@ -63,7 +63,7 @@ public class Main {
 
   The only dependency you need is
   (you can also download
-  {{{http://repo1.maven.org/maven2/co/stateful/java-sdk/${project.version}/java-sdk-${project.version}.jar}<<<java-sdk-${project.version}.jar>>>]
+  {{{http://repo1.maven.org/maven2/co/stateful/java-sdk/${project.version}/java-sdk-${project.version}.jar}<<<java-sdk-${project.version}.jar>>>}}
   and add it to the classpath):
 
 +--

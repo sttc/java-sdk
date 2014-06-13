@@ -51,8 +51,8 @@
             <item name="Release History" href="https://github.com/sttc/java-sdk/releases"/>
         </menu>
         <menu name="Examples">
-            <item name="Locks in Cloud" href="./example-lock.html"/>
-            <item name="Atomic Cloud Counters" href="./example-counter.html"/>
+            <item name="Locks" href="./example-lock.html"/>
+            <item name="Atomic Counters" href="./example-counter.html"/>
         </menu>
         <menu ref="reports"/>
     </body>
