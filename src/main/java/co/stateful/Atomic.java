@@ -31,6 +31,7 @@ package co.stateful;
 
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.Tv;
+import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -87,13 +88,30 @@ public final class Atomic<T> implements Callable<T> {
     private final transient Lock lock;
 
     /**
+     * Maximum waiting time, in milliseconds.
+     */
+    private final transient long max;
+
+    /**
      * Public ctor.
      * @param clbl Callable to use
      * @param lck Lock to use
      */
     public Atomic(final Callable<T> clbl, final Lock lck) {
+        this(clbl, lck, TimeUnit.HOURS.toMillis(1L));
+    }
+
+    /**
+     * Public ctor.
+     * @param clbl Callable to use
+     * @param lck Lock to use
+     * @param maximum Maximum waiting time
+     * @since 0.8
+     */
+    public Atomic(final Callable<T> clbl, final Lock lck, final long maximum) {
         this.callable = clbl;
         this.lock = lck;
+        this.max = maximum;
     }
 
     @Override
@@ -110,10 +128,28 @@ public final class Atomic<T> implements Callable<T> {
             }
         };
         Runtime.getRuntime().addShutdownHook(hook);
+        long attempt = 0L;
+        final long start = System.currentTimeMillis();
         while (!this.lock.lock()) {
-            TimeUnit.MILLISECONDS.sleep(
-                (long) Tv.HUNDRED + (long) Atomic.RANDOM.nextInt(Tv.HUNDRED)
+            final long age = System.currentTimeMillis() - start;
+            if (age > this.max) {
+                throw new IllegalStateException(
+                    Logger.format(
+                        "lock %s is stale (%d attempts in %[ms]s)",
+                        this.lock, attempt, age
+                    )
+                );
+            }
+            ++attempt;
+            final long delay = (long) Tv.HUNDRED
+                + (long) Atomic.RANDOM.nextInt(Tv.HUNDRED)
+                // @checkstyle MagicNumber (1 line)
+                + (long) StrictMath.pow(5.0d, (double) attempt);
+            Logger.info(
+                this, "lock %s is occupied, will make attempt #%d in %[ms]s",
+                this.lock, attempt, delay
             );
+            TimeUnit.MILLISECONDS.sleep(delay);
         }
         try {
             return this.callable.call();

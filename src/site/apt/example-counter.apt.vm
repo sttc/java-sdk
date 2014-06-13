@@ -1,9 +1,9 @@
  ------
- Stateful.co
+ Atomic Cloud Counters
  ------
  Yegor Bugayenko
  ------
- 2014-05-08
+ 2014-06-13
  ------
 
 ~~ This source file is subject to the new BSD license that is bundled
@@ -26,12 +26,9 @@
 ~~ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
 ~~ OF SUCH DAMAGE.
 
-Stateful Web Primitives
+Atomic Cloud Counters at Stateful.co
 
-  This is a Java SDK for a collection of stateful web primitives
-  at {{{http://www.stateful.co}www.stateful.co}}.
-
-  For example, you need a lock available online and shared among multiple
+  For example, you need an atomic counter available online and shared among multiple
   processes running on different nodes in the network. Here is how you
   do it in Java, using this SDK:
 
@@ -47,51 +44,14 @@ public class Main {
       new URN("urn:github:526301"),
       "9FF3-41E0-73FB-F900"
     );
-    Lock lock = sttc.locks().get("my-test-lock");
-    new Atomic<Void>(
-      new Callable<Void>() {
-        @Override
-        public Void call() {
-          System.out.println("this call is synchronized");
-        }
-      },
-      lock
-    ).call();
+    String name = "test-123";
+    Counters counters = sttc.counters();
+    Counter counter = counters.create(name);
+    long value = counter.incrementAndGet(1L);
+    System.out.println("new value: " + value);
+    counters.delete(name);
   }
 }
 +--
 
-  The only dependency you need is
-  (you can also download
-  {{{http://repo1.maven.org/maven2/co/stateful/java-sdk/${project.version}/java-sdk-${project.version}.jar}<<<java-sdk-${project.version}.jar>>>]
-  and add it to the classpath):
-
-+--
-<dependency>
-  <groupId>co.stateful</groupId>
-  <artifactId>java-sdk</artifactId>
-  <version>${project.version}</version>
-</dependency>
-+--
-
-## Cutting Edge Version
-
-  If you want to use current version of the product, you can do it with
-  this configuration in your <<<pom.xml>>>:
-
-+--
-<repositories>
-  <repository>
-    <id>oss.sonatype.org</id>
-    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-  </repository>
-</repositories>
-<dependencies>
-  <dependency>
-    <groupId>co.stateful</groupId>
-    <artifactId>java-sdk</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </dependency>
-</dependencies>
-+--
 

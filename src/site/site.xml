@@ -30,7 +30,7 @@
     <skin>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-maven-skin</artifactId>
-        <version>1.3</version>
+        <version>1.3.1</version>
     </skin>
     <bannerLeft>
         <name>stateful</name>
@@ -44,14 +44,15 @@
         <head>
             <link href="http://img.stateful.co/favicon.ico" rel="shortcut icon"/>
         </head>
-        <breadcrumbs>
-            <item name="java-sdk" href="http://java-sdk.stateful.co"/>
-        </breadcrumbs>
         <menu name="Overview">
             <item name="Introduction" href="./index.html"/>
             <item name="JavaDoc ${project.version}" href="./apidocs-${project.version}/index.html"/>
             <item name="Test Coverage" href="./cobertura/index.html"/>
             <item name="Release History" href="https://github.com/sttc/java-sdk/releases"/>
+        </menu>
+        <menu name="Examples">
+            <item name="Locks in Cloud" href="./example-lock.html"/>
+            <item name="Atomic Cloud Counters" href="./example-counter.html"/>
         </menu>
         <menu ref="reports"/>
     </body>
