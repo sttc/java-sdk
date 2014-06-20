@@ -35,12 +35,21 @@ import co.stateful.Sttc;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
+import com.jcabi.aspects.Tv;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
  * Retriable Sttc.
+ *
+ * <p>Just wrap your original {@link Sttc} object with this
+ * decorator and all requests to stateful.co server will be
+ * retried a few times before giving up and throwing a runtime
+ * exception. It is highly recommended to use this decorator
+ * in production environment. The Internet is not a stable environment,
+ * and connection failures is a regular event.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -66,13 +75,19 @@ public final class ReSttc implements Sttc {
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(
+        verbose = false, attempts = Tv.TWENTY,
+        delay = Tv.FIVE, unit = TimeUnit.SECONDS
+    )
     public Counters counters() throws IOException {
         return new ReCounters(this.origin.counters());
     }
 
     @Override
-    @RetryOnFailure(verbose = false)
+    @RetryOnFailure(
+        verbose = false, attempts = Tv.TWENTY,
+        delay = Tv.FIVE, unit = TimeUnit.SECONDS
+    )
     public Locks locks() throws IOException {
         return new ReLocks(this.origin.locks());
     }
