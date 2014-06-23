@@ -33,6 +33,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
+import com.jcabi.log.Logger;
 import com.jcabi.manifests.Manifests;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -98,18 +99,30 @@ final class RtLock implements Lock {
             System.getProperty("os.name"),
             System.getProperty("os.version")
         );
-        return this.lrequest
+        final long start = System.currentTimeMillis();
+        final boolean locked = this.lrequest
             .body().formParam("label", marker).back()
             .fetch()
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
+        Logger.info(
+            this, "lock of \"%s\" is %s in %[ms]s",
+            this.label, Boolean.toString(locked),
+            System.currentTimeMillis() - start
+        );
+        return locked;
     }
 
     @Override
     public void unlock() throws IOException {
+        final long start = System.currentTimeMillis();
         this.urequest
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+        Logger.info(
+            this, "unlocked \"%s\" in %[ms]s",
+            this.label, System.currentTimeMillis() - start
+        );
     }
 
 }

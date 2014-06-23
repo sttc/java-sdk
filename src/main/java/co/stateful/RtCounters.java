@@ -34,6 +34,7 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
+import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import lombok.EqualsAndHashCode;
@@ -78,6 +79,7 @@ final class RtCounters implements Counters {
 
     @Override
     public Counter create(final String name) throws IOException {
+        final long start = System.currentTimeMillis();
         this.request.fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
@@ -88,11 +90,16 @@ final class RtCounters implements Counters {
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+        Logger.info(
+            this, "counter \"%s\" created in %[ms]s",
+            name, System.currentTimeMillis() - start
+        );
         return this.get(name);
     }
 
     @Override
     public void delete(final String name) throws IOException {
+        final long start = System.currentTimeMillis();
         this.request.fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
@@ -108,6 +115,10 @@ final class RtCounters implements Counters {
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+        Logger.info(
+            this, "counter \"%s\" deleted in %[ms]s",
+            name, System.currentTimeMillis() - start
+        );
     }
 
     @Override

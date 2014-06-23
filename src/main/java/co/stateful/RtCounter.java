@@ -33,6 +33,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
+import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import javax.ws.rs.core.HttpHeaders;
@@ -88,16 +89,23 @@ final class RtCounter implements Counter {
 
     @Override
     public void set(final long value) throws IOException {
+        final long start = System.currentTimeMillis();
         this.srequest.method(Request.PUT)
             .uri().queryParam("value", value).back()
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK);
+        Logger.info(
+            this, "counter \"%s\" set to %d in %[ms]s",
+            this.label, value,
+            System.currentTimeMillis() - start
+        );
     }
 
     @Override
     public long incrementAndGet(final long delta) throws IOException {
-        return Long.parseLong(
+        final long start = System.currentTimeMillis();
+        final long value = Long.parseLong(
             this.irequest.method(Request.GET)
                 .uri().queryParam("value", delta).back()
                 .header(HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN)
@@ -106,5 +114,11 @@ final class RtCounter implements Counter {
                 .assertStatus(HttpURLConnection.HTTP_OK)
                 .body()
         );
+        Logger.info(
+            this, "counter \"%s\" incremented by %d to %d in %[ms]s",
+            this.label, delta, value,
+            System.currentTimeMillis() - start
+        );
+        return value;
     }
 }
