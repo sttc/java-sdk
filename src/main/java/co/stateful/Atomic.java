@@ -135,7 +135,7 @@ public final class Atomic<T> implements Callable<T> {
             if (age > this.max) {
                 throw new IllegalStateException(
                     Logger.format(
-                        "lock %s is stale (%d attempts in %[ms]s)",
+                        "lock \"%s\" is stale (%d failed attempts in %[ms]s)",
                         this.lock, attempt, age
                     )
                 );
