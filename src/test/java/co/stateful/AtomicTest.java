@@ -58,7 +58,7 @@ public final class AtomicTest {
                     }
                 },
                 new MkSttc().locks().get("test")
-            ).call(),
+            ).callQuietly(),
             Matchers.containsString("hello")
         );
     }
