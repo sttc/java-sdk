@@ -144,10 +144,12 @@ public final class Atomic<T> implements Callable<T> {
             final long delay = (long) Tv.HUNDRED
                 + (long) Atomic.RANDOM.nextInt(Tv.HUNDRED)
                 // @checkstyle MagicNumber (1 line)
-                + (long) StrictMath.pow(5.0d, (double) attempt);
+                + (long) StrictMath.pow(5.0d, (double) attempt + 1.0d);
             Logger.info(
-                this, "lock %s is occupied, will make attempt #%d in %[ms]s",
-                this.lock, attempt, delay
+                this,
+                // @checkstyle LineLength (1 line)
+                "lock \"%s\" is occupied for %[ms]s already, attempt #%d in %[ms]s",
+                this.lock, age, attempt, delay
             );
             TimeUnit.MILLISECONDS.sleep(delay);
         }
