@@ -115,16 +115,18 @@ public final class Atomic<T> implements Callable<T> {
     @Override
     @SuppressWarnings("PMD.DoNotUseThreads")
     public T call() throws Exception {
-        final Thread hook = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Atomic.this.lock.unlock();
-                } catch (final IOException ex) {
-                    throw new IllegalStateException(ex);
+        final Thread hook = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Atomic.this.lock.unlock();
+                    } catch (final IOException ex) {
+                        throw new IllegalStateException(ex);
+                    }
                 }
             }
-        };
+        );
         Runtime.getRuntime().addShutdownHook(hook);
         long attempt = 0L;
         final long start = System.currentTimeMillis();
