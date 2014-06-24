@@ -64,7 +64,6 @@ import lombok.ToString;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.6
- * @see <a href="http://tempusfugitlibrary.org/documentation/callables/custom/">tempusfugitlibrary.org</a>
  */
 @Loggable(Loggable.DEBUG)
 @ToString
@@ -92,12 +91,12 @@ public final class Atomic<T> implements Callable<T> {
     private final transient long max;
 
     /**
-     * Public ctor.
+     * Public ctor (default maximum waiting time of five minutes).
      * @param clbl Callable to use
      * @param lck Lock to use
      */
     public Atomic(final Callable<T> clbl, final Lock lck) {
-        this(clbl, lck, TimeUnit.HOURS.toMillis(1L));
+        this(clbl, lck, TimeUnit.MINUTES.toMillis((long) Tv.FIVE));
     }
 
     /**
