@@ -141,10 +141,12 @@ public final class Atomic<T> implements Callable<T> {
                 );
             }
             ++attempt;
-            final long delay = (long) Tv.HUNDRED
-                + (long) Atomic.RANDOM.nextInt(Tv.HUNDRED)
+            final long delay = Math.min(
+                TimeUnit.MINUTES.toMillis(1L),
+                (long) Tv.HUNDRED + (long) Atomic.RANDOM.nextInt(Tv.HUNDRED)
                 // @checkstyle MagicNumber (1 line)
-                + (long) StrictMath.pow(5.0d, (double) attempt + 1.0d);
+                + (long) StrictMath.pow(5.0d, (double) attempt + 1.0d)
+            );
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
