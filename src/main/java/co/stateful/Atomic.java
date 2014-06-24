@@ -59,8 +59,7 @@ import lombok.ToString;
  *
  * <p>If you want to use {@link Runnable} instead, try static method
  * {@link java.util.concurrent.Executors#callable(Runnable)}. If you
- * want to avoid checked exceptions, try {@code Callable}
- * from tempusfugitlibrary.org.
+ * want to avoid checked exceptions, use {@link #callQuietly()}.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
@@ -156,6 +155,19 @@ public final class Atomic<T> implements Callable<T> {
         } finally {
             this.lock.unlock();
             Runtime.getRuntime().removeShutdownHook(hook);
+        }
+    }
+
+    /**
+     * Call without exception throwing.
+     * @return Result
+     * @since 0.9
+     */
+    public T callQuietly() {
+        try {
+            return this.call();
+        } catch (final Exception ex) {
+            throw new IllegalStateException(ex);
         }
     }
 
