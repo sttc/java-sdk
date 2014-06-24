@@ -166,9 +166,11 @@ public final class Atomic<T> implements Callable<T> {
      * @return Result
      * @since 0.9
      */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public T callQuietly() {
         try {
             return this.call();
+        // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception ex) {
             throw new IllegalStateException(ex);
         }
