@@ -132,4 +132,15 @@ public final class RtLocksITCase {
         }
     }
 
+    /**
+     * RtLocks can reject an incorrect name of a lock.
+     * @throws Exception If some problem inside
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectsIncorrectLockName() throws Exception {
+        final Sttc sttc = this.srule.get();
+        final Locks locks = sttc.locks();
+        locks.get("invalid name with spaces").lock();
+    }
+
 }
