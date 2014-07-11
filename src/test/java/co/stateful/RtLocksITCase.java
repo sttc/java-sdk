@@ -109,4 +109,27 @@ public final class RtLocksITCase {
         );
     }
 
+    /**
+     * RtLocks can manage locks in one simple thread.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void locksAndUnlocksInOneThread() throws Exception {
+        final Sttc sttc = this.srule.get();
+        final Locks locks = sttc.locks();
+        final String name = String.format(
+            "test2-%s", RtLocksITCase.RANDOM.nextInt(Integer.MAX_VALUE)
+        );
+        MatcherAssert.assertThat(locks.exists(name), Matchers.is(false));
+        final Lock lock = locks.get(name);
+        lock.lock();
+        try {
+            MatcherAssert.assertThat(locks.exists(name), Matchers.is(true));
+            lock.unlock();
+            MatcherAssert.assertThat(locks.exists(name), Matchers.is(false));
+        } finally {
+            lock.unlock();
+        }
+    }
+
 }

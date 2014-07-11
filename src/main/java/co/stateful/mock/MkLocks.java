@@ -50,6 +50,11 @@ import lombok.ToString;
 final class MkLocks implements Locks {
 
     @Override
+    public boolean exists(final String name) {
+        return false;
+    }
+
+    @Override
     public Lock get(final String name) {
         return new MkLock();
     }

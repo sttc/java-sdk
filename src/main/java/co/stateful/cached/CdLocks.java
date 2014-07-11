@@ -66,6 +66,11 @@ public final class CdLocks implements Locks {
     }
 
     @Override
+    public boolean exists(final String name) throws IOException {
+        return this.origin.exists(name);
+    }
+
+    @Override
     @Cacheable(lifetime = 1, unit = TimeUnit.HOURS)
     public Lock get(final String name) throws IOException {
         return this.origin.get(name);

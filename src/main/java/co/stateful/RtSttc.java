@@ -38,6 +38,7 @@ import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
 import com.jcabi.http.wire.OneMinuteWire;
 import com.jcabi.http.wire.RetryWire;
+import com.jcabi.http.wire.VerboseWire;
 import com.jcabi.urn.URN;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -81,6 +82,7 @@ public final class RtSttc implements Sttc {
         this.request = new JdkRequest("http://www.stateful.co")
             .through(OneMinuteWire.class)
             .through(RetryWire.class)
+            .through(VerboseWire.class)
             .header("X-Sttc-URN", urn.toString())
             .header("X-Sttc-Token", token)
             .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)

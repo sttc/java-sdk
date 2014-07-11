@@ -71,6 +71,18 @@ final class RtLocks implements Locks {
     }
 
     @Override
+    public boolean exists(final String name) throws IOException {
+        return !this.response
+            .rel("/page/links/link[@rel='self']/@href")
+            .method(Request.GET)
+            .fetch()
+            .as(XmlResponse.class)
+            .xml()
+            .nodes(String.format("/page/locks/lock[name='%s']", name))
+            .isEmpty();
+    }
+
+    @Override
     public Lock get(final String name) {
         return new RtLock(
             name,

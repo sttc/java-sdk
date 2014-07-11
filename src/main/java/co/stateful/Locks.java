@@ -43,6 +43,15 @@ import java.io.IOException;
 public interface Locks {
 
     /**
+     * Does it exist?
+     * @param name Name of lock
+     * @return TRUE if the lock exists
+     * @throws IOException If fails
+     * @since 0.10
+     */
+    boolean exists(String name) throws IOException;
+
+    /**
      * Get one lock by name.
      * @param name Name of lock
      * @return Lock
