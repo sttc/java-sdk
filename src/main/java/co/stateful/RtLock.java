@@ -51,14 +51,14 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@ToString(of = "lock", includeFieldNames = false)
-@EqualsAndHashCode(of = { "lock", "lrequest", "urequest" })
+@ToString(of = "lck", includeFieldNames = false)
+@EqualsAndHashCode(of = { "lck", "lrequest", "urequest" })
 final class RtLock implements Lock {
 
     /**
      * Its name.
      */
-    private final transient String lock;
+    private final transient String lck;
 
     /**
      * Lock request.
@@ -77,14 +77,14 @@ final class RtLock implements Lock {
      * @param ureq Unlock request
      */
     RtLock(final String name, final Request lreq, final Request ureq) {
-        this.lock = name;
+        this.lck = name;
         this.lrequest = lreq;
         this.urequest = ureq;
     }
 
     @Override
     public String name() {
-        return this.lock;
+        return this.lck;
     }
 
     @Override
@@ -116,7 +116,7 @@ final class RtLock implements Lock {
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
         Logger.info(
             this, "lock of \"%s\" is %s in %[ms]s",
-            this.lock, Boolean.toString(locked),
+            this.lck, Boolean.toString(locked),
             System.currentTimeMillis() - start
         );
         return locked;
@@ -131,7 +131,7 @@ final class RtLock implements Lock {
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
         Logger.info(
             this, "unlocked \"%s\" in %[ms]s: %B",
-            this.lock, System.currentTimeMillis() - start, unlocked
+            this.lck, System.currentTimeMillis() - start, unlocked
         );
         return unlocked;
     }
