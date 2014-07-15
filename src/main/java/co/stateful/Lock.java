@@ -64,4 +64,22 @@ public interface Lock {
      */
     void unlock() throws IOException;
 
+    /**
+     * Lock with label.
+     * @param label Label to attach
+     * @return TRUE if success, FALSE otherwise
+     * @throws IOException If any problem inside
+     * @since 0.11
+     */
+    boolean lock(String label) throws IOException;
+
+    /**
+     * Unlock, if label matches.
+     * @param label Label to attach
+     * @return TRUE if success, FALSE otherwise (label doesn't match)
+     * @throws IOException If any problem inside
+     * @since 0.11
+     */
+    boolean unlock(String label) throws IOException;
+
 }

@@ -32,7 +32,6 @@ package co.stateful;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
-import com.jcabi.http.response.RestResponse;
 import com.jcabi.log.Logger;
 import com.jcabi.manifests.Manifests;
 import java.io.IOException;
@@ -52,14 +51,14 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
-@ToString(of = "label", includeFieldNames = false)
-@EqualsAndHashCode(of = { "lrequest", "urequest" })
+@ToString(of = "lock", includeFieldNames = false)
+@EqualsAndHashCode(of = { "lock", "lrequest", "urequest" })
 final class RtLock implements Lock {
 
     /**
      * Its name.
      */
-    private final transient String label;
+    private final transient String lock;
 
     /**
      * Lock request.
@@ -78,51 +77,63 @@ final class RtLock implements Lock {
      * @param ureq Unlock request
      */
     RtLock(final String name, final Request lreq, final Request ureq) {
-        this.label = name;
+        this.lock = name;
         this.lrequest = lreq;
         this.urequest = ureq;
     }
 
     @Override
     public String name() {
-        return this.label;
+        return this.lock;
     }
 
     @Override
     public boolean lock() throws IOException {
-        final String marker = String.format(
-            "co.stateful/java-sdk %s/%s; %s; Java %s; %s %s",
-            Manifests.read("Sttc-Version"),
-            Manifests.read("Sttc-Revision"),
-            DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()),
-            System.getProperty("java.version"),
-            System.getProperty("os.name"),
-            System.getProperty("os.version")
+        return this.lock(
+            String.format(
+                "co.stateful/java-sdk %s/%s; %s; Java %s; %s %s",
+                Manifests.read("Sttc-Version"),
+                Manifests.read("Sttc-Revision"),
+                DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()),
+                System.getProperty("java.version"),
+                System.getProperty("os.name"),
+                System.getProperty("os.version")
+            )
         );
+    }
+
+    @Override
+    public void unlock() throws IOException {
+        this.unlock("");
+    }
+
+    @Override
+    public boolean lock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
         final boolean locked = this.lrequest
-            .body().formParam("label", marker).back()
+            .body().formParam("label", label).back()
             .fetch()
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
         Logger.info(
             this, "lock of \"%s\" is %s in %[ms]s",
-            this.label, Boolean.toString(locked),
+            this.lock, Boolean.toString(locked),
             System.currentTimeMillis() - start
         );
         return locked;
     }
 
     @Override
-    public void unlock() throws IOException {
+    public boolean unlock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
-        this.urequest
+        final boolean unlocked = this.urequest
+            .uri().queryParam("label", label).back()
             .fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
+            .status() == HttpURLConnection.HTTP_SEE_OTHER;
         Logger.info(
-            this, "unlocked \"%s\" in %[ms]s",
-            this.label, System.currentTimeMillis() - start
+            this, "unlocked \"%s\" in %[ms]s: %B",
+            this.lock, System.currentTimeMillis() - start, unlocked
         );
+        return unlocked;
     }
 
 }

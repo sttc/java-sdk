@@ -91,4 +91,22 @@ public final class ReLock implements Lock {
     public void unlock() throws IOException {
         this.origin.unlock();
     }
+
+    @Override
+    @RetryOnFailure(
+        verbose = false, attempts = Tv.TWENTY,
+        delay = Tv.FIVE, unit = TimeUnit.SECONDS
+    )
+    public boolean lock(final String label) throws IOException {
+        return this.origin.lock(label);
+    }
+
+    @Override
+    @RetryOnFailure(
+        verbose = false, attempts = Tv.TWENTY,
+        delay = Tv.FIVE, unit = TimeUnit.SECONDS
+    )
+    public boolean unlock(final String label) throws IOException {
+        return this.origin.unlock(label);
+    }
 }
