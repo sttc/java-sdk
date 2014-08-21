@@ -1,11 +1,14 @@
 <img src="http://img.stateful.co/pomegranate.svg" width="64px" height="64px"/>
 
 [![Made By Teamed.io](http://img.teamed.io/btn.svg)](http://www.teamed.io)
+[![DevOps By Rultor.com](http://www.rultor.com/b/sttc/java-sdk)](http://www.rultor.com/p/sttc/java-sdk)
 
 [![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
 
-Java SDK of Stateful.co
+## Java SDK of Stateful.co
+
+JavaDoc is here: [java-sdk.stateful.co](http://java-sdk.stateful.co/)
 
 First, register an account at [stateful.co](http://www.stateful.co). Then,
 you can create a counter and increment it:
