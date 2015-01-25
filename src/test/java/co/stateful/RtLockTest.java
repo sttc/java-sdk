@@ -35,6 +35,7 @@ import com.jcabi.http.mock.MkContainer;
 import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
 import java.net.HttpURLConnection;
+import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -48,17 +49,24 @@ import org.junit.Test;
 public final class RtLockTest {
 
     /**
+     * Front XML.
+     */
+    private static final String XML = StringUtils.join(
+        "<page><links><link rel='lock' href='#lock'/>",
+        "<link rel='unlock' href='#unlock'/></links></page>"
+    );
+
+    /**
      * RtLock can lock.
      * @throws Exception If some problem inside
      */
     @Test
     public void locksViaHttp() throws Exception {
-        final String xml = "<page><links><link rel='lock' href=''/></links></page>";
         final MkContainer container = new MkGrizzlyContainer()
-            .next(new MkAnswer.Simple(xml))
+            .next(new MkAnswer.Simple(RtLockTest.XML))
             .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
             .start();
-        final Lock lock = new RtLock("test", new JdkRequest(container.home()));
+        final Lock lock = new RtLock("", new JdkRequest(container.home()));
         try {
             MatcherAssert.assertThat(lock.lock(), Matchers.equalTo(true));
         } finally {
@@ -71,6 +79,32 @@ public final class RtLockTest {
         MatcherAssert.assertThat(
             container.take().method(),
             Matchers.equalTo(Request.POST)
+        );
+    }
+
+    /**
+     * RtLock can unlock.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void unlocksViaHttp() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtLockTest.XML))
+            .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
+            .start();
+        final Lock lock = new RtLock("", new JdkRequest(container.home()));
+        try {
+            lock.unlock();
+        } finally {
+            container.stop();
+        }
+        MatcherAssert.assertThat(
+            container.take().method(),
+            Matchers.equalTo(Request.GET)
+        );
+        MatcherAssert.assertThat(
+            container.take().method(),
+            Matchers.equalTo(Request.GET)
         );
     }
 
