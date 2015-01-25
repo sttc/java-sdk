@@ -32,6 +32,8 @@ package co.stateful;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
+import com.jcabi.http.response.RestResponse;
+import com.jcabi.http.response.XmlResponse;
 import com.jcabi.log.Logger;
 import com.jcabi.manifests.Manifests;
 import java.io.IOException;
@@ -52,7 +54,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString(of = "lck", includeFieldNames = false)
-@EqualsAndHashCode(of = { "lck", "lrequest", "urequest" })
+@EqualsAndHashCode(of = { "lck", "request" })
 final class RtLock implements Lock {
 
     /**
@@ -61,25 +63,18 @@ final class RtLock implements Lock {
     private final transient String lck;
 
     /**
-     * Lock request.
+     * Locks home.
      */
-    private final transient Request lrequest;
-
-    /**
-     * Unlock request.
-     */
-    private final transient Request urequest;
+    private final transient Request request;
 
     /**
      * Ctor.
      * @param name Name of it
-     * @param lreq Lock request
-     * @param ureq Unlock request
+     * @param req Lock request
      */
-    RtLock(final String name, final Request lreq, final Request ureq) {
+    RtLock(final String name, final Request req) {
         this.lck = name;
-        this.lrequest = lreq;
-        this.urequest = ureq;
+        this.request = req;
     }
 
     @Override
@@ -110,7 +105,7 @@ final class RtLock implements Lock {
     @Override
     public boolean lock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
-        final boolean locked = this.lrequest
+        final boolean locked = this.front("lock")
             .body().formParam("label", label).back()
             .fetch()
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
@@ -125,7 +120,7 @@ final class RtLock implements Lock {
     @Override
     public boolean unlock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
-        final boolean unlocked = this.urequest
+        final boolean unlocked = this.front("unlock")
             .uri().queryParam("label", label).back()
             .fetch()
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
@@ -134,6 +129,23 @@ final class RtLock implements Lock {
             this.lck, System.currentTimeMillis() - start, unlocked
         );
         return unlocked;
+    }
+
+    /**
+     * Get front request.
+     * @param label Label
+     * @return Request
+     * @throws IOException If fails
+     */
+    private Request front(final String label) throws IOException {
+        return this.request
+            .fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(XmlResponse.class)
+            .rel(String.format("/page/links/link[@rel='%s']/@href", label))
+            .method(Request.GET)
+            .uri().queryParam("name", this.lck).back();
     }
 
 }

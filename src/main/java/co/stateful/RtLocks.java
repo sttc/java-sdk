@@ -83,26 +83,8 @@ final class RtLocks implements Locks {
     }
 
     @Override
-    public Lock get(final String name) throws IOException {
-        return new RtLock(
-            name,
-            this.request
-                .fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(XmlResponse.class)
-                .rel("/page/links/link[@rel='lock']/@href")
-                .method(Request.POST)
-                .body().formParam("name", name).back(),
-            this.request
-                .fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(XmlResponse.class)
-                .rel("/page/links/link[@rel='unlock']/@href")
-                .method(Request.GET)
-                .uri().queryParam("name", name).back()
-        );
+    public Lock get(final String name) {
+        return new RtLock(name, this.request);
     }
 
 }
