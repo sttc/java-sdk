@@ -30,10 +30,12 @@
 package co.stateful;
 
 import co.stateful.mock.MkSttc;
+import java.io.IOException;
 import java.util.concurrent.Callable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * Test case for {@link Atomic}.
@@ -61,6 +63,32 @@ public final class AtomicTest {
             ).callQuietly(),
             Matchers.containsString("hello")
         );
+    }
+
+    /**
+     * Atomic can unlock if crashed.
+     * @throws Exception If some problem inside
+     */
+    @Test
+    public void unlocksWhenCrashed() throws Exception {
+        final Lock lock = Mockito.mock(Lock.class);
+        Mockito.doReturn(true).when(lock).lock();
+        try {
+            new Atomic<String>(
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        throw new IOException("expected one");
+                    }
+                },
+                lock
+            ).call();
+        } catch (final IOException ex) {
+            MatcherAssert.assertThat(
+                ex.getLocalizedMessage(), Matchers.startsWith("expected")
+            );
+        }
+        Mockito.verify(lock).unlock();
     }
 
 }
