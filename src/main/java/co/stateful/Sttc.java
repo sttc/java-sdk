@@ -35,9 +35,23 @@ import java.io.IOException;
 /**
  * Stateful Entry Point.
  *
+ * <p>Make an instance of this interface using {@link RtSttc}, for example,
+ * if you want to use a cloud lock from
+ * <a href="http://www.stateful.co">stateful.co</a>:
+ *
+ * <pre> Lock lock = new RtSttc(
+ *   new URN("urn:github:12345"), "token"
+ * ).locks().lock("test");</pre>
+ *
+ * <p>You need two arguments to instantiate {@link RtSttc}: URN of the user
+ * and your secret token. You can get them at the home page of
+ * <a href="http://www.stateful.co">stateful.co</a>, right on the top.
+ *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
+ * @link <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
+ * @link <a href="http://www.yegor256.com/2014/12/04/synchronization-between-nodes.html">Synchronization Between Nodes</a>
  */
 @Immutable
 public interface Sttc {
