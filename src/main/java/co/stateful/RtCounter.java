@@ -33,6 +33,7 @@ import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
+import com.jcabi.http.response.XmlResponse;
 import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -52,7 +53,7 @@ import lombok.ToString;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString(of = "label", includeFieldNames = false)
-@EqualsAndHashCode(of = { "srequest", "irequest" })
+@EqualsAndHashCode(of = { "label", "request" })
 final class RtCounter implements Counter {
 
     /**
@@ -61,25 +62,18 @@ final class RtCounter implements Counter {
     private final transient String label;
 
     /**
-     * Set request.
+     * Home request.
      */
-    private final transient Request srequest;
-
-    /**
-     * Increment request.
-     */
-    private final transient Request irequest;
+    private final transient Request request;
 
     /**
      * Ctor.
      * @param name Name of it
-     * @param sreq SET request
-     * @param ireq INC request
+     * @param req Home page request
      */
-    RtCounter(final String name, final Request sreq, final Request ireq) {
+    RtCounter(final String name, final Request req) {
         this.label = name;
-        this.srequest = sreq;
-        this.irequest = ireq;
+        this.request = req;
     }
 
     @Override
@@ -90,7 +84,7 @@ final class RtCounter implements Counter {
     @Override
     public void set(final long value) throws IOException {
         final long start = System.currentTimeMillis();
-        this.srequest.method(Request.PUT)
+        this.front("set").method(Request.PUT)
             .uri().queryParam("value", value).back()
             .fetch()
             .as(RestResponse.class)
@@ -106,7 +100,7 @@ final class RtCounter implements Counter {
     public long incrementAndGet(final long delta) throws IOException {
         final long start = System.currentTimeMillis();
         final long value = Long.parseLong(
-            this.irequest.method(Request.GET)
+            this.front("increment").method(Request.GET)
                 .uri().queryParam("value", delta).back()
                 .header(HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN)
                 .fetch()
@@ -121,4 +115,25 @@ final class RtCounter implements Counter {
         );
         return value;
     }
+
+    /**
+     * Get front request.
+     * @param ops Operation
+     * @return Request
+     * @throws IOException If fails
+     */
+    private Request front(final String ops) throws IOException {
+        return this.request.fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(XmlResponse.class)
+            .rel(
+                String.format(
+                    // @checkstyle LineLength (1 line)
+                    "/page/counters/counter[name='%s']/links/link[@rel='%s']/@href",
+                    this.label, ops
+                )
+            );
+    }
+
 }

@@ -123,26 +123,6 @@ final class RtCounters implements Counters {
 
     @Override
     public Counter get(final String name) throws IOException {
-        final XmlResponse rsp = this.request.fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(XmlResponse.class);
-        return new RtCounter(
-            name,
-            rsp.rel(
-                String.format(
-                    // @checkstyle LineLength (1 line)
-                    "/page/counters/counter[name='%s']/links/link[@rel='set']/@href",
-                    name
-                )
-            ),
-            rsp.rel(
-                String.format(
-                    // @checkstyle LineLength (1 line)
-                    "/page/counters/counter[name='%s']/links/link[@rel='increment']/@href",
-                    name
-                )
-            )
-        );
+        return new RtCounter(name, this.request);
     }
 }
