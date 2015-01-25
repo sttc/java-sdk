@@ -50,29 +50,29 @@ import lombok.ToString;
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString(of = { })
-@EqualsAndHashCode(of = "response")
+@EqualsAndHashCode(of = "request")
 final class RtLocks implements Locks {
 
     /**
      * Entry response.
      */
-    private final transient XmlResponse response;
+    private final transient Request request;
 
     /**
      * Ctor.
      * @param req Request
-     * @throws IOException If fails
      */
-    RtLocks(final Request req) throws IOException {
-        this.response = req.fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(XmlResponse.class);
+    RtLocks(final Request req) {
+        this.request = req;
     }
 
     @Override
     public boolean exists(final String name) throws IOException {
-        return !this.response
+        return !this.request
+            .fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(XmlResponse.class)
             .rel("/page/links/link[@rel='self']/@href")
             .method(Request.GET)
             .fetch()
@@ -83,13 +83,23 @@ final class RtLocks implements Locks {
     }
 
     @Override
-    public Lock get(final String name) {
+    public Lock get(final String name) throws IOException {
         return new RtLock(
             name,
-            this.response.rel("/page/links/link[@rel='lock']/@href")
+            this.request
+                .fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(XmlResponse.class)
+                .rel("/page/links/link[@rel='lock']/@href")
                 .method(Request.POST)
                 .body().formParam("name", name).back(),
-            this.response.rel("/page/links/link[@rel='unlock']/@href")
+            this.request
+                .fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(XmlResponse.class)
+                .rel("/page/links/link[@rel='unlock']/@href")
                 .method(Request.GET)
                 .uri().queryParam("name", name).back()
         );
