@@ -1,9 +1,13 @@
 language: java
+cache:
+  directories:
+    - $HOME/.m2
 env:
   global:
-    - MAVEN_OPTS="-XX:MaxPermSize=512m -Xmx2g"
+    - MAVEN_OPTS="-XX:MaxPermSize=2g -Xmx4g"
+    - JAVA_OPTS="-XX:MaxPermSize=2g -Xmx4g"
 jdk:
   - oraclejdk7
-  - openjdk6
   - openjdk7
-script: mvn clean install -Pqulice --quiet --batch-mode --errors
+script:
+  - mvn clean install -Pqulice --quiet --batch-mode --errors
