@@ -107,6 +107,7 @@ final class RtLock implements Lock {
         final long start = System.currentTimeMillis();
         final boolean locked = this.front("lock")
             .body().formParam("label", label).back()
+            .method(Request.POST)
             .fetch()
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
         Logger.info(
