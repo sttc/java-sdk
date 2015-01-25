@@ -131,29 +131,9 @@
 <a class="jxr_linenumber" name="L123" href="#L123">123</a> 
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>     @Override
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>     <strong class="jxr_keyword">public</strong> <a href="../../co/stateful/Counter.html">Counter</a> get(<strong class="jxr_keyword">final</strong> String name) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>         <strong class="jxr_keyword">final</strong> XmlResponse rsp = <strong class="jxr_keyword">this</strong>.request.fetch()
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>             .as(RestResponse.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>             .assertStatus(HttpURLConnection.HTTP_OK)
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>             .as(XmlResponse.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../co/stateful/RtCounter.html">RtCounter</a>(
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>             name,
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>             rsp.rel(
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>                 String.format(
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>                     <em class="jxr_comment">// @checkstyle LineLength (1 line)</em>
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>                     <span class="jxr_string">"/page/counters/counter[name='%s']/links/link[@rel='set']/@href"</span>,
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>                     name
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>                 )
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>             ),
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>             rsp.rel(
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>                 String.format(
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>                     <em class="jxr_comment">// @checkstyle LineLength (1 line)</em>
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>                     <span class="jxr_string">"/page/counters/counter[name='%s']/links/link[@rel='increment']/@href"</span>,
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>                     name
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>                 )
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>             )
-<a class="jxr_linenumber" name="L146" href="#L146">146</a>         );
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>     }
-<a class="jxr_linenumber" name="L148" href="#L148">148</a> }
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../co/stateful/RtCounter.html">RtCounter</a>(name, <strong class="jxr_keyword">this</strong>.request);
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>     }
+<a class="jxr_linenumber" name="L128" href="#L128">128</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2014&#x2013;2015 <a href="http://www.stateful.co">stateful.co</a>. All rights reserved.</div>
