@@ -37,6 +37,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -70,12 +71,29 @@ import lombok.ToString;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = { "callable", "lock" })
+@SuppressWarnings("PMD.DoNotUseThreads")
 public final class Atomic<T> implements Callable<T> {
 
     /**
      * Random.
      */
     private static final Random RANDOM = new SecureRandom();
+
+    /**
+     * Shutdown hook.
+     */
+    private final transient Thread hook = new Thread(
+        new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Atomic.this.lock.unlock();
+                } catch (final IOException ex) {
+                    throw new IllegalStateException(ex);
+                }
+            }
+        }
+    );
 
     /**
      * Callable to use.
@@ -91,6 +109,11 @@ public final class Atomic<T> implements Callable<T> {
      * Maximum waiting time, in milliseconds.
      */
     private final transient long max;
+
+    /**
+     * Successfully locked?
+     */
+    private final transient AtomicBoolean locked = new AtomicBoolean();
 
     /**
      * Public ctor (default maximum waiting time of five minutes).
@@ -115,21 +138,8 @@ public final class Atomic<T> implements Callable<T> {
     }
 
     @Override
-    @SuppressWarnings("PMD.DoNotUseThreads")
     public T call() throws Exception {
-        final Thread hook = new Thread(
-            new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Atomic.this.lock.unlock();
-                    } catch (final IOException ex) {
-                        throw new IllegalStateException(ex);
-                    }
-                }
-            }
-        );
-        Runtime.getRuntime().addShutdownHook(hook);
+        Runtime.getRuntime().addShutdownHook(this.hook);
         long attempt = 0L;
         final long start = System.currentTimeMillis();
         while (!this.lock.lock()) {
@@ -157,11 +167,11 @@ public final class Atomic<T> implements Callable<T> {
             );
             TimeUnit.MILLISECONDS.sleep(delay);
         }
+        this.locked.set(true);
         try {
             return this.callable.call();
         } finally {
-            this.lock.unlock();
-            Runtime.getRuntime().removeShutdownHook(hook);
+            this.unlock();
         }
     }
 
@@ -178,6 +188,17 @@ public final class Atomic<T> implements Callable<T> {
         } catch (final Exception ex) {
             throw new IllegalStateException(ex);
         }
+    }
+
+    /**
+     * Unlock it.
+     * @throws IOException If fails
+     */
+    private void unlock() throws IOException {
+        if (this.locked.get()) {
+            this.lock.unlock();
+        }
+        Runtime.getRuntime().removeShutdownHook(this.hook);
     }
 
 }
