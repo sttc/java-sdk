@@ -106,7 +106,8 @@ final class RtLock implements Lock {
     public boolean lock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
         final boolean locked = this.front("lock")
-            .body().formParam("label", label).back()
+            .body().formParam("label", label)
+            .formParam("name", this.lck).back()
             .method(Request.POST)
             .fetch()
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
@@ -122,7 +123,9 @@ final class RtLock implements Lock {
     public boolean unlock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
         final boolean unlocked = this.front("unlock")
-            .uri().queryParam("label", label).back()
+            .uri().queryParam("label", label)
+            .queryParam("name", this.lck).back()
+            .method(Request.GET)
             .fetch()
             .status() == HttpURLConnection.HTTP_SEE_OTHER;
         Logger.info(
@@ -144,9 +147,7 @@ final class RtLock implements Lock {
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class)
-            .rel(String.format("/page/links/link[@rel='%s']/@href", label))
-            .method(Request.GET)
-            .uri().queryParam("name", this.lck).back();
+            .rel(String.format("/page/links/link[@rel='%s']/@href", label));
     }
 
 }
