@@ -172,6 +172,12 @@ public final class Atomic<T> implements Callable<T> {
             return this.callable.call();
         } finally {
             this.unlock();
+            Logger.info(
+                this,
+                // @checkstyle LineLength (1 line)
+                "\"%s\" took %[ms]s after %d attempt(s)",
+                this.lock, System.currentTimeMillis() - start, attempt
+            );
         }
     }
 
