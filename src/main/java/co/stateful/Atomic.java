@@ -178,7 +178,7 @@ public final class Atomic<T> implements Callable<T> {
                 this,
                 // @checkstyle LineLength (1 line)
                 "\"%s\" took %[ms]s after %d attempt(s)",
-                this.lock, System.currentTimeMillis() - start, attempt
+                this.lock, System.currentTimeMillis() - start, attempt + 1
             );
         }
     }
