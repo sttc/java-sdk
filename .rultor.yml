@@ -25,6 +25,5 @@ release:
   - mvn clean deploy -Pqulice -Psonatype -Psttc --errors --settings ../settings.xml
   - mvn clean site-deploy -Psite --errors --settings ../settings.xml
 architect:
-- yegor256
-- yegor256
 - karato
+- yegor256
