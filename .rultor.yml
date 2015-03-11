@@ -20,6 +20,8 @@ deploy:
   - mvn clean
   - pdd --source=$(pwd) --verbose --file=sttc-java-sdk.xml
   - s3cmd --no-progress put sttc-java-sdk.xml --config=../s3cfg s3://pdd.teamed.io/sttc-java-sdk.xml
+  commanders:
+  - yegor256
 release:
   script:
   - mvn versions:set "-DnewVersion=${tag}"
