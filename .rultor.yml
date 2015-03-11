@@ -28,6 +28,8 @@ release:
   - git commit -am "${tag}"
   - mvn clean deploy -Pqulice -Psonatype -Psttc --errors --settings ../settings.xml
   - mvn clean site-deploy -Psite --errors --settings ../settings.xml
+  commanders:
+  - yegor256
 architect:
 - karato
 - yegor256
