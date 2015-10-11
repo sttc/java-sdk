@@ -5,6 +5,7 @@
 
 [![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
+[![Dependencies](https://www.versioneye.com/user/projects/561ac6a1a193340f2800116d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561ac6a1a193340f2800116d)
 
 ## Java SDK of Stateful.co
 
