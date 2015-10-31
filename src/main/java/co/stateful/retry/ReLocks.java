@@ -67,19 +67,21 @@ public final class ReLocks implements Locks {
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public boolean exists(final String name) throws IOException {
         return this.origin.exists(name);
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public Lock get(final String name) throws IOException {
         return new ReLock(this.origin.get(name));
     }

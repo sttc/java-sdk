@@ -66,46 +66,51 @@ public final class ReLock implements Lock {
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public String name() {
         return this.origin.name();
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public boolean lock() throws IOException {
         return this.origin.lock();
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public void unlock() throws IOException {
         this.origin.unlock();
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public boolean lock(final String label) throws IOException {
         return this.origin.lock(label);
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public boolean unlock(final String label) throws IOException {
         return this.origin.unlock(label);
     }

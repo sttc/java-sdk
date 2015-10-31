@@ -66,28 +66,31 @@ public final class ReCounter implements Counter {
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public String name() {
         return this.origin.name();
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public void set(final long value) throws IOException {
         this.origin.set(value);
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public long incrementAndGet(final long delta) throws IOException {
         return this.origin.incrementAndGet(delta);
     }

@@ -75,19 +75,21 @@ public final class ReSttc implements Sttc {
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public Counters counters() throws IOException {
         return new ReCounters(this.origin.counters());
     }
 
     @Override
-    @RetryOnFailure(
-        verbose = false, attempts = Tv.TWENTY,
-        delay = Tv.FIVE, unit = TimeUnit.SECONDS
-    )
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+        )
     public Locks locks() throws IOException {
         return new ReLocks(this.origin.locks());
     }
