@@ -70,7 +70,7 @@ public final class ReCounters implements Counters {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public Iterable<String> names() throws IOException {
         return this.origin.names();
@@ -80,7 +80,7 @@ public final class ReCounters implements Counters {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public Counter create(final String name) throws IOException {
         return this.origin.create(name);
@@ -90,7 +90,7 @@ public final class ReCounters implements Counters {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public void delete(final String name) throws IOException {
         this.origin.delete(name);
@@ -100,7 +100,7 @@ public final class ReCounters implements Counters {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public Counter get(final String name) throws IOException {
         return new ReCounter(this.origin.get(name));

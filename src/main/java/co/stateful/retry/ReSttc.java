@@ -78,7 +78,7 @@ public final class ReSttc implements Sttc {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public Counters counters() throws IOException {
         return new ReCounters(this.origin.counters());
@@ -88,7 +88,7 @@ public final class ReSttc implements Sttc {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public Locks locks() throws IOException {
         return new ReLocks(this.origin.locks());

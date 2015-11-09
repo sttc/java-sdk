@@ -69,7 +69,7 @@ public final class ReCounter implements Counter {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public String name() {
         return this.origin.name();
@@ -79,7 +79,7 @@ public final class ReCounter implements Counter {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public void set(final long value) throws IOException {
         this.origin.set(value);
@@ -89,7 +89,7 @@ public final class ReCounter implements Counter {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public long incrementAndGet(final long delta) throws IOException {
         return this.origin.incrementAndGet(delta);

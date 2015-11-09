@@ -70,7 +70,7 @@ public final class ReLocks implements Locks {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public boolean exists(final String name) throws IOException {
         return this.origin.exists(name);
@@ -80,7 +80,7 @@ public final class ReLocks implements Locks {
     @RetryOnFailure
         (
             verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.FIVE, unit = TimeUnit.SECONDS
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
     public Lock get(final String name) throws IOException {
         return new ReLock(this.origin.get(name));
