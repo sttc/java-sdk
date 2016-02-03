@@ -4,6 +4,7 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/sttc/java-sdk)](http://www.rultor.com/p/sttc/java-sdk)
 
 [![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
+[![Build status](https://ci.appveyor.com/api/projects/status/g2r57nw43nxqb29h?svg=true)](https://ci.appveyor.com/project/yegor256/java-sdk)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
 [![Dependencies](https://www.versioneye.com/user/projects/561ac6a1a193340f2800116d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561ac6a1a193340f2800116d)
 
