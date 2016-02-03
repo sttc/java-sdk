@@ -65,6 +65,7 @@ import lombok.ToString;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.6
+ * @param <T> Type of result
  * @link <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
  * @link <a href="http://www.yegor256.com/2014/12/04/synchronization-between-nodes.html">Synchronization Between Nodes</a>
  */
@@ -82,18 +83,7 @@ public final class Atomic<T> implements Callable<T> {
     /**
      * Shutdown hook.
      */
-    private final transient Thread hook = new Thread(
-        new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Atomic.this.lock.unlock();
-                } catch (final IOException ex) {
-                    throw new IllegalStateException(ex);
-                }
-            }
-        }
-    );
+    private final transient Thread hook;
 
     /**
      * Callable to use.
@@ -113,7 +103,7 @@ public final class Atomic<T> implements Callable<T> {
     /**
      * Successfully locked?
      */
-    private final transient AtomicBoolean locked = new AtomicBoolean();
+    private final transient AtomicBoolean locked;
 
     /**
      * Public ctor (default maximum waiting time of five minutes).
@@ -132,6 +122,19 @@ public final class Atomic<T> implements Callable<T> {
      * @since 0.8
      */
     public Atomic(final Callable<T> clbl, final Lock lck, final long maximum) {
+        this.hook = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Atomic.this.lock.unlock();
+                    } catch (final IOException ex) {
+                        throw new IllegalStateException(ex);
+                    }
+                }
+            }
+        );
+        this.locked = new AtomicBoolean();
         this.callable = clbl;
         this.lock = lck;
         this.max = maximum;
@@ -147,8 +150,9 @@ public final class Atomic<T> implements Callable<T> {
             if (age > this.max) {
                 throw new IllegalStateException(
                     Logger.format(
-                        "lock \"%s\" is stale (%d failed attempts in %[ms]s)",
-                        this.lock, attempt, age
+                        // @checkstyle LineLength (1 line)
+                        "lock \"%s\" is stale (%d failed attempts in %[ms]s, which is over %[ms]s)",
+                        this.lock, attempt, age, this.max
                     )
                 );
             }
@@ -192,7 +196,7 @@ public final class Atomic<T> implements Callable<T> {
     public T callQuietly() {
         try {
             return this.call();
-        // @checkstyle IllegalCatchCheck (1 line)
+            // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception ex) {
             throw new IllegalStateException(ex);
         }

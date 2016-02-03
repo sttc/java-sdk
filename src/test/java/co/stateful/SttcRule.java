@@ -48,12 +48,32 @@ public final class SttcRule implements TestRule {
     /**
      * URN of stateful.co.
      */
-    private static final String USER = System.getProperty("sttc.urn");
+    private final transient String user;
 
     /**
      * Token of stateful.co.
      */
-    private static final String TOKEN = System.getProperty("sttc.token");
+    private final transient String token;
+
+    /**
+     * Ctor.
+     */
+    public SttcRule() {
+        this(
+            System.getProperty("sttc.urn"),
+            System.getProperty("sttc.token")
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param urn User URN
+     * @param tkn Token
+     */
+    public SttcRule(final String urn, final String tkn) {
+        this.user = urn;
+        this.token = tkn;
+    }
 
     @Override
     public Statement apply(final Statement base,
@@ -66,12 +86,13 @@ public final class SttcRule implements TestRule {
      * @return Sttc
      */
     public Sttc get() {
-        Assume.assumeNotNull(SttcRule.USER);
+        Assume.assumeNotNull(this.user);
+        Assume.assumeFalse(this.user.isEmpty());
         return new ReSttc(
             new CdSttc(
                 new RtSttc(
-                    URN.create(SttcRule.USER),
-                    SttcRule.TOKEN
+                    URN.create(this.user),
+                    this.token
                 )
             )
         );
