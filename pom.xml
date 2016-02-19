@@ -115,10 +115,6 @@
         </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
-            <artifactId>jcabi-manifests</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.jcabi</groupId>
             <artifactId>jcabi-xml</artifactId>
         </dependency>
         <dependency>
@@ -199,5 +195,19 @@
                 </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.qulice</groupId>
+                    <artifactId>qulice-maven-plugin</artifactId>
+                    <version>0.16.2</version>
+                    <configuration>
+                        <excludes combine.children="append">
+                            <exclude>findbugs:.*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
