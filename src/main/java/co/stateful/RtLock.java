@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,13 +35,10 @@ import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
 import com.jcabi.log.Logger;
-import com.jcabi.manifests.Manifests;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * Lock.
@@ -80,26 +77,6 @@ final class RtLock implements Lock {
     @Override
     public String name() {
         return this.lck;
-    }
-
-    @Override
-    public boolean lock() throws IOException {
-        return this.lock(
-            String.format(
-                "co.stateful/java-sdk %s/%s; %s; Java %s; %s %s",
-                Manifests.read("Sttc-Version"),
-                Manifests.read("Sttc-Revision"),
-                DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date()),
-                System.getProperty("java.version"),
-                System.getProperty("os.name"),
-                System.getProperty("os.version")
-            )
-        );
-    }
-
-    @Override
-    public void unlock() throws IOException {
-        this.unlock("");
     }
 
     @Override

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -122,13 +122,13 @@ public final class RtLocksITCase {
         );
         MatcherAssert.assertThat(locks.exists(name), Matchers.is(false));
         final Lock lock = locks.get(name);
-        lock.lock();
+        lock.lock("test");
         try {
             MatcherAssert.assertThat(locks.exists(name), Matchers.is(true));
-            lock.unlock();
+            lock.unlock("");
             MatcherAssert.assertThat(locks.exists(name), Matchers.is(false));
         } finally {
-            lock.unlock();
+            lock.unlock("");
         }
     }
 
@@ -140,7 +140,7 @@ public final class RtLocksITCase {
     public void rejectsIncorrectLockName() throws Exception {
         final Sttc sttc = this.srule.get();
         final Locks locks = sttc.locks();
-        locks.get("invalid name with spaces").lock();
+        locks.get("invalid name with spaces").lock("test-3");
     }
 
 }

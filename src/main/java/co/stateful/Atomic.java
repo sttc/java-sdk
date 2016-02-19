@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -106,28 +106,46 @@ public final class Atomic<T> implements Callable<T> {
     private final transient AtomicBoolean locked;
 
     /**
+     * Label for locking.
+     */
+    private final transient String label;
+
+    /**
      * Public ctor (default maximum waiting time of five minutes).
      * @param clbl Callable to use
      * @param lck Lock to use
      */
     public Atomic(final Callable<T> clbl, final Lock lck) {
-        this(clbl, lck, TimeUnit.MINUTES.toMillis((long) Tv.FIVE));
+        this(clbl, lck, "");
+    }
+
+    /**
+     * Public ctor (default maximum waiting time of five minutes).
+     * @param clbl Callable to use
+     * @param lck Lock to use
+     * @param lbl Label to use for locking and unlocking (can be empty)
+     */
+    public Atomic(final Callable<T> clbl, final Lock lck, final String lbl) {
+        this(clbl, lck, lbl, TimeUnit.MINUTES.toMillis((long) Tv.FIVE));
     }
 
     /**
      * Public ctor.
      * @param clbl Callable to use
      * @param lck Lock to use
+     * @param lbl Label to use for locking and unlocking (can be empty)
      * @param maximum Maximum waiting time
      * @since 0.8
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
-    public Atomic(final Callable<T> clbl, final Lock lck, final long maximum) {
+    public Atomic(final Callable<T> clbl, final Lock lck, final String lbl,
+        final long maximum) {
         this.hook = new Thread(
             new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        Atomic.this.lock.unlock();
+                        Atomic.this.lock.unlock(lbl);
                     } catch (final IOException ex) {
                         throw new IllegalStateException(ex);
                     }
@@ -138,6 +156,7 @@ public final class Atomic<T> implements Callable<T> {
         this.callable = clbl;
         this.lock = lck;
         this.max = maximum;
+        this.label = lbl;
     }
 
     @Override
@@ -145,7 +164,7 @@ public final class Atomic<T> implements Callable<T> {
         Runtime.getRuntime().addShutdownHook(this.hook);
         long attempt = 0L;
         final long start = System.currentTimeMillis();
-        while (!this.lock.lock()) {
+        while (!this.lock.lock(this.label)) {
             final long age = System.currentTimeMillis() - start;
             if (age > this.max) {
                 throw new IllegalStateException(
@@ -182,7 +201,7 @@ public final class Atomic<T> implements Callable<T> {
                 this,
                 // @checkstyle LineLength (1 line)
                 "\"%s\" took %[ms]s after %d attempt(s)",
-                this.lock, System.currentTimeMillis() - start, attempt + 1
+                this.lock, System.currentTimeMillis() - start, attempt + 1L
             );
         }
     }
@@ -208,7 +227,7 @@ public final class Atomic<T> implements Callable<T> {
      */
     private void unlock() throws IOException {
         if (this.locked.get()) {
-            this.lock.unlock();
+            this.lock.unlock(this.label);
         }
         Runtime.getRuntime().removeShutdownHook(this.hook);
     }

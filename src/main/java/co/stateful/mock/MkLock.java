@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,16 +51,6 @@ final class MkLock implements Lock {
     @Override
     public String name() {
         return this.getClass().getName();
-    }
-
-    @Override
-    public boolean lock() {
-        return true;
-    }
-
-    @Override
-    public void unlock() {
-        // nothing to do here
     }
 
     @Override

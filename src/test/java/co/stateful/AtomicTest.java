@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -72,7 +72,7 @@ public final class AtomicTest {
     @Test
     public void unlocksWhenCrashed() throws Exception {
         final Lock lock = Mockito.mock(Lock.class);
-        Mockito.doReturn(true).when(lock).lock();
+        Mockito.doReturn(true).when(lock).lock(Mockito.anyString());
         try {
             new Atomic<String>(
                 new Callable<String>() {
@@ -88,7 +88,7 @@ public final class AtomicTest {
                 ex.getLocalizedMessage(), Matchers.startsWith("expected")
             );
         }
-        Mockito.verify(lock).unlock();
+        Mockito.verify(lock).unlock(Mockito.anyString());
     }
 
 }

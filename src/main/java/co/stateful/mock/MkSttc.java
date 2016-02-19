@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,6 @@ import co.stateful.Locks;
 import co.stateful.Sttc;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
-import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -52,12 +51,12 @@ import lombok.ToString;
 public final class MkSttc implements Sttc {
 
     @Override
-    public Counters counters() throws IOException {
+    public Counters counters() {
         return new MkCounters();
     }
 
     @Override
-    public Locks locks() throws IOException {
+    public Locks locks() {
         return new MkLocks();
     }
 }

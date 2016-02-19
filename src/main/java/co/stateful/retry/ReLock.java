@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,26 +73,6 @@ public final class ReLock implements Lock {
         )
     public String name() {
         return this.origin.name();
-    }
-
-    @Override
-    @RetryOnFailure
-        (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
-        )
-    public boolean lock() throws IOException {
-        return this.origin.lock();
-    }
-
-    @Override
-    @RetryOnFailure
-        (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
-        )
-    public void unlock() throws IOException {
-        this.origin.unlock();
     }
 
     @Override

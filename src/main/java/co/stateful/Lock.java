@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,21 +48,6 @@ public interface Lock {
      * @since 0.8
      */
     String name();
-
-    /**
-     * Lock.
-     * @return TRUE if success, FALSE otherwise
-     * @throws IOException If any problem inside
-     * @since 0.6
-     */
-    boolean lock() throws IOException;
-
-    /**
-     * Unlock.
-     * @throws IOException If any problem inside
-     * @since 0.6
-     */
-    void unlock() throws IOException;
 
     /**
      * Lock with label.

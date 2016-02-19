@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, stateful.co
+ * Copyright (c) 2014-2016, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@ package co.stateful;
 
 import com.jcabi.aspects.Immutable;
 import java.io.IOException;
-import javax.validation.constraints.NotNull;
 
 /**
  * Counters.
@@ -48,7 +47,6 @@ public interface Counters {
      * @return List of counter names
      * @throws IOException If some I/O problem
      */
-    @NotNull
     Iterable<String> names() throws IOException;
 
     /**
@@ -57,7 +55,6 @@ public interface Counters {
      * @return Counter
      * @throws IOException If some I/O problem
      */
-    @NotNull
     Counter create(String name) throws IOException;
 
     /**
@@ -73,7 +70,6 @@ public interface Counters {
      * @return Counter
      * @throws IOException If some I/O problem
      */
-    @NotNull
     Counter get(String name) throws IOException;
 
 }
