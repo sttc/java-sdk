@@ -72,7 +72,6 @@ import lombok.ToString;
 @Loggable(Loggable.DEBUG)
 @ToString
 @EqualsAndHashCode(of = { "callable", "lock" })
-@SuppressWarnings("PMD.DoNotUseThreads")
 public final class Atomic<T> implements Callable<T> {
 
     /**
