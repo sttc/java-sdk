@@ -32,6 +32,7 @@ package co.stateful;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
+import com.jcabi.http.Response;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
 import com.jcabi.log.Logger;
@@ -82,16 +83,17 @@ final class RtLock implements Lock {
     @Override
     public boolean lock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
-        final boolean locked = this.front("lock")
+        final Response rsp = this.front("lock")
             .body().formParam("label", label)
             .formParam("name", this.lck).back()
             .method(Request.POST)
-            .fetch()
-            .status() == HttpURLConnection.HTTP_SEE_OTHER;
+            .fetch();
+        final boolean locked = rsp.status() == HttpURLConnection.HTTP_SEE_OTHER;
         Logger.info(
-            this, "lock of \"%s\" is %s in %[ms]s",
-            this.lck, Boolean.toString(locked),
-            System.currentTimeMillis() - start
+            this, "lock of \"%s\" is %B in %[ms]s: %s",
+            this.lck, locked,
+            System.currentTimeMillis() - start,
+            rsp.body()
         );
         return locked;
     }
@@ -99,15 +101,17 @@ final class RtLock implements Lock {
     @Override
     public boolean unlock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
-        final boolean unlocked = this.front("unlock")
+        final Response rsp = this.front("unlock")
             .uri().queryParam("label", label)
             .queryParam("name", this.lck).back()
             .method(Request.GET)
-            .fetch()
-            .status() == HttpURLConnection.HTTP_SEE_OTHER;
+            .fetch();
+        final boolean unlocked =
+            rsp.status() == HttpURLConnection.HTTP_SEE_OTHER;
         Logger.info(
-            this, "unlocked \"%s\" in %[ms]s: %B",
-            this.lck, System.currentTimeMillis() - start, unlocked
+            this, "unlock of \"%s\" is %B in %[ms]s",
+            this.lck, unlocked,
+            System.currentTimeMillis() - start
         );
         return unlocked;
     }
