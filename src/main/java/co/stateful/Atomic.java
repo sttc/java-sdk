@@ -80,11 +80,6 @@ public final class Atomic<T> implements Callable<T> {
     private static final Random RANDOM = new SecureRandom();
 
     /**
-     * Shutdown hook.
-     */
-    private final transient Thread hook;
-
-    /**
      * Callable to use.
      */
     private final transient Callable<T> callable;
@@ -139,18 +134,6 @@ public final class Atomic<T> implements Callable<T> {
      */
     public Atomic(final Callable<T> clbl, final Lock lck, final String lbl,
         final long maximum) {
-        this.hook = new Thread(
-            new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Atomic.this.lock.unlock(lbl);
-                    } catch (final IOException ex) {
-                        throw new IllegalStateException(ex);
-                    }
-                }
-            }
-        );
         this.locked = new AtomicBoolean();
         this.callable = clbl;
         this.lock = lck;
@@ -160,7 +143,19 @@ public final class Atomic<T> implements Callable<T> {
 
     @Override
     public T call() throws Exception {
-        Runtime.getRuntime().addShutdownHook(this.hook);
+        final Thread hook = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Atomic.this.lock.unlock(Atomic.this.label);
+                    } catch (final IOException ex) {
+                        throw new IllegalStateException(ex);
+                    }
+                }
+            }
+        );
+        Runtime.getRuntime().addShutdownHook(hook);
         long attempt = 0L;
         final long start = System.currentTimeMillis();
         while (!this.lock.lock(this.label)) {
@@ -195,7 +190,10 @@ public final class Atomic<T> implements Callable<T> {
         try {
             return this.callable.call();
         } finally {
-            this.unlock();
+            if (this.locked.get()) {
+                this.lock.unlock(this.label);
+            }
+            Runtime.getRuntime().removeShutdownHook(hook);
             Logger.info(
                 this,
                 // @checkstyle LineLength (1 line)
@@ -218,17 +216,6 @@ public final class Atomic<T> implements Callable<T> {
         } catch (final Exception ex) {
             throw new IllegalStateException(ex);
         }
-    }
-
-    /**
-     * Unlock it.
-     * @throws IOException If fails
-     */
-    private void unlock() throws IOException {
-        if (this.locked.get()) {
-            this.lock.unlock(this.label);
-        }
-        Runtime.getRuntime().removeShutdownHook(this.hook);
     }
 
 }
