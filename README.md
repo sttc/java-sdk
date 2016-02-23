@@ -8,7 +8,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/g2r57nw43nxqb29h?svg=true)](https://ci.appveyor.com/project/yegor256/java-sdk)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
 [![Dependencies](https://www.versioneye.com/user/projects/561ac6a1a193340f2800116d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561ac6a1a193340f2800116d)
-[![JavaDoc](https://img.shields.io/badge/javadoc-html-blue.svg)](http://www.javadoc.io/doc/co.stateful/java-sdk)
+[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/co.stateful/java-sdk/badge.svg)](http://www.javadoc.io/doc/co.stateful/java-sdk)
 
 ## Java SDK of Stateful.co
 
