@@ -54,6 +54,11 @@ final class MkLock implements Lock {
     }
 
     @Override
+    public String label() {
+        return "label";
+    }
+
+    @Override
     public boolean lock(final String label) {
         return true;
     }

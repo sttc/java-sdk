@@ -50,6 +50,14 @@ public interface Lock {
     String name();
 
     /**
+     * Read label (or empty text if lock doesn't exist).
+     * @return Label of this lock (if the lock exists), or empty string
+     * @throws IOException If any problem inside
+     * @since 0.15
+     */
+    String label() throws IOException;
+
+    /**
      * Lock with label.
      * @param label Label to attach
      * @return TRUE if success, FALSE otherwise

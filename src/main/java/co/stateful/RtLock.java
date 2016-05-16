@@ -81,6 +81,23 @@ final class RtLock implements Lock {
     }
 
     @Override
+    public String label() throws IOException {
+        final long start = System.currentTimeMillis();
+        final String label = this.front("label")
+            .uri().queryParam("name", this.lck).back()
+            .method(Request.GET)
+            .fetch()
+            .body();
+        Logger.info(
+            this, "label of \"%s\" retrieved in %[ms]s: \"%s\"",
+            this.lck,
+            System.currentTimeMillis() - start,
+            label
+        );
+        return label;
+    }
+
+    @Override
     public boolean lock(final String label) throws IOException {
         final long start = System.currentTimeMillis();
         final Response rsp = this.front("lock")

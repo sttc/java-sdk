@@ -81,6 +81,16 @@ public final class ReLock implements Lock {
             verbose = false, attempts = Tv.TWENTY,
             delay = Tv.TWENTY, unit = TimeUnit.SECONDS
         )
+    public String label() throws IOException {
+        return this.origin.label();
+    }
+
+    @Override
+    @RetryOnFailure
+        (
+            verbose = false, attempts = Tv.TWENTY,
+            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+        )
     public boolean lock(final String label) throws IOException {
         return this.origin.lock(label);
     }
