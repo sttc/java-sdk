@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016, stateful.co
+ * Copyright (c) 2014-2017, stateful.co
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
