@@ -2,7 +2,7 @@
 
 [![Managed by Zerocracy](http://www.zerocracy.com/badge.svg)](http://www.zerocracy.com)
 [![DevOps By Rultor.com](http://www.rultor.com/b/sttc/java-sdk)](http://www.rultor.com/p/sttc/java-sdk)
-[![We recommend IntelliJ IDEA](http://img.teamed.io/intellij-idea-recommend.svg)](https://www.jetbrains.com/idea/)
+[![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
 [![Build status](https://ci.appveyor.com/api/projects/status/g2r57nw43nxqb29h?svg=true)](https://ci.appveyor.com/project/yegor256/java-sdk)
