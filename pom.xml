@@ -43,16 +43,16 @@
     <packaging>jar</packaging>
     <name>java-sdk</name>
     <description>Stateful Web Primitives</description>
-    <url>http://www.stateful.co</url>
+    <url>https://www.stateful.co</url>
     <inceptionYear>2014</inceptionYear>
     <organization>
         <name>stateful.co</name>
-        <url>http://www.stateful.co</url>
+        <url>https://www.stateful.co</url>
     </organization>
     <licenses>
         <license>
             <name>Stateful Web Primitives</name>
-            <url>http://www.stateful.co/LICENSE.txt</url>
+            <url>https://www.stateful.co/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>

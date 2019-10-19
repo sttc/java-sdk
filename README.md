@@ -14,7 +14,7 @@
 
 JavaDoc is here: [java-sdk.stateful.co](http://java-sdk.stateful.co/)
 
-First, register an account at [stateful.co](http://www.stateful.co). Then,
+First, register an account at [stateful.co](https://www.stateful.co). Then,
 you can create a counter and increment it:
 
 ```java

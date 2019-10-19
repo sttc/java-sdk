@@ -8,7 +8,7 @@
 
 ~~ This source file is subject to the new BSD license that is bundled
 ~~ with this package in the file LICENSE.txt. It is also available
-~~ through the world-wide-web at this URL: http://www.stateful.co/LICENSE.txt
+~~ through the world-wide-web at this URL: https://www.stateful.co/LICENSE.txt
 ~~ If you did not receive a copy of the license and are unable to
 ~~ obtain it through the world-wide-web, please send an email
 ~~ to license@stateful.co so we can send you a copy immediately.
@@ -29,7 +29,7 @@
 Stateful Web Primitives
 
   This is a Java SDK for a collection of stateful web primitives
-  at {{{http://www.stateful.co}www.stateful.co}}.
+  at {{{https://www.stateful.co}www.stateful.co}}.
 
   For example, you need a lock available online and shared among multiple
   processes running on different nodes in the network. Here is how you

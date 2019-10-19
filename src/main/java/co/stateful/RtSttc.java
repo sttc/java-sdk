@@ -53,7 +53,7 @@ import lombok.ToString;
  *
  * <p>Make an instance of this class and start from there, for example,
  * if you want to use a cloud lock from
- * <a href="http://www.stateful.co">stateful.co</a>:
+ * <a href="https://www.stateful.co">stateful.co</a>:
  *
  * <pre> Lock lock = new RtSttc(
  *   new URN("urn:github:12345"), "token"
@@ -61,7 +61,7 @@ import lombok.ToString;
  *
  * <p>You need two arguments to instantiate this class: URN of the user
  * and your secret token. You can get them at the home page of
- * <a href="http://www.stateful.co">stateful.co</a>, right on the top.
+ * <a href="https://www.stateful.co">stateful.co</a>, right on the top.
  *
  * <p>It is highly recommended to use
  * {@link co.stateful.retry.ReSttc} decorator, in production
@@ -94,7 +94,7 @@ public final class RtSttc implements Sttc {
      * @param token Security token
      */
     public RtSttc(final URN urn, final String token) {
-        this.request = new JdkRequest("http://www.stateful.co")
+        this.request = new JdkRequest("https://www.stateful.co")
             .through(OneMinuteWire.class)
             .through(RetryWire.class)
             .through(VerboseWire.class)

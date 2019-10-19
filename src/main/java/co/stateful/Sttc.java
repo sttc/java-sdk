@@ -37,7 +37,7 @@ import java.io.IOException;
  *
  * <p>Make an instance of this interface using {@link RtSttc}, for example,
  * if you want to use a cloud lock from
- * <a href="http://www.stateful.co">stateful.co</a>:
+ * <a href="https://www.stateful.co">stateful.co</a>:
  *
  * <pre> Lock lock = new RtSttc(
  *   new URN("urn:github:12345"), "token"
@@ -45,7 +45,7 @@ import java.io.IOException;
  *
  * <p>You need two arguments to instantiate {@link RtSttc}: URN of the user
  * and your secret token. You can get them at the home page of
- * <a href="http://www.stateful.co">stateful.co</a>, right on the top.
+ * <a href="https://www.stateful.co">stateful.co</a>, right on the top.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$

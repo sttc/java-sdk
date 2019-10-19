@@ -32,8 +32,8 @@
  * Stateful.co SDK.
  *
  * <p>First, read the documentation at
- * <a href="http://java-sdk.stateful.co">java-sdk.stateful.co</a>. Then,
- * register an account at <a href="http://www.stateful.co">stateful.co</a>.
+ * <a href="https://java-sdk.stateful.co">java-sdk.stateful.co</a>. Then,
+ * register an account at <a href="https://www.stateful.co">stateful.co</a>.
  * Then, you can try to use, for example, counters:
  *
  * <pre> public class Main {
@@ -53,7 +53,7 @@
  *
  * <p>You need two arguments to instantiate {@link RtSttc}: URN of the user
  * and your secret token. You can get them at the home page of
- * <a href="http://www.stateful.co">stateful.co</a>, right on the top.
+ * <a href="https://www.stateful.co">stateful.co</a>, right on the top.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
