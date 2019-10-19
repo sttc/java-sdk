@@ -7,7 +7,7 @@
 [![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
 [![Build status](https://ci.appveyor.com/api/projects/status/g2r57nw43nxqb29h?svg=true)](https://ci.appveyor.com/project/yegor256/java-sdk)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/co.stateful/java-sdk/badge.svg)](http://www.javadoc.io/doc/co.stateful/java-sdk)
+[![Javadoc](http://www.javadoc.io/badge/co.stateful/java-sdk.svg)](http://www.javadoc.io/doc/co.stateful/java-sdk)
 
 This is Java SDK for [Stateful](https://www.stateful.co).
 
