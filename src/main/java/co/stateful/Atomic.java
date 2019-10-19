@@ -66,8 +66,8 @@ import lombok.ToString;
  * @version $Id$
  * @since 0.6
  * @param <T> Type of result
- * @link <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
- * @link <a href="http://www.yegor256.com/2014/12/04/synchronization-between-nodes.html">Synchronization Between Nodes</a>
+ * @see <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
+ * @see <a href="http://www.yegor256.com/2014/12/04/synchronization-between-nodes.html">Synchronization Between Nodes</a>
  */
 @Loggable(Loggable.DEBUG)
 @ToString
@@ -123,6 +123,7 @@ public final class Atomic<T> implements Callable<T> {
         this(clbl, lck, lbl, TimeUnit.MINUTES.toMillis((long) Tv.FIVE));
     }
 
+    // @checkstyle ParameterNumberCheck (15 lines)
     /**
      * Public ctor.
      * @param clbl Callable to use
@@ -130,7 +131,6 @@ public final class Atomic<T> implements Callable<T> {
      * @param lbl Label to use for locking and unlocking (can be empty)
      * @param maximum Maximum waiting time
      * @since 0.8
-     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public Atomic(final Callable<T> clbl, final Lock lck, final String lbl,
         final long maximum) {

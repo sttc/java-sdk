@@ -37,7 +37,7 @@
  * adapter of <a href="http://www.statefu.co">stateful.co</a>:
  *
  * <pre>public class FooTest {
- *   @&#64;Test
+ *   &#64;Test
  *   public void worksWithCounter() {
  *     Sttc sttc = new MkSttc();
  *     new Foo(sttc.counters().get("my-counter")).doIt();

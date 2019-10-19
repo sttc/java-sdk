@@ -1,20 +1,19 @@
 <img src="http://img.stateful.co/pomegranate.svg" width="64px" height="64px"/>
 
-[![Managed by Zerocracy](http://www.zerocracy.com/badge.svg)](http://www.zerocracy.com)
-[![DevOps By Rultor.com](http://www.rultor.com/b/sttc/java-sdk)](http://www.rultor.com/p/sttc/java-sdk)
+[![Managed by Zerocracy](https://www.zerocracy.com/badge.svg)](https://www.zerocracy.com)
+[![DevOps By Rultor.com](https://www.rultor.com/b/sttc/java-sdk)](https://www.rultor.com/p/sttc/java-sdk)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
 [![Build status](https://ci.appveyor.com/api/projects/status/g2r57nw43nxqb29h?svg=true)](https://ci.appveyor.com/project/yegor256/java-sdk)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
-[![Dependencies](https://www.versioneye.com/user/projects/561ac6a1a193340f2800116d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561ac6a1a193340f2800116d)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/co.stateful/java-sdk/badge.svg)](http://www.javadoc.io/doc/co.stateful/java-sdk)
 
-## Java SDK of Stateful.co
+This is Java SDK for [Stateful](https://www.stateful.co).
 
-JavaDoc is here: [java-sdk.stateful.co](http://java-sdk.stateful.co/)
+The JavaDoc is [here](http://java-sdk.stateful.co/).
 
-First, register an account at [stateful.co](https://www.stateful.co). Then,
+First, register an account at [Stateful](https://www.stateful.co). Then,
 you can create a counter and increment it:
 
 ```java
