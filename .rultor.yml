@@ -19,5 +19,5 @@ release:
     pdd -f /dev/null
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
-    mvn clean deploy -Pqulice -Psonatype -Psttc --errors --settings ../settings.xml
     mvn clean site-deploy -Psite --errors --settings ../settings.xml
+    mvn clean deploy -Pqulice -Psonatype -Psttc --errors --settings ../settings.xml
