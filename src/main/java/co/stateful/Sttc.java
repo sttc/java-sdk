@@ -47,8 +47,6 @@ import java.io.IOException;
  * and your secret token. You can get them at the home page of
  * <a href="https://www.stateful.co">stateful.co</a>, right on the top.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  * @see <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
  * @see <a href="http://www.yegor256.com/2014/12/04/synchronization-between-nodes.html">Synchronization Between Nodes</a>

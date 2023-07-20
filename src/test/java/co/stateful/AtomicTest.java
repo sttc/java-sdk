@@ -34,52 +34,34 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
  * Test case for {@link Atomic}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.6
  */
 public final class AtomicTest {
 
-    /**
-     * Atomic can run callable.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void runsCallable() throws Exception {
         MatcherAssert.assertThat(
-            new Atomic<String>(
-                new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        return "hello, world";
-                    }
-                },
+            new Atomic<>(
+                () -> "hello, world",
                 new MkSttc().locks().get("test")
             ).callQuietly(),
             Matchers.containsString("hello")
         );
     }
 
-    /**
-     * Atomic can unlock if crashed.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void unlocksWhenCrashed() throws Exception {
         final Lock lock = Mockito.mock(Lock.class);
         Mockito.doReturn(true).when(lock).lock(Mockito.anyString());
         try {
-            new Atomic<String>(
-                new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        throw new IOException("expected one");
-                    }
+            new Atomic<>(
+                () -> {
+                    throw new IOException("expected one");
                 },
                 lock
             ).call();

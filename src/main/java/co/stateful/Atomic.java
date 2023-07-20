@@ -30,7 +30,6 @@
 package co.stateful;
 
 import com.jcabi.aspects.Loggable;
-import com.jcabi.aspects.Tv;
 import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -120,7 +119,7 @@ public final class Atomic<T> implements Callable<T> {
      * @param lbl Label to use for locking and unlocking (can be empty)
      */
     public Atomic(final Callable<T> clbl, final Lock lck, final String lbl) {
-        this(clbl, lck, lbl, TimeUnit.MINUTES.toMillis((long) Tv.FIVE));
+        this(clbl, lck, lbl, TimeUnit.MINUTES.toMillis(5L));
     }
 
     // @checkstyle ParameterNumberCheck (15 lines)
@@ -173,7 +172,7 @@ public final class Atomic<T> implements Callable<T> {
             final long delay = Math.min(
                 TimeUnit.MINUTES.toMillis(1L),
                 Math.abs(
-                    (long) Tv.HUNDRED + (long) Atomic.RANDOM.nextInt(Tv.HUNDRED)
+                    100L + (long) Atomic.RANDOM.nextInt(100)
                     // @checkstyle MagicNumber (1 line)
                     + (long) StrictMath.pow(5.0d, (double) attempt + 1.0d)
                 )

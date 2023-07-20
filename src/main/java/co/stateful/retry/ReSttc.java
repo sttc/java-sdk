@@ -35,7 +35,6 @@ import co.stateful.Sttc;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
-import com.jcabi.aspects.Tv;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
@@ -51,8 +50,6 @@ import lombok.ToString;
  * in production environment. The Internet is not a stable environment,
  * and connection failures is a regular event.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.5
  */
 @Immutable
@@ -77,8 +74,8 @@ public final class ReSttc implements Sttc {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public Counters counters() throws IOException {
         return new ReCounters(this.origin.counters());
@@ -87,8 +84,8 @@ public final class ReSttc implements Sttc {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public Locks locks() throws IOException {
         return new ReLocks(this.origin.locks());

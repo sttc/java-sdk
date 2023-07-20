@@ -39,12 +39,10 @@ import java.net.HttpURLConnection;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link RtLock}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.12.3
  */
 public final class RtLockTest {
@@ -57,10 +55,6 @@ public final class RtLockTest {
         "<link rel='unlock' href='#unlock'/></links></page>"
     );
 
-    /**
-     * RtLock can lock.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void locksViaHttp() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()
@@ -84,10 +78,6 @@ public final class RtLockTest {
         );
     }
 
-    /**
-     * RtLock can unlock.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void unlocksViaHttp() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()

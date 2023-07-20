@@ -29,17 +29,14 @@
  */
 package co.stateful;
 
-import com.jcabi.aspects.Tv;
 import java.security.SecureRandom;
 import java.util.Random;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link RtCounters}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  */
 public final class RtCountersITCase {
@@ -55,10 +52,6 @@ public final class RtCountersITCase {
      */
     public final transient SttcRule srule = new SttcRule();
 
-    /**
-     * RtCounters can manage counters.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void incrementsAndSets() throws Exception {
         final Sttc sttc = this.srule.get();
@@ -78,7 +71,7 @@ public final class RtCountersITCase {
                 counter.incrementAndGet(0L),
                 Matchers.equalTo(start)
             );
-            final long delta = (long) Tv.FIVE;
+            final long delta = 5L;
             MatcherAssert.assertThat(
                 counter.incrementAndGet(delta),
                 Matchers.equalTo(start + delta)

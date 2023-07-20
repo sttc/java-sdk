@@ -34,7 +34,6 @@ import co.stateful.Locks;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
-import com.jcabi.aspects.Tv;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
@@ -43,8 +42,6 @@ import lombok.ToString;
 /**
  * Retriable locks.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.5
  */
 @Immutable
@@ -69,8 +66,8 @@ public final class ReLocks implements Locks {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public boolean exists(final String name) throws IOException {
         return this.origin.exists(name);
@@ -79,8 +76,8 @@ public final class ReLocks implements Locks {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public Lock get(final String name) throws IOException {
         return new ReLock(this.origin.get(name));

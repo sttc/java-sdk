@@ -33,7 +33,6 @@ import co.stateful.Lock;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
-import com.jcabi.aspects.Tv;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
@@ -68,8 +67,8 @@ public final class ReLock implements Lock {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public String name() {
         return this.origin.name();
@@ -78,8 +77,8 @@ public final class ReLock implements Lock {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public String label() throws IOException {
         return this.origin.label();
@@ -88,8 +87,8 @@ public final class ReLock implements Lock {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public boolean lock(final String label) throws IOException {
         return this.origin.lock(label);
@@ -98,8 +97,8 @@ public final class ReLock implements Lock {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public boolean unlock(final String label) throws IOException {
         return this.origin.unlock(label);

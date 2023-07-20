@@ -42,8 +42,6 @@
  *   new RtSttc(new URN("urn:github:12345"), "auth-key")
  * );</pre>
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.5
  */
 package co.stateful.retry;

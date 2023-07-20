@@ -30,19 +30,19 @@
     <skin>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-maven-skin</artifactId>
-        <version>1.4</version>
+        <version>1.7.1</version>
     </skin>
     <bannerLeft>
         <name>stateful</name>
-        <src>http://img.stateful.co/pomegranate.svg</src>
-        <href>http://java-sdk.stateful.co</href>
+        <src>https://img.stateful.co/pomegranate.svg</src>
+        <href>https://java-sdk.stateful.co</href>
         <width>64</width>
         <height>64</height>
     </bannerLeft>
     <googleAnalyticsAccountId>UA-1963507-35</googleAnalyticsAccountId>
     <body>
         <head>
-            <link href="http://img.stateful.co/favicon.ico" rel="shortcut icon"/>
+            &lt;link href="http://img.stateful.co/favicon.ico" rel="shortcut icon"/&gt;
         </head>
         <menu name="Overview">
             <item name="Introduction" href="./index.html"/>

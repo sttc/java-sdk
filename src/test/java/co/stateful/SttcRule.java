@@ -32,18 +32,13 @@ package co.stateful;
 import co.stateful.cached.CdSttc;
 import co.stateful.retry.ReSttc;
 import com.jcabi.urn.URN;
-import org.junit.Assume;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
+import org.junit.jupiter.api.Assumptions;
 
 /**
  * Sttc test rule.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.1
  */
-public final class SttcRule implements TestRule {
+public final class SttcRule {
 
     /**
      * URN of stateful.co.
@@ -75,19 +70,13 @@ public final class SttcRule implements TestRule {
         this.token = tkn;
     }
 
-    @Override
-    public Statement apply(final Statement base,
-        final Description description) {
-        return base;
-    }
-
     /**
      * Get Sttc.
      * @return Sttc
      */
     public Sttc get() {
-        Assume.assumeNotNull(this.user);
-        Assume.assumeFalse(this.user.isEmpty());
+        Assumptions.assumeFalse(this.user == null);
+        Assumptions.assumeFalse(this.user.isEmpty());
         return new ReSttc(
             new CdSttc(
                 new RtSttc(

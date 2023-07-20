@@ -33,7 +33,6 @@ import co.stateful.Counter;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
 import com.jcabi.aspects.RetryOnFailure;
-import com.jcabi.aspects.Tv;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
@@ -42,8 +41,6 @@ import lombok.ToString;
 /**
  * Retriable counter.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.5
  */
 @Immutable
@@ -68,8 +65,8 @@ public final class ReCounter implements Counter {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public String name() {
         return this.origin.name();
@@ -78,8 +75,8 @@ public final class ReCounter implements Counter {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public void set(final long value) throws IOException {
         this.origin.set(value);
@@ -88,8 +85,8 @@ public final class ReCounter implements Counter {
     @Override
     @RetryOnFailure
         (
-            verbose = false, attempts = Tv.TWENTY,
-            delay = Tv.TWENTY, unit = TimeUnit.SECONDS
+            verbose = false, attempts = 20,
+            delay = 20, unit = TimeUnit.SECONDS
         )
     public long incrementAndGet(final long delta) throws IOException {
         return this.origin.incrementAndGet(delta);

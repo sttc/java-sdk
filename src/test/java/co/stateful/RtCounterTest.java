@@ -37,7 +37,7 @@ import com.jcabi.http.request.JdkRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link RtCounter}.
@@ -57,10 +57,6 @@ public final class RtCounterTest {
         "</counter></counters></page>"
     );
 
-    /**
-     * RtCounter can set.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void setsViaHttp() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()
@@ -83,10 +79,6 @@ public final class RtCounterTest {
         );
     }
 
-    /**
-     * RtCounter can increment.
-     * @throws Exception If some problem inside
-     */
     @Test
     public void incrementsViaHttp() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()

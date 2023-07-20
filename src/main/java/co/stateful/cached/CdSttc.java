@@ -43,8 +43,6 @@ import lombok.ToString;
 /**
  * Cached Sttc.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.7
  */
 @Immutable
