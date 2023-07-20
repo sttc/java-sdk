@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -41,8 +41,6 @@ import lombok.ToString;
 /**
  * Retriable lock.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.5
  */
 @Immutable

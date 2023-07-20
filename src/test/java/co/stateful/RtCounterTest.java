@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -41,11 +41,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link RtCounter}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.12.3
  */
-public final class RtCounterTest {
+final class RtCounterTest {
 
     /**
      * Front XML.
@@ -58,7 +56,7 @@ public final class RtCounterTest {
     );
 
     @Test
-    public void setsViaHttp() throws Exception {
+    void setsViaHttp() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()
             .next(new MkAnswer.Simple(RtCounterTest.XML))
             .next(new MkAnswer.Simple(""))
@@ -80,7 +78,7 @@ public final class RtCounterTest {
     }
 
     @Test
-    public void incrementsViaHttp() throws Exception {
+    void incrementsViaHttp() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()
             .next(new MkAnswer.Simple(RtCounterTest.XML))
             .next(new MkAnswer.Simple("1"))

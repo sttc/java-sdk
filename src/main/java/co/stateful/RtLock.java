@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -86,12 +86,14 @@ final class RtLock implements Lock {
             .method(Request.GET)
             .fetch()
             .body();
-        Logger.info(
-            this, "label of \"%s\" retrieved in %[ms]s: \"%s\"",
-            this.lck,
-            System.currentTimeMillis() - start,
-            label
-        );
+        if (Logger.isInfoEnabled(this)) {
+            Logger.info(
+                this, "label of \"%s\" retrieved in %[ms]s: \"%s\"",
+                this.lck,
+                System.currentTimeMillis() - start,
+                label
+            );
+        }
         return label;
     }
 
@@ -104,12 +106,14 @@ final class RtLock implements Lock {
             .method(Request.POST)
             .fetch();
         final boolean locked = rsp.status() == HttpURLConnection.HTTP_SEE_OTHER;
-        Logger.info(
-            this, "lock of \"%s\" is %B in %[ms]s: %s",
-            this.lck, locked,
-            System.currentTimeMillis() - start,
-            rsp.body()
-        );
+        if (Logger.isInfoEnabled(this)) {
+            Logger.info(
+                this, "lock of \"%s\" is %B in %[ms]s: %s",
+                this.lck, locked,
+                System.currentTimeMillis() - start,
+                rsp.body()
+            );
+        }
         return locked;
     }
 
@@ -123,11 +127,13 @@ final class RtLock implements Lock {
             .fetch();
         final boolean unlocked =
             rsp.status() == HttpURLConnection.HTTP_SEE_OTHER;
-        Logger.info(
-            this, "unlock of \"%s\" is %B in %[ms]s",
-            this.lck, unlocked,
-            System.currentTimeMillis() - start
-        );
+        if (Logger.isInfoEnabled(this)) {
+            Logger.info(
+                this, "unlock of \"%s\" is %B in %[ms]s",
+                this.lck, unlocked,
+                System.currentTimeMillis() - start
+            );
+        }
         return unlocked;
     }
 

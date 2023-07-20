@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -87,11 +87,13 @@ final class RtCounter implements Counter {
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK);
-        Logger.info(
-            this, "counter \"%s\" set to %d in %[ms]s",
-            this.label, value,
-            System.currentTimeMillis() - start
-        );
+        if (Logger.isInfoEnabled(this)) {
+            Logger.info(
+                this, "counter \"%s\" set to %d in %[ms]s",
+                this.label, value,
+                System.currentTimeMillis() - start
+            );
+        }
     }
 
     @Override
@@ -106,11 +108,13 @@ final class RtCounter implements Counter {
                 .assertStatus(HttpURLConnection.HTTP_OK)
                 .body()
         );
-        Logger.info(
-            this, "counter \"%s\" incremented by %d to %d in %[ms]s",
-            this.label, delta, value,
-            System.currentTimeMillis() - start
-        );
+        if (Logger.isInfoEnabled(this)) {
+            Logger.info(
+                this, "counter \"%s\" incremented by %d to %d in %[ms]s",
+                this.label, delta, value,
+                System.currentTimeMillis() - start
+            );
+        }
         return value;
     }
 

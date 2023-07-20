@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *

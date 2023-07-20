@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -88,10 +88,12 @@ final class RtCounters implements Counters {
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
-        Logger.info(
-            this, "counter \"%s\" created in %[ms]s",
-            name, System.currentTimeMillis() - start
-        );
+        if (Logger.isInfoEnabled(this)) {
+            Logger.info(
+                this, "counter \"%s\" created in %[ms]s",
+                name, System.currentTimeMillis() - start
+            );
+        }
         return this.get(name);
     }
 
@@ -113,10 +115,12 @@ final class RtCounters implements Counters {
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
-        Logger.info(
-            this, "counter \"%s\" deleted in %[ms]s",
-            name, System.currentTimeMillis() - start
-        );
+        if (Logger.isInfoEnabled(this)) {
+            Logger.info(
+                this, "counter \"%s\" deleted in %[ms]s",
+                name, System.currentTimeMillis() - start
+            );
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
  * Integration case for {@link RtLocks}.
  * @since 0.2
  */
-public final class RtLocksITCase {
+final class RtLocksITCase {
 
     /**
      * Random.
@@ -60,7 +60,7 @@ public final class RtLocksITCase {
     public final transient SttcRule srule = new SttcRule();
 
     @Test
-    public void locksAndUnlocks() throws Exception {
+    void locksAndUnlocks() throws Exception {
         final Sttc sttc = this.srule.get();
         final Lock lock = sttc.locks().get(
             String.format(
@@ -101,7 +101,7 @@ public final class RtLocksITCase {
     }
 
     @Test
-    public void locksAndUnlocksInOneThread() throws Exception {
+    void locksAndUnlocksInOneThread() throws Exception {
         final Sttc sttc = this.srule.get();
         final Locks locks = sttc.locks();
         final String name = String.format(
@@ -120,7 +120,7 @@ public final class RtLocksITCase {
     }
 
     @Test
-    public void rejectsIncorrectLockName() {
+    void rejectsIncorrectLockName() {
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> {

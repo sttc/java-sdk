@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Assumptions;
  * Sttc test rule.
  * @since 0.1
  */
-public final class SttcRule {
+final class SttcRule {
 
     /**
      * URN of stateful.co.
@@ -53,7 +53,7 @@ public final class SttcRule {
     /**
      * Ctor.
      */
-    public SttcRule() {
+    SttcRule() {
         this(
             System.getProperty("sttc.urn"),
             System.getProperty("sttc.token")
@@ -65,7 +65,7 @@ public final class SttcRule {
      * @param urn User URN
      * @param tkn Token
      */
-    public SttcRule(final String urn, final String tkn) {
+    SttcRule(final String urn, final String tkn) {
         this.user = urn;
         this.token = tkn;
     }
@@ -74,7 +74,7 @@ public final class SttcRule {
      * Get Sttc.
      * @return Sttc
      */
-    public Sttc get() {
+    Sttc get() {
         Assumptions.assumeFalse(this.user == null);
         Assumptions.assumeFalse(this.user.isEmpty());
         return new ReSttc(

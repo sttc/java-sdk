@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -45,7 +45,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link RtLock}.
  * @since 0.12.3
  */
-public final class RtLockTest {
+final class RtLockTest {
 
     /**
      * Front XML.
@@ -56,7 +56,7 @@ public final class RtLockTest {
     );
 
     @Test
-    public void locksViaHttp() throws Exception {
+    void locksViaHttp() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()
             .next(new MkAnswer.Simple(RtLockTest.XML))
             .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
@@ -79,7 +79,7 @@ public final class RtLockTest {
     }
 
     @Test
-    public void unlocksViaHttp() throws Exception {
+    void unlocksViaHttp() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()
             .next(new MkAnswer.Simple(RtLockTest.XML))
             .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))

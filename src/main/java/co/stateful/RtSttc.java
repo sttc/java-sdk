@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -109,6 +109,7 @@ public final class RtSttc implements Sttc {
      * @param token Security token
      * @return Sttc
      */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static Sttc make(final URN urn, final String token) {
         final Sttc sttc;
         if (token.matches("[A-F0-9\\-]{19}")) {

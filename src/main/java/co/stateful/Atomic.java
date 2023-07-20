@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -61,8 +61,6 @@ import lombok.ToString;
  * {@link java.util.concurrent.Executors#callable(Runnable)}. If you
  * want to avoid checked exceptions, use {@link #callQuietly()}.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
  * @since 0.6
  * @param <T> Type of result
  * @see <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
@@ -143,14 +141,11 @@ public final class Atomic<T> implements Callable<T> {
     @Override
     public T call() throws Exception {
         final Thread hook = new Thread(
-            new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Atomic.this.lock.unlock(Atomic.this.label);
-                    } catch (final IOException ex) {
-                        throw new IllegalStateException(ex);
-                    }
+            () -> {
+                try {
+                    this.lock.unlock(this.label);
+                } catch (final IOException ex) {
+                    throw new IllegalStateException(ex);
                 }
             }
         );
@@ -162,7 +157,6 @@ public final class Atomic<T> implements Callable<T> {
             if (age > this.max) {
                 throw new IllegalStateException(
                     Logger.format(
-                        // @checkstyle LineLength (1 line)
                         "lock \"%s\" is stale (%d failed attempts in %[ms]s, which is over %[ms]s)",
                         this.lock, attempt, age, this.max
                     )
@@ -173,13 +167,11 @@ public final class Atomic<T> implements Callable<T> {
                 TimeUnit.MINUTES.toMillis(1L),
                 Math.abs(
                     100L + (long) Atomic.RANDOM.nextInt(100)
-                    // @checkstyle MagicNumber (1 line)
                     + (long) StrictMath.pow(5.0d, (double) attempt + 1.0d)
                 )
             );
             Logger.info(
                 this,
-                // @checkstyle LineLength (1 line)
                 "lock \"%s\" is occupied for %[ms]s already, attempt #%d in %[ms]s",
                 this.lock, age, attempt, delay
             );
@@ -193,12 +185,13 @@ public final class Atomic<T> implements Callable<T> {
                 this.lock.unlock(this.label);
             }
             Runtime.getRuntime().removeShutdownHook(hook);
-            Logger.info(
-                this,
-                // @checkstyle LineLength (1 line)
-                "\"%s\" took %[ms]s after %d attempt(s)",
-                this.lock, System.currentTimeMillis() - start, attempt + 1L
-            );
+            if (Logger.isInfoEnabled(this)) {
+                Logger.info(
+                    this,
+                    "\"%s\" took %[ms]s after %d attempt(s)",
+                    this.lock, System.currentTimeMillis() - start, attempt + 1L
+                );
+            }
         }
     }
 

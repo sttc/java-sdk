@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -31,7 +31,6 @@ package co.stateful;
 
 import co.stateful.mock.MkSttc;
 import java.io.IOException;
-import java.util.concurrent.Callable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -41,10 +40,10 @@ import org.mockito.Mockito;
  * Test case for {@link Atomic}.
  * @since 0.6
  */
-public final class AtomicTest {
+final class AtomicTest {
 
     @Test
-    public void runsCallable() throws Exception {
+    void runsCallable() throws Exception {
         MatcherAssert.assertThat(
             new Atomic<>(
                 () -> "hello, world",
@@ -55,7 +54,7 @@ public final class AtomicTest {
     }
 
     @Test
-    public void unlocksWhenCrashed() throws Exception {
+    void unlocksWhenCrashed() throws Exception {
         final Lock lock = Mockito.mock(Lock.class);
         Mockito.doReturn(true).when(lock).lock(Mockito.anyString());
         try {

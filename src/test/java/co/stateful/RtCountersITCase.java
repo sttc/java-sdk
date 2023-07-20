@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2014-2023, stateful.co
  * All rights reserved.
  *
@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
  * Integration case for {@link RtCounters}.
  * @since 0.1
  */
-public final class RtCountersITCase {
+final class RtCountersITCase {
 
     /**
      * Random.
@@ -53,7 +53,7 @@ public final class RtCountersITCase {
     public final transient SttcRule srule = new SttcRule();
 
     @Test
-    public void incrementsAndSets() throws Exception {
+    void incrementsAndSets() throws Exception {
         final Sttc sttc = this.srule.get();
         final Counters counters = sttc.counters();
         final String name = String.format(
