@@ -40,6 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -121,6 +122,7 @@ final class RtLocksITCase {
 
     @Test
     void rejectsIncorrectLockName() {
+        Assumptions.assumeFalse(System.getProperty("sttc.urn").isEmpty());
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> {
