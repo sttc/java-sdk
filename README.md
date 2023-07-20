@@ -1,4 +1,4 @@
-<img src="https://img.stateful.co/pomegranate.svg" width="64px" height="64px"/>
+<img src="http://img.stateful.co/pomegranate.svg" width="64px" height="64px"/>
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![DevOps By Rultor.com](https://www.rultor.com/b/sttc/java-sdk)](https://www.rultor.com/p/sttc/java-sdk)
