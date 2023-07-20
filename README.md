@@ -4,8 +4,7 @@
 [![DevOps By Rultor.com](https://www.rultor.com/b/sttc/java-sdk)](https://www.rultor.com/p/sttc/java-sdk)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
-[![Build Status](https://travis-ci.org/sttc/java-sdk.svg?branch=master)](https://travis-ci.org/sttc/java-sdk)
-[![Build status](https://ci.appveyor.com/api/projects/status/g2r57nw43nxqb29h?svg=true)](https://ci.appveyor.com/project/yegor256/java-sdk)
+[![mvn](https://github.com/sttc/java-sdk/actions/workflows/mvn.yml/badge.svg)](https://github.com/sttc/java-sdk/actions/workflows/mvn.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
 [![Javadoc](http://www.javadoc.io/badge/co.stateful/java-sdk.svg)](http://www.javadoc.io/doc/co.stateful/java-sdk)
 
