@@ -65,4 +65,3 @@ public class Main {
   If you want to avoid checked exceptions, try
   {{{http://tempusfugitlibrary.org/apidocs/com/google/code/tempusfugit/concurrency/Callable.html}<<<Callable>>>}}
   from {{{http://tempusfugitlibrary.org/}tempusfugitlibrary.org}}.
-

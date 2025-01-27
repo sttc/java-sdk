@@ -52,4 +52,3 @@ new Atomic(lock).call(
   }
 );
 ```
-
