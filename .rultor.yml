@@ -9,6 +9,7 @@ merge:
     pdd -f /dev/null
     mvn clean install -Pqulice --errors --settings ../settings.xml
 release:
+  pre: false
   script: |-
     pdd -f /dev/null
     mvn versions:set "-DnewVersion=${tag}"
