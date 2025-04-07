@@ -6,7 +6,7 @@
 
 [![mvn](https://github.com/sttc/java-sdk/actions/workflows/mvn.yml/badge.svg)](https://github.com/sttc/java-sdk/actions/workflows/mvn.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/co.stateful/java-sdk)
-[![Javadoc](http://www.javadoc.io/badge/co.stateful/java-sdk.svg)](http://www.javadoc.io/doc/co.stateful/java-sdk)
+[![Javadoc](https://www.javadoc.io/badge/co.stateful/java-sdk.svg)](https://www.javadoc.io/doc/co.stateful/java-sdk)
 
 This is Java SDK for [Stateful](https://www.stateful.co).
 
