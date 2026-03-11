@@ -10,7 +10,7 @@
  * production environment. They will provide some guarantee that in
  * case of accidental network outage your code will make a few
  * honest retries before throwing a runtime exception. Just
- * wrap your actual {@code Sttc} implemntation into
+ * wrap your actual {@code Sttc} implementation into
  * {@link ReSttc} and that's it:</p>
  *
  * <pre>Sttc sttc = new ReSttc(

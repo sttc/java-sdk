@@ -10,7 +10,7 @@
 
 This is Java SDK for [Stateful](https://www.stateful.co).
 
-The JavaDoc is [here](http://java-sdk.stateful.co/).
+See our [JavaDoc](http://java-sdk.stateful.co/).
 
 First, register an account at [Stateful](https://www.stateful.co).
 Then, you can create a counter and increment it:
