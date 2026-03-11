@@ -36,10 +36,10 @@ import lombok.ToString;
  * {@link java.util.concurrent.Executors#callable(Runnable)}. If you
  * want to avoid checked exceptions, use {@link #callQuietly()}.
  *
- * @since 0.6
  * @param <T> Type of result
  * @see <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
  * @see <a href="http://www.yegor256.com/2014/12/04/synchronization-between-nodes.html">Synchronization Between Nodes</a>
+ * @since 0.6
  */
 @Loggable(Loggable.DEBUG)
 @ToString
@@ -141,8 +141,8 @@ public final class Atomic<T> implements Callable<T> {
             final long delay = Math.min(
                 TimeUnit.MINUTES.toMillis(1L),
                 Math.abs(
-                    100L + (long) Atomic.RANDOM.nextInt(100)
-                    + (long) StrictMath.pow(5.0d, (double) attempt + 1.0d)
+                    100L + Atomic.RANDOM.nextInt(100)
+                    + (long) StrictMath.pow(5.0d, attempt + 1.0d)
                 )
             );
             Logger.info(

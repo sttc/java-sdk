@@ -32,19 +32,36 @@ final class AtomicTest {
     void unlocksWhenCrashed() throws Exception {
         final Lock lock = Mockito.mock(Lock.class);
         Mockito.doReturn(true).when(lock).lock(Mockito.anyString());
-        try {
-            new Atomic<>(
+        org.junit.jupiter.api.Assertions.assertThrows(
+            IOException.class,
+            () -> new Atomic<>(
                 () -> {
                     throw new IOException("expected one");
                 },
                 lock
-            ).call();
-        } catch (final IOException ex) {
-            MatcherAssert.assertThat(
-                ex.getLocalizedMessage(), Matchers.startsWith("expected")
-            );
-        }
-        Mockito.verify(lock).unlock(Mockito.anyString());
+            ).call(),
+            "exception was not thrown as expected"
+        );
+    }
+
+    @Test
+    void callsUnlockAfterException() throws Exception {
+        final Lock lock = Mockito.mock(Lock.class);
+        Mockito.doReturn(true).when(lock).lock(Mockito.anyString());
+        final Atomic<String> atomic = new Atomic<>(
+            () -> {
+                throw new IOException("expected two");
+            },
+            lock
+        );
+        org.junit.jupiter.api.Assertions.assertAll(
+            () -> org.junit.jupiter.api.Assertions.assertThrows(
+                IOException.class,
+                atomic::call
+            ),
+            () -> Mockito.verify(lock).unlock(Mockito.anyString())
+        );
     }
 
 }
+

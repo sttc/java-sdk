@@ -10,10 +10,10 @@ import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
 import com.jcabi.log.Logger;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -56,24 +56,16 @@ final class RtCounter implements Counter {
 
     @Override
     public void set(final long value) throws IOException {
-        final long start = System.currentTimeMillis();
         this.front("set").method(Request.PUT)
             .uri().queryParam("value", value).back()
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK);
-        if (Logger.isInfoEnabled(this)) {
-            Logger.info(
-                this, "counter \"%s\" set to %d in %[ms]s",
-                this.label, value,
-                System.currentTimeMillis() - start
-            );
-        }
+        Logger.info(this, "counter \"%s\" set to %d", this.label, value);
     }
 
     @Override
     public long incrementAndGet(final long delta) throws IOException {
-        final long start = System.currentTimeMillis();
         final long value = Long.parseLong(
             this.front("increment").method(Request.GET)
                 .uri().queryParam("value", delta).back()
@@ -83,13 +75,10 @@ final class RtCounter implements Counter {
                 .assertStatus(HttpURLConnection.HTTP_OK)
                 .body()
         );
-        if (Logger.isInfoEnabled(this)) {
-            Logger.info(
-                this, "counter \"%s\" incremented by %d to %d in %[ms]s",
-                this.label, delta, value,
-                System.currentTimeMillis() - start
-            );
-        }
+        Logger.info(
+            this, "counter \"%s\" incremented by %d to %d",
+            this.label, delta, value
+        );
         return value;
     }
 

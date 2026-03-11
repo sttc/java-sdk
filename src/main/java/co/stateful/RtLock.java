@@ -55,46 +55,32 @@ final class RtLock implements Lock {
 
     @Override
     public String label() throws IOException {
-        final long start = System.currentTimeMillis();
         final String label = this.front("label")
             .uri().queryParam("name", this.lck).back()
             .method(Request.GET)
             .fetch()
             .body();
-        if (Logger.isInfoEnabled(this)) {
-            Logger.info(
-                this, "label of \"%s\" retrieved in %[ms]s: \"%s\"",
-                this.lck,
-                System.currentTimeMillis() - start,
-                label
-            );
-        }
+        Logger.info(this, "label of \"%s\" retrieved: \"%s\"", this.lck, label);
         return label;
     }
 
     @Override
     public boolean lock(final String label) throws IOException {
-        final long start = System.currentTimeMillis();
         final Response rsp = this.front("lock")
             .body().formParam("label", label)
             .formParam("name", this.lck).back()
             .method(Request.POST)
             .fetch();
         final boolean locked = rsp.status() == HttpURLConnection.HTTP_SEE_OTHER;
-        if (Logger.isInfoEnabled(this)) {
-            Logger.info(
-                this, "lock of \"%s\" is %B in %[ms]s: %s",
-                this.lck, locked,
-                System.currentTimeMillis() - start,
-                rsp.body()
-            );
-        }
+        Logger.info(
+            this, "lock of \"%s\" is %B: %s",
+            this.lck, locked, rsp.body()
+        );
         return locked;
     }
 
     @Override
     public boolean unlock(final String label) throws IOException {
-        final long start = System.currentTimeMillis();
         final Response rsp = this.front("unlock")
             .uri().queryParam("label", label)
             .queryParam("name", this.lck).back()
@@ -102,13 +88,7 @@ final class RtLock implements Lock {
             .fetch();
         final boolean unlocked =
             rsp.status() == HttpURLConnection.HTTP_SEE_OTHER;
-        if (Logger.isInfoEnabled(this)) {
-            Logger.info(
-                this, "unlock of \"%s\" is %B in %[ms]s",
-                this.lck, unlocked,
-                System.currentTimeMillis() - start
-            );
-        }
+        Logger.info(this, "unlock of \"%s\" is %B", this.lck, unlocked);
         return unlocked;
     }
 

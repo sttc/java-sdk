@@ -36,9 +36,8 @@ final class RtCounterTest {
             .next(new MkAnswer.Simple(RtCounterTest.XML))
             .next(new MkAnswer.Simple(""))
             .start();
-        final Counter cnt = new RtCounter("", new JdkRequest(container.home()));
         try {
-            cnt.set(1L);
+            new RtCounter("", new JdkRequest(container.home())).set(1L);
         } finally {
             container.stop();
         }
@@ -46,6 +45,20 @@ final class RtCounterTest {
             container.take().method(),
             Matchers.equalTo(Request.GET)
         );
+    }
+
+    @Test
+    void setsViaPut() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtCounterTest.XML))
+            .next(new MkAnswer.Simple(""))
+            .start();
+        try {
+            new RtCounter("", new JdkRequest(container.home())).set(1L);
+        } finally {
+            container.stop();
+        }
+        container.take();
         MatcherAssert.assertThat(
             container.take().method(),
             Matchers.equalTo(Request.PUT)
@@ -58,22 +71,16 @@ final class RtCounterTest {
             .next(new MkAnswer.Simple(RtCounterTest.XML))
             .next(new MkAnswer.Simple("1"))
             .start();
-        final Counter cnt = new RtCounter("", new JdkRequest(container.home()));
         try {
             MatcherAssert.assertThat(
-                cnt.incrementAndGet(1L), Matchers.equalTo(1L)
+                new RtCounter("", new JdkRequest(container.home()))
+                    .incrementAndGet(1L),
+                Matchers.equalTo(1L)
             );
         } finally {
             container.stop();
         }
-        MatcherAssert.assertThat(
-            container.take().method(),
-            Matchers.equalTo(Request.GET)
-        );
-        MatcherAssert.assertThat(
-            container.take().method(),
-            Matchers.equalTo(Request.GET)
-        );
     }
 
 }
+

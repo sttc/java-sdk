@@ -16,10 +16,10 @@ import com.jcabi.http.wire.OneMinuteWire;
 import com.jcabi.http.wire.RetryWire;
 import com.jcabi.http.wire.VerboseWire;
 import com.jcabi.urn.URN;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -46,9 +46,9 @@ import lombok.ToString;
  * {@link co.stateful.cached.CdSttc} decorator, in production
  * environment.</p>
  *
- * @since 0.1
  * @see <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
  * @see <a href="http://www.yegor256.com/2014/12/04/synchronization-between-nodes.html">Synchronization Between Nodes</a>
+ * @since 0.1
  */
 @Immutable
 @Loggable(Loggable.DEBUG)

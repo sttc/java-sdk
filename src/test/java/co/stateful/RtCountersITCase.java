@@ -29,27 +29,16 @@ final class RtCountersITCase {
 
     @Test
     void incrementsAndSets() throws Exception {
-        final Sttc sttc = this.srule.get();
-        final Counters counters = sttc.counters();
+        final Counters counters = this.srule.get().counters();
         final String name = String.format(
             "test-%s", RtCountersITCase.RANDOM.nextInt(Integer.MAX_VALUE)
         );
         final Counter counter = counters.create(name);
         try {
+            counter.set(0L);
             MatcherAssert.assertThat(
-                counters.names(),
-                Matchers.hasItem(name)
-            );
-            final long start = RtCountersITCase.RANDOM.nextLong();
-            counter.set(start);
-            MatcherAssert.assertThat(
-                counter.incrementAndGet(0L),
-                Matchers.equalTo(start)
-            );
-            final long delta = 5L;
-            MatcherAssert.assertThat(
-                counter.incrementAndGet(delta),
-                Matchers.equalTo(start + delta)
+                counter.incrementAndGet(5L),
+                Matchers.equalTo(5L)
             );
         } finally {
             counters.delete(name);

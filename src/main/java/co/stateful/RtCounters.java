@@ -52,7 +52,6 @@ final class RtCounters implements Counters {
 
     @Override
     public Counter create(final String name) throws IOException {
-        final long start = System.currentTimeMillis();
         this.request.fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
@@ -63,18 +62,12 @@ final class RtCounters implements Counters {
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
-        if (Logger.isInfoEnabled(this)) {
-            Logger.info(
-                this, "counter \"%s\" created in %[ms]s",
-                name, System.currentTimeMillis() - start
-            );
-        }
+        Logger.info(this, "counter \"%s\" created", name);
         return this.get(name);
     }
 
     @Override
     public void delete(final String name) throws IOException {
-        final long start = System.currentTimeMillis();
         this.request.fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
@@ -90,12 +83,7 @@ final class RtCounters implements Counters {
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_SEE_OTHER);
-        if (Logger.isInfoEnabled(this)) {
-            Logger.info(
-                this, "counter \"%s\" deleted in %[ms]s",
-                name, System.currentTimeMillis() - start
-            );
-        }
+        Logger.info(this, "counter \"%s\" deleted", name);
     }
 
     @Override

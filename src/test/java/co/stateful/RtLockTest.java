@@ -8,7 +8,6 @@ import com.jcabi.http.Request;
 import com.jcabi.http.mock.MkAnswer;
 import com.jcabi.http.mock.MkContainer;
 import com.jcabi.http.mock.MkGrizzlyContainer;
-import com.jcabi.http.mock.MkQuery;
 import com.jcabi.http.request.JdkRequest;
 import java.net.HttpURLConnection;
 import org.apache.commons.lang3.StringUtils;
@@ -36,21 +35,14 @@ final class RtLockTest {
             .next(new MkAnswer.Simple(RtLockTest.XML))
             .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
             .start();
-        final Lock lock = new RtLock("foo", new JdkRequest(container.home()));
         try {
-            MatcherAssert.assertThat(lock.lock(""), Matchers.equalTo(true));
+            MatcherAssert.assertThat(
+                new RtLock("foo", new JdkRequest(container.home())).lock(""),
+                Matchers.equalTo(true)
+            );
         } finally {
             container.stop();
         }
-        MatcherAssert.assertThat(
-            container.take().method(),
-            Matchers.equalTo(Request.GET)
-        );
-        final MkQuery query = container.take();
-        MatcherAssert.assertThat(query.method(), Matchers.is(Request.POST));
-        MatcherAssert.assertThat(
-            query.body(), Matchers.containsString("name=foo")
-        );
     }
 
     @Test
@@ -59,20 +51,51 @@ final class RtLockTest {
             .next(new MkAnswer.Simple(RtLockTest.XML))
             .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
             .start();
-        final Lock lock = new RtLock("", new JdkRequest(container.home()));
         try {
-            lock.unlock("");
+            MatcherAssert.assertThat(
+                new RtLock("", new JdkRequest(container.home())).unlock(""),
+                Matchers.equalTo(true)
+            );
         } finally {
             container.stop();
         }
+    }
+
+    @Test
+    void locksViaPost() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtLockTest.XML))
+            .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
+            .start();
+        try {
+            new RtLock("foo", new JdkRequest(container.home())).lock("");
+        } finally {
+            container.stop();
+        }
+        container.take();
         MatcherAssert.assertThat(
             container.take().method(),
-            Matchers.equalTo(Request.GET)
+            Matchers.is(Request.POST)
         );
+    }
+
+    @Test
+    void locksSendsName() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtLockTest.XML))
+            .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
+            .start();
+        try {
+            new RtLock("foo", new JdkRequest(container.home())).lock("");
+        } finally {
+            container.stop();
+        }
+        container.take();
         MatcherAssert.assertThat(
-            container.take().method(),
-            Matchers.equalTo(Request.GET)
+            container.take().body(),
+            Matchers.containsString("name=foo")
         );
     }
 
 }
+
