@@ -1,4 +1,4 @@
-<img src="http://img.stateful.co/pomegranate.svg" width="64px" height="64px"/>
+# Java SDK for Stateful.co
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![DevOps By Rultor.com](https://www.rultor.com/b/sttc/java-sdk)](https://www.rultor.com/p/sttc/java-sdk)
@@ -12,8 +12,8 @@ This is Java SDK for [Stateful](https://www.stateful.co).
 
 The JavaDoc is [here](http://java-sdk.stateful.co/).
 
-First, register an account at [Stateful](https://www.stateful.co). Then,
-you can create a counter and increment it:
+First, register an account at [Stateful](https://www.stateful.co).
+Then, you can create a counter and increment it:
 
 ```java
 import co.stateful.Counter;
@@ -52,3 +52,17 @@ new Atomic(lock).call(
   }
 );
 ```
+
+## How to Contribute
+
+Fork repository, make changes, send us a
+[pull request](https://www.yegor256.com/2014/04/15/github-guidelines.html).
+We will review your changes and apply them to the `master` branch shortly,
+provided they don't violate our quality standards. To avoid frustration,
+before sending us your pull request please run full Maven build:
+
+```bash
+mvn clean install -Pqulice
+```
+
+You will need Maven 3.3+ and Java 11+.
