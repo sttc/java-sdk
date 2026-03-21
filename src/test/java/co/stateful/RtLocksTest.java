@@ -23,12 +23,15 @@ final class RtLocksTest {
 
     @Test
     void checksExistenceWhenLockPresent() throws Exception {
-        final String xml = StringUtils.join(
-            "<page><locks><lock><name>замок-αβγ</name>",
-            "<label>мітка</label></lock></locks></page>"
-        );
         final MkContainer container = new MkGrizzlyContainer()
-            .next(new MkAnswer.Simple(xml))
+            .next(
+                new MkAnswer.Simple(
+                    StringUtils.join(
+                        "<page><locks><lock><name>замок-αβγ</name>",
+                        "<label>мітка</label></lock></locks></page>"
+                    )
+                )
+            )
             .start();
         try {
             MatcherAssert.assertThat(
@@ -43,12 +46,15 @@ final class RtLocksTest {
 
     @Test
     void checksExistenceWhenLockAbsent() throws Exception {
-        final String xml = StringUtils.join(
-            "<page><locks><lock><name>другий</name>",
-            "<label>інша</label></lock></locks></page>"
-        );
         final MkContainer container = new MkGrizzlyContainer()
-            .next(new MkAnswer.Simple(xml))
+            .next(
+                new MkAnswer.Simple(
+                    StringUtils.join(
+                        "<page><locks><lock><name>другий</name>",
+                        "<label>інша</label></lock></locks></page>"
+                    )
+                )
+            )
             .start();
         try {
             MatcherAssert.assertThat(
@@ -63,9 +69,8 @@ final class RtLocksTest {
 
     @Test
     void checksExistenceWithEmptyLocksPage() throws Exception {
-        final String xml = "<page><locks></locks></page>";
         final MkContainer container = new MkGrizzlyContainer()
-            .next(new MkAnswer.Simple(xml))
+            .next(new MkAnswer.Simple("<page><locks></locks></page>"))
             .start();
         try {
             MatcherAssert.assertThat(
@@ -80,9 +85,8 @@ final class RtLocksTest {
 
     @Test
     void existsSendsAcceptXmlHeader() throws Exception {
-        final String xml = "<page><locks></locks></page>";
         final MkContainer container = new MkGrizzlyContainer()
-            .next(new MkAnswer.Simple(xml))
+            .next(new MkAnswer.Simple("<page><locks></locks></page>"))
             .start();
         try {
             new RtLocks(new JdkRequest(container.home())).exists("замок");
