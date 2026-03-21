@@ -26,7 +26,8 @@ final class RtLockTest {
      */
     private static final String XML = StringUtils.join(
         "<page><links><link rel='lock' href='#lock'/>",
-        "<link rel='unlock' href='#unlock'/></links></page>"
+        "<link rel='unlock' href='#unlock'/>",
+        "<link rel='label' href='#label'/></links></page>"
     );
 
     @Test
@@ -94,6 +95,41 @@ final class RtLockTest {
         MatcherAssert.assertThat(
             container.take().body(),
             Matchers.containsString("name=foo")
+        );
+    }
+
+    @Test
+    void readsLabelViaHttp() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtLockTest.XML))
+            .next(new MkAnswer.Simple("αβγ-мітка"))
+            .start();
+        try {
+            MatcherAssert.assertThat(
+                new RtLock("замок", new JdkRequest(container.home())).label(),
+                Matchers.equalTo("αβγ-мітка")
+            );
+        } finally {
+            container.stop();
+        }
+    }
+
+    @Test
+    void labelSendsName() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtLockTest.XML))
+            .next(new MkAnswer.Simple("мітка"))
+            .start();
+        try {
+            new RtLock("замок", new JdkRequest(container.home())).label();
+        } finally {
+            container.stop();
+        }
+        container.take();
+        MatcherAssert.assertThat(
+            "should send name parameter",
+            container.take().uri().toString(),
+            Matchers.containsString("name=")
         );
     }
 

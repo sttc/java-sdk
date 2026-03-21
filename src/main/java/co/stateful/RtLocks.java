@@ -46,10 +46,6 @@ final class RtLocks implements Locks {
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class)
-            .rel("/page/links/link[@rel='self']/@href")
-            .method(Request.GET)
-            .fetch()
-            .as(XmlResponse.class)
             .xml()
             .nodes(String.format("/page/locks/lock[name='%s']", name))
             .isEmpty();

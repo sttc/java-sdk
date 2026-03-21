@@ -59,6 +59,8 @@ final class RtLock implements Lock {
             .uri().queryParam("name", this.lck).back()
             .method(Request.GET)
             .fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
             .body();
         Logger.info(this, "label of \"%s\" retrieved: \"%s\"", this.lck, label);
         return label;
