@@ -8,6 +8,8 @@ import com.jcabi.http.mock.MkAnswer;
 import com.jcabi.http.mock.MkContainer;
 import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -74,6 +76,24 @@ final class RtLocksTest {
         } finally {
             container.stop();
         }
+    }
+
+    @Test
+    void existsSendsAcceptXmlHeader() throws Exception {
+        final String xml = "<page><locks></locks></page>";
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(xml))
+            .start();
+        try {
+            new RtLocks(new JdkRequest(container.home())).exists("замок");
+        } finally {
+            container.stop();
+        }
+        MatcherAssert.assertThat(
+            "request must have Accept header for XML",
+            container.take().headers().get(HttpHeaders.ACCEPT),
+            Matchers.hasItem(MediaType.TEXT_XML)
+        );
     }
 
 }

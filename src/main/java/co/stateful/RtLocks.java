@@ -9,6 +9,8 @@ import com.jcabi.aspects.Loggable;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import lombok.EqualsAndHashCode;
@@ -42,6 +44,7 @@ final class RtLocks implements Locks {
     @Override
     public boolean exists(final String name) throws IOException {
         return !this.request
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)

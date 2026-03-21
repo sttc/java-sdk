@@ -10,6 +10,8 @@ import com.jcabi.http.Request;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
 import com.jcabi.log.Logger;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import lombok.EqualsAndHashCode;
@@ -42,7 +44,9 @@ final class RtCounters implements Counters {
 
     @Override
     public Iterable<String> names() throws IOException {
-        return this.request.fetch()
+        return this.request
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
+            .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class)
@@ -52,11 +56,14 @@ final class RtCounters implements Counters {
 
     @Override
     public Counter create(final String name) throws IOException {
-        this.request.fetch()
+        this.request
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
+            .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class)
             .rel("/page/links/link[@rel='add']/@href")
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
             .method(Request.POST)
             .body().formParam("name", name).back()
             .fetch()
@@ -68,7 +75,9 @@ final class RtCounters implements Counters {
 
     @Override
     public void delete(final String name) throws IOException {
-        this.request.fetch()
+        this.request
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
+            .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class)
@@ -79,6 +88,7 @@ final class RtCounters implements Counters {
                     name
                 )
             )
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
             .uri().queryParam("name", name).back()
             .fetch()
             .as(RestResponse.class)

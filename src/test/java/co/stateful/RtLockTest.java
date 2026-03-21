@@ -9,6 +9,8 @@ import com.jcabi.http.mock.MkAnswer;
 import com.jcabi.http.mock.MkContainer;
 import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import java.net.HttpURLConnection;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
@@ -130,6 +132,42 @@ final class RtLockTest {
             "should send name parameter",
             container.take().uri().toString(),
             Matchers.containsString("name=")
+        );
+    }
+
+    @Test
+    void lockSendsAcceptXmlHeader() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtLockTest.XML))
+            .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
+            .start();
+        try {
+            new RtLock("замок", new JdkRequest(container.home())).lock("мітка");
+        } finally {
+            container.stop();
+        }
+        MatcherAssert.assertThat(
+            "front request must have Accept header for XML",
+            container.take().headers().get(HttpHeaders.ACCEPT),
+            Matchers.hasItem(MediaType.TEXT_XML)
+        );
+    }
+
+    @Test
+    void unlockSendsAcceptXmlHeader() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtLockTest.XML))
+            .next(new MkAnswer.Simple(HttpURLConnection.HTTP_SEE_OTHER, ""))
+            .start();
+        try {
+            new RtLock("замок", new JdkRequest(container.home())).unlock("мітка");
+        } finally {
+            container.stop();
+        }
+        MatcherAssert.assertThat(
+            "front request must have Accept header for XML",
+            container.take().headers().get(HttpHeaders.ACCEPT),
+            Matchers.hasItem(MediaType.TEXT_XML)
         );
     }
 

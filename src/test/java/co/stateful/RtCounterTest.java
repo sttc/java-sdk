@@ -9,6 +9,8 @@ import com.jcabi.http.mock.MkAnswer;
 import com.jcabi.http.mock.MkContainer;
 import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -80,6 +82,44 @@ final class RtCounterTest {
         } finally {
             container.stop();
         }
+    }
+
+    @Test
+    void setSendsAcceptXmlHeader() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtCounterTest.XML))
+            .next(new MkAnswer.Simple(""))
+            .start();
+        try {
+            new RtCounter("", new JdkRequest(container.home())).set(42L);
+        } finally {
+            container.stop();
+        }
+        MatcherAssert.assertThat(
+            "front request must have Accept header for XML",
+            container.take().headers().get(HttpHeaders.ACCEPT),
+            Matchers.hasItem(MediaType.TEXT_XML)
+        );
+    }
+
+    @Test
+    void incrementSendsAcceptPlainHeader() throws Exception {
+        final MkContainer container = new MkGrizzlyContainer()
+            .next(new MkAnswer.Simple(RtCounterTest.XML))
+            .next(new MkAnswer.Simple("1"))
+            .start();
+        try {
+            new RtCounter("", new JdkRequest(container.home()))
+                .incrementAndGet(1L);
+        } finally {
+            container.stop();
+        }
+        container.take();
+        MatcherAssert.assertThat(
+            "increment request must have Accept header for plain text",
+            container.take().headers().get(HttpHeaders.ACCEPT),
+            Matchers.hasItem(MediaType.TEXT_PLAIN)
+        );
     }
 
 }

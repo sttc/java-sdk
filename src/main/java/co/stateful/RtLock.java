@@ -11,6 +11,8 @@ import com.jcabi.http.Response;
 import com.jcabi.http.response.RestResponse;
 import com.jcabi.http.response.XmlResponse;
 import com.jcabi.log.Logger;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import lombok.EqualsAndHashCode;
@@ -102,6 +104,7 @@ final class RtLock implements Lock {
      */
     private Request front(final String label) throws IOException {
         return this.request
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)

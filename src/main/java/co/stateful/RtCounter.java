@@ -89,7 +89,9 @@ final class RtCounter implements Counter {
      * @throws IOException If fails
      */
     private Request front(final String ops) throws IOException {
-        return this.request.fetch()
+        return this.request
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
+            .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class)
