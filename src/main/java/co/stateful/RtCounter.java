@@ -19,7 +19,6 @@ import lombok.ToString;
 
 /**
  * Counter.
- *
  * @since 0.1
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
@@ -28,6 +27,13 @@ import lombok.ToString;
 @ToString(of = "label", includeFieldNames = false)
 @EqualsAndHashCode(of = { "label", "request" })
 final class RtCounter implements Counter {
+
+    /**
+     * XPath template to a counter operation link.
+     * @checkstyle LineLength (3 lines)
+     */
+    private static final String XPATH =
+        "/page/counters/counter[name='%s']/links/link[@rel='%s']/@href";
 
     /**
      * Its name.
@@ -95,13 +101,6 @@ final class RtCounter implements Counter {
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class)
-            .rel(
-                String.format(
-                    // @checkstyle LineLength (1 line)
-                    "/page/counters/counter[name='%s']/links/link[@rel='%s']/@href",
-                    this.label, ops
-                )
-            );
+            .rel(String.format(RtCounter.XPATH, this.label, ops));
     }
-
 }

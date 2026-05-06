@@ -21,15 +21,9 @@ final class RtCountersITCase {
      */
     private static final Random RANDOM = new SecureRandom();
 
-    /**
-     * Region rule.
-     * @checkstyle VisibilityModifierCheck (3 lines)
-     */
-    public final transient SttcRule srule = new SttcRule();
-
     @Test
     void incrementsAndSets() throws Exception {
-        final Counters counters = this.srule.get().counters();
+        final Counters counters = SttcRule.fromProperties().get().counters();
         final String name = String.format(
             "test-%s", RtCountersITCase.RANDOM.nextInt(Integer.MAX_VALUE)
         );
@@ -44,5 +38,4 @@ final class RtCountersITCase {
             counters.delete(name);
         }
     }
-
 }

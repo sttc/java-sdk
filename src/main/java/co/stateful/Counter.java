@@ -9,7 +9,6 @@ import java.io.IOException;
 
 /**
  * Counter.
- *
  * @since 0.1
  */
 @Immutable
@@ -36,5 +35,4 @@ public interface Counter {
      * @throws IOException If some I/O problem
      */
     long incrementAndGet(long delta) throws IOException;
-
 }

@@ -23,18 +23,12 @@ final class RtLocksITCase {
      */
     private static final Random RANDOM = new SecureRandom();
 
-    /**
-     * Region rule.
-     * @checkstyle VisibilityModifierCheck (3 lines)
-     */
-    public final transient SttcRule srule = new SttcRule();
-
     @Test
     void locksAndUnlocks() throws Exception {
         MatcherAssert.assertThat(
             new Atomic<>(
                 () -> "done",
-                this.srule.get().locks().get(
+                SttcRule.fromProperties().get().locks().get(
                     String.format(
                         "lck-%s",
                         RtLocksITCase.RANDOM.nextInt(Integer.MAX_VALUE)
@@ -47,7 +41,7 @@ final class RtLocksITCase {
 
     @Test
     void locksAndUnlocksInOneThread() throws Exception {
-        final Locks locks = this.srule.get().locks();
+        final Locks locks = SttcRule.fromProperties().get().locks();
         final String name = String.format(
             "test2-%s", RtLocksITCase.RANDOM.nextInt(Integer.MAX_VALUE)
         );
@@ -67,9 +61,8 @@ final class RtLocksITCase {
         Assumptions.assumeFalse(System.getProperty("sttc.urn").isEmpty());
         Assertions.assertThrows(
             IllegalArgumentException.class,
-            () -> this.srule.get().locks()
+            () -> SttcRule.fromProperties().get().locks()
                 .get("invalid name with spaces").lock("test-3")
         );
     }
-
 }

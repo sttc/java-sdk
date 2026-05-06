@@ -9,7 +9,6 @@ import java.io.IOException;
 
 /**
  * Counters.
- *
  * @since 0.1
  */
 @Immutable
@@ -44,5 +43,4 @@ public interface Counters {
      * @throws IOException If some I/O problem
      */
     Counter get(String name) throws IOException;
-
 }

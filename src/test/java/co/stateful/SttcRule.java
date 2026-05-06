@@ -27,16 +27,6 @@ final class SttcRule {
 
     /**
      * Ctor.
-     */
-    SttcRule() {
-        this(
-            System.getProperty("sttc.urn"),
-            System.getProperty("sttc.token")
-        );
-    }
-
-    /**
-     * Ctor.
      * @param urn User URN
      * @param tkn Token
      */
@@ -62,4 +52,14 @@ final class SttcRule {
         );
     }
 
+    /**
+     * Make a new SttcRule from system properties.
+     * @return SttcRule
+     */
+    static SttcRule fromProperties() {
+        return new SttcRule(
+            System.getProperty("sttc.urn"),
+            System.getProperty("sttc.token")
+        );
+    }
 }

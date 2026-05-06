@@ -20,7 +20,6 @@ import lombok.ToString;
 
 /**
  * Lock.
- *
  * @since 0.3
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
@@ -111,5 +110,4 @@ final class RtLock implements Lock {
             .as(XmlResponse.class)
             .rel(String.format("/page/links/link[@rel='%s']/@href", label));
     }
-
 }

@@ -13,7 +13,6 @@ import lombok.ToString;
 
 /**
  * Mock locks.
- *
  * @since 0.2
  */
 @Immutable
@@ -31,5 +30,4 @@ final class MkLocks implements Locks {
     public Lock get(final String name) {
         return new MkLock();
     }
-
 }

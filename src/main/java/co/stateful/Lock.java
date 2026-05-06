@@ -9,7 +9,6 @@ import java.io.IOException;
 
 /**
  * Lock.
- *
  * @since 0.3
  */
 @Immutable
@@ -47,5 +46,4 @@ public interface Lock {
      * @since 0.11
      */
     boolean unlock(String label) throws IOException;
-
 }

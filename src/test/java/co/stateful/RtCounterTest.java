@@ -121,5 +121,4 @@ final class RtCounterTest {
             Matchers.hasItem(MediaType.TEXT_PLAIN)
         );
     }
-
 }

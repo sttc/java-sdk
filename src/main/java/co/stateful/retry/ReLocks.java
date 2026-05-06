@@ -16,7 +16,6 @@ import lombok.ToString;
 
 /**
  * Retriable locks.
- *
  * @since 0.5
  */
 @Immutable

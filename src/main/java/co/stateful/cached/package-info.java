@@ -5,7 +5,6 @@
 
 /**
  * Cached SDK interfaces (highly recommended to use in production).
- *
  * @since 0.7
  */
 package co.stateful.cached;

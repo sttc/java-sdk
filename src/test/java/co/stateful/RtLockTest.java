@@ -170,5 +170,4 @@ final class RtLockTest {
             Matchers.hasItem(MediaType.TEXT_XML)
         );
     }
-
 }

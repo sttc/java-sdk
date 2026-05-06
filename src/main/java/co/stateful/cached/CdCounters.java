@@ -16,7 +16,6 @@ import lombok.ToString;
 
 /**
  * Cached counters.
- *
  * @since 0.7
  */
 @Immutable

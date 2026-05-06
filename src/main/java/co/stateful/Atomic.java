@@ -47,6 +47,11 @@ import lombok.ToString;
 public final class Atomic<T> implements Callable<T> {
 
     /**
+     * Default maximum waiting time, in milliseconds (five minutes).
+     */
+    private static final long DEFAULT_MAX = TimeUnit.MINUTES.toMillis(5L);
+
+    /**
      * Random.
      */
     private static final Random RANDOM = new SecureRandom();
@@ -92,7 +97,7 @@ public final class Atomic<T> implements Callable<T> {
      * @param lbl Label to use for locking and unlocking (can be empty)
      */
     public Atomic(final Callable<T> clbl, final Lock lck, final String lbl) {
-        this(clbl, lck, lbl, TimeUnit.MINUTES.toMillis(5L));
+        this(clbl, lck, lbl, Atomic.DEFAULT_MAX);
     }
 
     // @checkstyle ParameterNumberCheck (15 lines)
@@ -184,5 +189,4 @@ public final class Atomic<T> implements Callable<T> {
             throw new IllegalStateException(ex);
         }
     }
-
 }
