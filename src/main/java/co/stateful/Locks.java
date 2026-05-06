@@ -9,7 +9,6 @@ import java.io.IOException;
 
 /**
  * Locks.
- *
  * @since 0.2
  */
 @Immutable
@@ -31,5 +30,4 @@ public interface Locks {
      * @throws IOException If fails
      */
     Lock get(String name) throws IOException;
-
 }

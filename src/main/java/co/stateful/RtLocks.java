@@ -18,7 +18,6 @@ import lombok.ToString;
 
 /**
  * Locks.
- *
  * @since 0.2
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
@@ -58,5 +57,4 @@ final class RtLocks implements Locks {
     public Lock get(final String name) {
         return new RtLock(name, this.request);
     }
-
 }

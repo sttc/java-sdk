@@ -19,7 +19,6 @@ import lombok.ToString;
 
 /**
  * Counters.
- *
  * @since 0.1
  * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
@@ -28,6 +27,13 @@ import lombok.ToString;
 @ToString(of = { })
 @EqualsAndHashCode(of = "request")
 final class RtCounters implements Counters {
+
+    /**
+     * XPath template to a counter delete link.
+     * @checkstyle LineLength (3 lines)
+     */
+    private static final String XPATH_DELETE =
+        "/page/counters/counter[name='%s']/links/link[@rel='delete']/@href";
 
     /**
      * Entry request.
@@ -81,13 +87,7 @@ final class RtCounters implements Counters {
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(XmlResponse.class)
-            .rel(
-                String.format(
-                    // @checkstyle LineLength (1 line)
-                    "/page/counters/counter[name='%s']/links/link[@rel='delete']/@href",
-                    name
-                )
-            )
+            .rel(String.format(RtCounters.XPATH_DELETE, name))
             .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
             .uri().queryParam("name", name).back()
             .fetch()

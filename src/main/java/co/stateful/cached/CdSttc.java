@@ -17,7 +17,6 @@ import lombok.ToString;
 
 /**
  * Cached Sttc.
- *
  * @since 0.7
  */
 @Immutable

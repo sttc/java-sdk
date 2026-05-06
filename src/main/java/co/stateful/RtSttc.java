@@ -67,32 +67,16 @@ public final class RtSttc implements Sttc {
      * @param token Security token
      */
     public RtSttc(final URN urn, final String token) {
-        this.request = new JdkRequest("https://www.stateful.co")
-            .through(OneMinuteWire.class)
-            .through(RetryWire.class)
-            .through(VerboseWire.class)
-            .through(CachingWire.class, "((POST|PUT|PATCH) .*|.*\\?.*)")
-            .header("X-Sttc-URN", urn.toString())
-            .header("X-Sttc-Token", token)
-            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
-            .header(HttpHeaders.USER_AGENT, "java-sdk.stateful.co");
+        // @checkstyle ConstructorsCodeFreeCheck (1 line)
+        this(RtSttc.entry(urn, token));
     }
 
     /**
-     * Make an instance of it.
-     * @param urn Owner URN
-     * @param token Security token
-     * @return Sttc
+     * Ctor.
+     * @param req Entry request
      */
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static Sttc make(final URN urn, final String token) {
-        final Sttc sttc;
-        if (token.matches("[A-F0-9\\-]{19}")) {
-            sttc = new RtSttc(urn, token);
-        } else {
-            sttc = new MkSttc();
-        }
-        return sttc;
+    private RtSttc(final Request req) {
+        this.request = req;
     }
 
     @Override
@@ -117,5 +101,40 @@ public final class RtSttc implements Sttc {
                 .as(XmlResponse.class)
                 .rel("/page/links/link[@rel='menu:locks']/@href")
         );
+    }
+
+    /**
+     * Make an instance of it.
+     * @param urn Owner URN
+     * @param token Security token
+     * @return Sttc
+     */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
+    public static Sttc make(final URN urn, final String token) {
+        final Sttc sttc;
+        if (token.matches("[A-F0-9\\-]{19}")) {
+            sttc = new RtSttc(urn, token);
+        } else {
+            sttc = new MkSttc();
+        }
+        return sttc;
+    }
+
+    /**
+     * Build entry request.
+     * @param urn Owner URN
+     * @param token Security token
+     * @return Request
+     */
+    private static Request entry(final URN urn, final String token) {
+        return new JdkRequest("https://www.stateful.co")
+            .through(OneMinuteWire.class)
+            .through(RetryWire.class)
+            .through(VerboseWire.class)
+            .through(CachingWire.class, "((POST|PUT|PATCH) .*|.*\\?.*)")
+            .header("X-Sttc-URN", urn.toString())
+            .header("X-Sttc-Token", token)
+            .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
+            .header(HttpHeaders.USER_AGENT, "java-sdk.stateful.co");
     }
 }

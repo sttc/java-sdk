@@ -42,5 +42,4 @@ public interface Sttc {
      * @throws IOException If some I/O problem
      */
     Locks locks() throws IOException;
-
 }

@@ -48,19 +48,17 @@ final class AtomicTest {
     void callsUnlockAfterException() throws Exception {
         final Lock lock = Mockito.mock(Lock.class);
         Mockito.doReturn(true).when(lock).lock(Mockito.anyString());
-        final Atomic<String> atomic = new Atomic<>(
-            () -> {
-                throw new IOException("expected two");
-            },
-            lock
-        );
         org.junit.jupiter.api.Assertions.assertAll(
             () -> org.junit.jupiter.api.Assertions.assertThrows(
                 IOException.class,
-                atomic::call
+                () -> new Atomic<>(
+                    () -> {
+                        throw new IOException("expected two");
+                    },
+                    lock
+                ).call()
             ),
             () -> Mockito.verify(lock).unlock(Mockito.anyString())
         );
     }
-
 }

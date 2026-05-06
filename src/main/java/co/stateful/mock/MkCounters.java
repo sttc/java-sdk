@@ -14,7 +14,6 @@ import lombok.ToString;
 
 /**
  * Mock counters.
- *
  * @since 0.1
  */
 @Immutable
@@ -42,5 +41,4 @@ final class MkCounters implements Counters {
     public Counter get(final String name) {
         return new MkCounter();
     }
-
 }

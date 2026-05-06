@@ -10,7 +10,6 @@ import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
-import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -24,14 +23,8 @@ final class RtLocksTest {
     @Test
     void checksExistenceWhenLockPresent() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()
-            .next(
-                new MkAnswer.Simple(
-                    StringUtils.join(
-                        "<page><locks><lock><name>замок-αβγ</name>",
-                        "<label>мітка</label></lock></locks></page>"
-                    )
-                )
-            )
+            // @checkstyle LineLength (1 line)
+            .next(new MkAnswer.Simple("<page><locks><lock><name>замок-αβγ</name><label>мітка</label></lock></locks></page>"))
             .start();
         try {
             MatcherAssert.assertThat(
@@ -47,14 +40,8 @@ final class RtLocksTest {
     @Test
     void checksExistenceWhenLockAbsent() throws Exception {
         final MkContainer container = new MkGrizzlyContainer()
-            .next(
-                new MkAnswer.Simple(
-                    StringUtils.join(
-                        "<page><locks><lock><name>другий</name>",
-                        "<label>інша</label></lock></locks></page>"
-                    )
-                )
-            )
+            // @checkstyle LineLength (1 line)
+            .next(new MkAnswer.Simple("<page><locks><lock><name>другий</name><label>інша</label></lock></locks></page>"))
             .start();
         try {
             MatcherAssert.assertThat(
@@ -99,5 +86,4 @@ final class RtLocksTest {
             Matchers.hasItem(MediaType.TEXT_XML)
         );
     }
-
 }

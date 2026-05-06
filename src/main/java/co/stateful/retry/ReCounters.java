@@ -16,7 +16,6 @@ import lombok.ToString;
 
 /**
  * Retriable counters.
- *
  * @since 0.5
  */
 @Immutable
