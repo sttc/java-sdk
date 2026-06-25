@@ -122,6 +122,9 @@ public final class Atomic<T> implements Callable<T> {
     public T call() throws Exception {
         final Thread hook = new Thread(
             () -> {
+                if (!this.locked.get()) {
+                    return;
+                }
                 try {
                     this.lock.unlock(this.label);
                 } catch (final IOException ex) {
