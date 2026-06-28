@@ -42,15 +42,14 @@ Here is how you can use a lock:
 ```java
 Locks locks = sttc.locks();
 Lock lock = locks.get("test-lock");
-new Atomic(lock).call(
-  new Callable<Void>() {
-    @Override
-    public void call() {
-      // perfectly synchronized code
-      return null;
-    }
+Callable<Void> work = new Callable<Void>() {
+  @Override
+  public Void call() {
+    // perfectly synchronized code
+    return null;
   }
-);
+};
+new Atomic<Void>(work, lock).call();
 ```
 
 ## How to Contribute
