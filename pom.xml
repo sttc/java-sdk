@@ -214,17 +214,12 @@
         <plugin>
           <groupId>com.qulice</groupId>
           <artifactId>qulice-maven-plugin</artifactId>
-          <version>0.30.2</version>
+          <version>0.30.5</version>
           <configuration>
             <excludes combine.children="append">
               <exclude>findbugs:.*</exclude>
               <exclude>duplicatefinder:.*</exclude>
               <exclude>dependencies:.*</exclude>
-              <!-- ErrorProne classpath omits test scope entirely, breaking
-                cross-file symbol resolution and transitive test deps
-                (opentest4j) across the whole test tree, see
-                https://github.com/yegor256/qulice/issues/1691 -->
-              <exclude>errorprone:.*/src/test/java/.*</exclude>
             </excludes>
           </configuration>
         </plugin>
