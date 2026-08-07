@@ -100,7 +100,6 @@ public final class Atomic<T> implements Callable<T> {
         this(clbl, lck, lbl, Atomic.DEFAULT_MAX);
     }
 
-    // @checkstyle ParameterNumberCheck (15 lines)
     /**
      * Public ctor.
      * @param clbl Callable to use

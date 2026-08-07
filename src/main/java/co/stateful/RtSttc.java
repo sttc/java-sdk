@@ -67,7 +67,6 @@ public final class RtSttc implements Sttc {
      * @param token Security token
      */
     public RtSttc(final URN urn, final String token) {
-        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this(RtSttc.entry(urn, token));
     }
 

@@ -21,7 +21,6 @@ import lombok.ToString;
 /**
  * Lock.
  * @since 0.3
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 @Immutable
 @Loggable(Loggable.DEBUG)

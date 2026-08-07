@@ -20,20 +20,12 @@ import lombok.ToString;
 /**
  * Counter.
  * @since 0.1
- * @checkstyle MultipleStringLiteralsCheck (500 lines)
  */
 @Immutable
 @Loggable(Loggable.DEBUG)
 @ToString(of = "label", includeFieldNames = false)
 @EqualsAndHashCode(of = { "label", "request" })
 final class RtCounter implements Counter {
-
-    /**
-     * XPath template to a counter operation link.
-     * @checkstyle LineLength (3 lines)
-     */
-    private static final String XPATH =
-        "/page/counters/counter[name='%s']/links/link[@rel='%s']/@href";
 
     /**
      * Its name.
@@ -100,7 +92,11 @@ final class RtCounter implements Counter {
             .fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(XmlResponse.class)
-            .rel(String.format(RtCounter.XPATH, this.label, ops));
+            .as(XmlResponse.class).rel(
+                String.format(
+                    "/page/counters/counter[name='%s']/links/link[@rel='%s']/@href",
+                    this.label, ops
+                )
+            );
     }
 }
