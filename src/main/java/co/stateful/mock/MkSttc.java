@@ -22,6 +22,13 @@ import lombok.ToString;
 @EqualsAndHashCode
 public final class MkSttc implements Sttc {
 
+    /**
+     * Ctor.
+     */
+    public MkSttc() {
+        // nothing to initialize
+    }
+
     @Override
     public Counters counters() {
         return new MkCounters();
