@@ -119,12 +119,6 @@ public final class RtSttc implements Sttc {
         return sttc;
     }
 
-    /**
-     * Build entry request.
-     * @param urn Owner URN
-     * @param token Security token
-     * @return Request
-     */
     private static Request entry(final URN urn, final String token) {
         return new JdkRequest("https://www.stateful.co")
             .through(OneMinuteWire.class)

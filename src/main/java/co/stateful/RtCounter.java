@@ -80,12 +80,6 @@ final class RtCounter implements Counter {
         return value;
     }
 
-    /**
-     * Get front request.
-     * @param ops Operation
-     * @return Request
-     * @throws IOException If fails
-     */
     private Request front(final String ops) throws IOException {
         return this.request
             .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)

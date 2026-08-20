@@ -94,12 +94,6 @@ final class RtLock implements Lock {
         return unlocked;
     }
 
-    /**
-     * Get front request.
-     * @param label Label
-     * @return Request
-     * @throws IOException If fails
-     */
     private Request front(final String label) throws IOException {
         return this.request
             .header(HttpHeaders.ACCEPT, MediaType.TEXT_XML)
