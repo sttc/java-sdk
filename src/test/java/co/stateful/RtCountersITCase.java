@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link RtCounters}.
+ *
  * @since 0.1
  */
 final class RtCountersITCase {

@@ -14,6 +14,7 @@ import lombok.ToString;
 
 /**
  * Mock counters.
+ *
  * @since 0.1
  */
 @Immutable

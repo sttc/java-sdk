@@ -13,6 +13,7 @@ import lombok.ToString;
 
 /**
  * Mock locks.
+ *
  * @since 0.2
  */
 @Immutable

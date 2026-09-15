@@ -9,7 +9,7 @@
  * <p>First, read the documentation at
  * <a href="https://java-sdk.stateful.co">java-sdk.stateful.co</a>. Then,
  * register an account at <a href="https://www.stateful.co">stateful.co</a>.
- * Then, you can try to use, for example, counters:
+ * Then, you can try to use, for example, counters:</p>
  *
  * <pre> public class Main {
  *   public static void main(String... args) {
@@ -28,7 +28,7 @@
  *
  * <p>You need two arguments to instantiate {@link RtSttc}: URN of the user
  * and your secret token. You can get them at the home page of
- * <a href="https://www.stateful.co">stateful.co</a>, right on the top.
+ * <a href="https://www.stateful.co">stateful.co</a>, right on the top.</p>
  *
  * @since 0.1
  * @see <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>

@@ -8,11 +8,13 @@ import co.stateful.mock.MkSttc;
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
  * Test case for {@link Atomic}.
+ *
  * @since 0.6
  */
 final class AtomicTest {
@@ -32,7 +34,7 @@ final class AtomicTest {
     void unlocksWhenCrashed() throws Exception {
         final Lock lock = Mockito.mock(Lock.class);
         Mockito.doReturn(true).when(lock).lock(Mockito.anyString());
-        org.junit.jupiter.api.Assertions.assertThrows(
+        Assertions.assertThrows(
             IOException.class,
             () -> new Atomic<>(
                 () -> {
@@ -48,8 +50,8 @@ final class AtomicTest {
     void callsUnlockAfterException() throws Exception {
         final Lock lock = Mockito.mock(Lock.class);
         Mockito.doReturn(true).when(lock).lock(Mockito.anyString());
-        org.junit.jupiter.api.Assertions.assertAll(
-            () -> org.junit.jupiter.api.Assertions.assertThrows(
+        Assertions.assertAll(
+            () -> Assertions.assertThrows(
                 IOException.class,
                 () -> new Atomic<>(
                     () -> {

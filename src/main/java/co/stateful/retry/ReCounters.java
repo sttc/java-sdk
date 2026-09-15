@@ -16,6 +16,7 @@ import lombok.ToString;
 
 /**
  * Retriable counters.
+ *
  * @since 0.5
  */
 @Immutable
@@ -31,6 +32,7 @@ public final class ReCounters implements Counters {
 
     /**
      * Ctor.
+     *
      * @param orgn Original object
      */
     public ReCounters(final Counters orgn) {

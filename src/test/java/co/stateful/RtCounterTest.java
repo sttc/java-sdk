@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link RtCounter}.
+ *
  * @since 0.12.3
  */
 final class RtCounterTest {

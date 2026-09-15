@@ -9,7 +9,7 @@
  * <p>This packages gives you an ability to use {@code Sttc} in
  * unit tests, without mocking frameworks. Just make an instance
  * of {@link MkSttc} class and work with it as if it was a normal
- * adapter of <a href="http://www.statefu.co">stateful.co</a>:
+ * adapter of <a href="http://www.statefu.co">stateful.co</a>:</p>
  *
  * <pre>public class FooTest {
  *   &#64;Test

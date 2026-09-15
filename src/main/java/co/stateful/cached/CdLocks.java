@@ -16,6 +16,7 @@ import lombok.ToString;
 
 /**
  * Cached locks.
+ *
  * @since 0.7
  */
 @Immutable
@@ -31,6 +32,7 @@ public final class CdLocks implements Locks {
 
     /**
      * Ctor.
+     *
      * @param orgn Original object
      */
     public CdLocks(final Locks orgn) {

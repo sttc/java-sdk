@@ -16,6 +16,7 @@ import lombok.ToString;
 
 /**
  * Cached counters.
+ *
  * @since 0.7
  */
 @Immutable
@@ -31,6 +32,7 @@ public final class CdCounters implements Counters {
 
     /**
      * Ctor.
+     *
      * @param orgn Original object
      */
     public CdCounters(final Counters orgn) {

@@ -16,6 +16,7 @@ import lombok.ToString;
 
 /**
  * Retriable locks.
+ *
  * @since 0.5
  */
 @Immutable
@@ -31,6 +32,7 @@ public final class ReLocks implements Locks {
 
     /**
      * Ctor.
+     *
      * @param orgn Original object
      */
     public ReLocks(final Locks orgn) {

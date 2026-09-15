@@ -19,6 +19,7 @@ import lombok.ToString;
 
 /**
  * Counter.
+ *
  * @since 0.1
  */
 @Immutable
@@ -39,6 +40,7 @@ final class RtCounter implements Counter {
 
     /**
      * Ctor.
+     *
      * @param name Name of it
      * @param req Home page request
      */

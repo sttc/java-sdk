@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * Locks.
+ *
  * @since 0.2
  */
 @Immutable
@@ -16,6 +17,7 @@ public interface Locks {
 
     /**
      * Does it exist?
+     *
      * @param name Name of lock
      * @return TRUE if the lock exists
      * @throws IOException If fails
@@ -25,6 +27,7 @@ public interface Locks {
 
     /**
      * Get one lock by name.
+     *
      * @param name Name of lock
      * @return Lock
      * @throws IOException If fails

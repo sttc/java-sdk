@@ -12,7 +12,7 @@ import java.io.IOException;
  *
  * <p>Make an instance of this interface using {@link RtSttc}, for example,
  * if you want to use a cloud lock from
- * <a href="https://www.stateful.co">stateful.co</a>:
+ * <a href="https://www.stateful.co">stateful.co</a>:</p>
  *
  * <pre> Lock lock = new RtSttc(
  *   new URN("urn:github:12345"), "token"
@@ -20,7 +20,7 @@ import java.io.IOException;
  *
  * <p>You need two arguments to instantiate {@link RtSttc}: URN of the user
  * and your secret token. You can get them at the home page of
- * <a href="https://www.stateful.co">stateful.co</a>, right on the top.
+ * <a href="https://www.stateful.co">stateful.co</a>, right on the top.</p>
  *
  * @see <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
  * @see <a href="http://www.yegor256.com/2014/12/04/synchronization-between-nodes.html">Synchronization Between Nodes</a>
@@ -31,6 +31,7 @@ public interface Sttc {
 
     /**
      * Counters.
+     *
      * @return Counters
      * @throws IOException If some I/O problem
      */
@@ -38,6 +39,7 @@ public interface Sttc {
 
     /**
      * Locks.
+     *
      * @return Locks
      * @throws IOException If some I/O problem
      */

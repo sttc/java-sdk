@@ -19,7 +19,7 @@ import lombok.ToString;
  * Atomic block of code.
  *
  * <p>This class runs your {@link Callable} in a concurrent thread-safe
- * manner, using a lock from Stateful.co. For example:
+ * manner, using a lock from Stateful.co. For example:</p>
  *
  * <pre> Callable&lt;String&gt; origin = new Callable&lt;String&gt;() {
  *   &#64;Override
@@ -34,7 +34,7 @@ import lombok.ToString;
  *
  * <p>If you want to use {@link Runnable} instead, try static method
  * {@link java.util.concurrent.Executors#callable(Runnable)}. If you
- * want to avoid checked exceptions, use {@link #callQuietly()}.
+ * want to avoid checked exceptions, use {@link #callQuietly()}.</p>
  *
  * @param <T> Type of result
  * @see <a href="http://www.yegor256.com/2014/05/18/cloud-autoincrement-counters.html">Atomic Counters at Stateful.co</a>
@@ -83,6 +83,7 @@ public final class Atomic<T> implements Callable<T> {
 
     /**
      * Public ctor (default maximum waiting time of five minutes).
+     *
      * @param clbl Callable to use
      * @param lck Lock to use
      */
@@ -92,6 +93,7 @@ public final class Atomic<T> implements Callable<T> {
 
     /**
      * Public ctor (default maximum waiting time of five minutes).
+     *
      * @param clbl Callable to use
      * @param lck Lock to use
      * @param lbl Label to use for locking and unlocking (can be empty)
@@ -102,6 +104,7 @@ public final class Atomic<T> implements Callable<T> {
 
     /**
      * Public ctor.
+     *
      * @param clbl Callable to use
      * @param lck Lock to use
      * @param lbl Label to use for locking and unlocking (can be empty)
@@ -179,6 +182,7 @@ public final class Atomic<T> implements Callable<T> {
 
     /**
      * Call without exception throwing.
+     *
      * @return Result
      * @since 0.9
      */

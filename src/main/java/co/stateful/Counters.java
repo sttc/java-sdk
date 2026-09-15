@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * Counters.
+ *
  * @since 0.1
  */
 @Immutable
@@ -16,6 +17,7 @@ public interface Counters {
 
     /**
      * Get list of them all.
+     *
      * @return List of counter names
      * @throws IOException If some I/O problem
      */
@@ -23,6 +25,7 @@ public interface Counters {
 
     /**
      * Create a counter.
+     *
      * @param name Name of it
      * @return Counter
      * @throws IOException If some I/O problem
@@ -31,6 +34,7 @@ public interface Counters {
 
     /**
      * Delete a counter.
+     *
      * @param name Name of it
      * @throws IOException If some I/O problem
      */
@@ -38,6 +42,7 @@ public interface Counters {
 
     /**
      * Get one counter by name.
+     *
      * @param name Name of it
      * @return Counter
      * @throws IOException If some I/O problem

@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * Counter.
+ *
  * @since 0.1
  */
 @Immutable
@@ -16,6 +17,7 @@ public interface Counter {
 
     /**
      * Its name.
+     *
      * @return Name of this lock
      * @since 0.8
      */
@@ -23,6 +25,7 @@ public interface Counter {
 
     /**
      * Set specific value.
+     *
      * @param value Value to set
      * @throws IOException If some I/O problem
      */
@@ -30,6 +33,7 @@ public interface Counter {
 
     /**
      * Add value to it.
+     *
      * @param delta Delta to add (can be zero or negative)
      * @return New value
      * @throws IOException If some I/O problem

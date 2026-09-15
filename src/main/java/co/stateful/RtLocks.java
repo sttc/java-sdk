@@ -18,6 +18,7 @@ import lombok.ToString;
 
 /**
  * Locks.
+ *
  * @since 0.2
  */
 @Immutable
@@ -33,6 +34,7 @@ final class RtLocks implements Locks {
 
     /**
      * Ctor.
+     *
      * @param req Request
      */
     RtLocks(final Request req) {

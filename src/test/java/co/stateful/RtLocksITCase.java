@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Integration case for {@link RtLocks}.
+ *
  * @since 0.2
  */
 final class RtLocksITCase {

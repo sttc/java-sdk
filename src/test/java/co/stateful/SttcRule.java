@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Assumptions;
 
 /**
  * Sttc test rule.
+ *
  * @since 0.1
  */
 final class SttcRule {
@@ -27,6 +28,7 @@ final class SttcRule {
 
     /**
      * Ctor.
+     *
      * @param urn User URN
      * @param tkn Token
      */
@@ -37,6 +39,7 @@ final class SttcRule {
 
     /**
      * Get Sttc.
+     *
      * @return Sttc
      */
     Sttc get() {
@@ -54,6 +57,7 @@ final class SttcRule {
 
     /**
      * Make a new SttcRule from system properties.
+     *
      * @return SttcRule
      */
     static SttcRule fromProperties() {

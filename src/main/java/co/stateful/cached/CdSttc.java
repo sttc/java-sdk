@@ -17,6 +17,7 @@ import lombok.ToString;
 
 /**
  * Cached Sttc.
+ *
  * @since 0.7
  */
 @Immutable
@@ -32,6 +33,7 @@ public final class CdSttc implements Sttc {
 
     /**
      * Ctor.
+     *
      * @param orgn Original object
      */
     public CdSttc(final Sttc orgn) {

@@ -23,7 +23,7 @@ import lombok.ToString;
  * retried a few times before giving up and throwing a runtime
  * exception. It is highly recommended to use this decorator
  * in production environment. The Internet is not a stable environment,
- * and connection failures is a regular event.
+ * and connection failures is a regular event.</p>
  *
  * @since 0.5
  */
@@ -40,6 +40,7 @@ public final class ReSttc implements Sttc {
 
     /**
      * Ctor.
+     *
      * @param orgn Original object
      */
     public ReSttc(final Sttc orgn) {
