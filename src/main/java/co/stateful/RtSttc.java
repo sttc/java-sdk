@@ -32,7 +32,7 @@ import lombok.ToString;
  *
  * <pre> Lock lock = new RtSttc(
  *   new URN("urn:github:12345"), "token"
- * ).locks().lock("test");</pre>
+ * ).locks().get("test");</pre>
  *
  * <p>You need two arguments to instantiate this class: URN of the user
  * and your secret token. You can get them at the home page of

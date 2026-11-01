@@ -29,7 +29,7 @@ import lombok.ToString;
  *   }
  * };
  * Lock lock = new RtSttc(new URN("urn:github:12345"), "token")
- *   .locks().lock("test");
+ *   .locks().get("test");
  * String result = new Atomic&lt;String&gt;(origin, lock).call();</pre>
  *
  * <p>If you want to use {@link Runnable} instead, try static method
