@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: Copyright (c) 2014-2026, stateful.co
+# SPDX-License-Identifier: MIT
+---
+# GitHub provides this image before actionlint includes its label.
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04
