@@ -1,8 +1,3 @@
-
-/*
- * SPDX-FileCopyrightText: Copyright (c) 2014-2026, stateful.co
- * SPDX-License-Identifier: MIT
- */
 package co.stateful.mock;
 
 import co.stateful.Counter;
@@ -18,7 +13,7 @@ import org.junit.jupiter.api.Test;
 final class MkCounterTest {
 
     @Test
-    void updatesCounterOnSameInstance() {
+    void updatesCounterOnSameInstance() throws Exception {
         final Counter counter = new MkCounter();
 
         counter.set(10L);
