@@ -1,15 +1,21 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 * SPDX-FileCopyrightText: Copyright (c) 2014-2026, stateful.co
 * SPDX-License-Identifier: MIT
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
     <version>0.73.5</version>
   </parent>
+
   <groupId>co.stateful</groupId>
   <artifactId>java-sdk</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -18,10 +24,12 @@
   <description>Stateful Web Primitives</description>
   <url>https://www.stateful.co</url>
   <inceptionYear>2014</inceptionYear>
+
   <organization>
     <name>stateful.co</name>
     <url>https://www.stateful.co</url>
   </organization>
+
   <licenses>
     <license>
       <name>Stateful Web Primitives</name>
@@ -29,6 +37,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <developers>
     <developer>
       <id>1</id>
@@ -43,132 +52,166 @@
       <timezone>-7</timezone>
     </developer>
   </developers>
+
   <issueManagement>
     <system>github</system>
     <url>https://github.com/sttc/java-sdk/issues</url>
   </issueManagement>
+
   <ciManagement>
     <system>rultor</system>
     <url>https://www.rultor.com/s/stateful</url>
   </ciManagement>
+
   <scm>
     <connection>scm:git:github.com:sttc/java-sdk.git</connection>
     <developerConnection>scm:git:github.com:sttc/java-sdk.git</developerConnection>
     <url>https://github.com/sttc/java-sdk</url>
   </scm>
+
   <distributionManagement>
     <site>
       <id>gh-pages</id>
       <url>https://java-sdk.stateful.co/</url>
     </site>
   </distributionManagement>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>2.0.20</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.48</version>
     </dependency>
+
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-aspects</artifactId>
       <version>0.26.0</version>
     </dependency>
+
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
       <version>0.24.3</version>
     </dependency>
+
     <dependency>
       <groupId>jakarta.ws.rs</groupId>
       <artifactId>jakarta.ws.rs-api</artifactId>
       <version>4.0.0</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-http</artifactId>
       <version>2.1.0</version>
     </dependency>
+
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-xml</artifactId>
       <version>0.37.3</version>
     </dependency>
+
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-urn</artifactId>
       <version>0.11.0</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.22.0</version>
     </dependency>
+
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-matchers</artifactId>
       <version>1.9.0</version>
       <scope>runtime</scope>
     </dependency>
+
     <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.json</artifactId>
       <version>1.1.4</version>
       <scope>runtime</scope>
     </dependency>
+
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
       <version>4.0.3</version>
       <scope>runtime</scope>
     </dependency>
+
     <dependency>
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>
       <version>4.0.3</version>
       <scope>runtime</scope>
     </dependency>
+
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest</artifactId>
       <version>3.0</version>
       <scope>compile</scope>
     </dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
     </dependency>
+
     <dependency>
       <groupId>org.glassfish.grizzly</groupId>
       <artifactId>grizzly-http-servlet-server</artifactId>
       <version>5.0.3</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
       <version>2.0.1.Final</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
       <version>3.0</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>5.24.0</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-reload4j</artifactId>
@@ -176,6 +219,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -190,6 +234,7 @@
           </archive>
         </configuration>
       </plugin>
+
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
@@ -209,6 +254,7 @@
         </executions>
       </plugin>
     </plugins>
+
     <pluginManagement>
       <plugins>
         <plugin>
@@ -219,4 +265,6 @@
       </plugins>
     </pluginManagement>
   </build>
+
 </project>
+

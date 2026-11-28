@@ -1,3 +1,4 @@
+
 /*
  * SPDX-FileCopyrightText: Copyright (c) 2014-2026, stateful.co
  * SPDX-License-Identifier: MIT
@@ -7,6 +8,7 @@ package co.stateful.mock;
 import co.stateful.Counter;
 import com.jcabi.aspects.Immutable;
 import com.jcabi.aspects.Loggable;
+import java.util.concurrent.atomic.AtomicLong;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -21,6 +23,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 final class MkCounter implements Counter {
 
+    private final AtomicLong value = new AtomicLong();
+
     @Override
     public String name() {
         return this.getClass().getName();
@@ -28,11 +32,12 @@ final class MkCounter implements Counter {
 
     @Override
     public void set(final long value) {
-        // done
+        this.value.set(value);
     }
 
     @Override
     public long incrementAndGet(final long delta) {
-        return System.currentTimeMillis();
+        return this.value.addAndGet(delta);
     }
 }
+
